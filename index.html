@@ -460,8 +460,8 @@
     <span class="brand"><span class="dot"></span> 第3回Base勉強会</span>
     <div class="links">
       <a href="#why">なぜ今</a>
-      <a href="#beryl">Beryl（最新）</a>
       <a href="#azul">Azul</a>
+      <a href="#beryl">Beryl（最新）</a>
       <a href="#b20">B20</a>
       <a href="#money">お金の地図</a>
       <a href="#multichain">Base独自?</a>
@@ -684,7 +684,58 @@
   </div>
 </section>
 
-<!-- ====================== BERYL（最新・主役）====================== -->
+<!-- ====================== AZUL（ひとつ前の大型アプデ・時系列で先）====================== -->
+<section id="azul">
+  <div class="wrap">
+    <span class="eyebrow">ひとつ前の大型アップグレード（土台づくり）</span>
+    <h2>Azul ── Base が「自前のエンジン」に載せ替えた、独立後はじめての大型アプデ。</h2>
+    <p class="lead">
+      2026-05-13 にメインネット稼働。Optimism の Superchain から独立して以来、
+      Base が単独で実行した初の大型ネットワークアップグレードです。
+      「より安全・より速い・より作りやすい」を一度に進めました。
+    </p>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="meta">安全性 / 分散化</div>
+        <h3>multiproof（2系統の鍵）</h3>
+        <p>2種類の安全確認（TEE と ZK ＝異なる方式の証明）を併用。片方が壊れても止まらず、両方が一致すれば出金が最短1日で確定（＝特急経路。ただしコストが高く現状はまれで、多くの人が通る通常経路は Beryl で5日に）。「運営者に依存しない」状態へ近づく、大きな一歩です。</p>
+        <div class="analogy"><b>たとえ：</b>「鍵を2系統にして、片方が壊れても止まらない金庫」。</div>
+      </div>
+      <div class="card">
+        <div class="meta">性能</div>
+        <h3>処理エンジンを1つに統合</h3>
+        <p>バラバラだった処理ソフトを Base 自前の1セットに集約。1秒あたりにさばける取引数（TPS）を底上げし、瞬間的に <b>毎秒5,000件</b> の取引を複数回さばけた実績も。さらなる高速化（目標：毎秒10億ガス相当の処理能力）への土台。</p>
+        <div class="analogy"><b>たとえ：</b>「部品の寄せ集めから、自社製ワンセットへ」。</div>
+      </div>
+      <div class="card">
+        <div class="meta">開発体験</div>
+        <h3>本家 Ethereum の最新仕様に追従</h3>
+        <p>Ethereum 本体の最新アップデートに細かく整列。内部を合わせておくことで、多くのアプリは改修なしでそのまま動きます。</p>
+        <div class="analogy"><b>意味：</b>「本家 Ethereum と歩調を合わせ、開発者が迷わない」。</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-top:24px">
+      <div class="card">
+        <div class="meta">利用者への影響</div>
+        <h3>何もしなくていい</h3>
+        <p>ユーザー側の作業は不要。Base が「より速く・安全・安く」なるだけ。Ethereum への出金は multiproof の成熟とともに速くなる。</p>
+      </div>
+      <div class="card">
+        <div class="meta">守りの本気度</div>
+        <h3>監査コンペ 最大 $25万</h3>
+        <p>稼働前に Immunefi の監査コンペ（4/21–5/4）を実施。重大脆弱性に最大 $250,000 の報奨。「まず安全」を数字で示した。</p>
+      </div>
+    </div>
+
+    <p class="note" style="margin-top:22px">
+      稼働日 2026-05-13 と各性能値は公式blogに記載されています<sup class="fn"><a href="#ref-3">[3]</a></sup><sup class="fn"><a href="#ref-4">[4]</a></sup>（稼働ニュースは<sup class="fn"><a href="#ref-16">[16]</a></sup>）。
+    </p>
+  </div>
+</section>
+
+<!-- ====================== BERYL（最新・主役・時系列で後）====================== -->
 <section id="beryl" style="background:linear-gradient(180deg,#eef3ff 0%,#ffffff 100%);">
   <div class="wrap">
     <span class="eyebrow">いま最新のアップグレード</span>
@@ -768,57 +819,6 @@
 
     <p class="note" style="margin-top:22px">
       メインネット 2026-06-25・testnet は Base Sepolia 先行・3本柱（B20 / 出金7→5日 / Reth V2）はいずれも公式blogに記載されています<sup class="fn"><a href="#ref-2">[2]</a></sup><sup class="fn"><a href="#ref-5">[5]</a></sup>。
-    </p>
-  </div>
-</section>
-
-<!-- ====================== AZUL（ひとつ前の大型アプデ）====================== -->
-<section id="azul">
-  <div class="wrap">
-    <span class="eyebrow">ひとつ前の大型アップグレード（土台づくり）</span>
-    <h2>Azul ── Base が「自前のエンジン」に載せ替えた、独立後はじめての大型アプデ。</h2>
-    <p class="lead">
-      2026-05-13 にメインネット稼働。Optimism の Superchain から独立して以来、
-      Base が単独で実行した初の大型ネットワークアップグレードです。
-      「より安全・より速い・より作りやすい」を一度に進めました。
-    </p>
-
-    <div class="grid grid-3">
-      <div class="card">
-        <div class="meta">安全性 / 分散化</div>
-        <h3>multiproof（2系統の鍵）</h3>
-        <p>2種類の安全確認（TEE と ZK ＝異なる方式の証明）を併用。片方が壊れても止まらず、両方が一致すれば出金が最短1日で確定（＝特急経路。ただしコストが高く現状はまれで、多くの人が通る通常経路は Beryl で5日に）。「運営者に依存しない」状態へ近づく、大きな一歩です。</p>
-        <div class="analogy"><b>たとえ：</b>「鍵を2系統にして、片方が壊れても止まらない金庫」。</div>
-      </div>
-      <div class="card">
-        <div class="meta">性能</div>
-        <h3>処理エンジンを1つに統合</h3>
-        <p>バラバラだった処理ソフトを Base 自前の1セットに集約。1秒あたりにさばける取引数（TPS）を底上げし、瞬間的に <b>毎秒5,000件</b> の取引を複数回さばけた実績も。さらなる高速化（目標：毎秒10億ガス相当の処理能力）への土台。</p>
-        <div class="analogy"><b>たとえ：</b>「部品の寄せ集めから、自社製ワンセットへ」。</div>
-      </div>
-      <div class="card">
-        <div class="meta">開発体験</div>
-        <h3>本家 Ethereum の最新仕様に追従</h3>
-        <p>Ethereum 本体の最新アップデートに細かく整列。内部を合わせておくことで、多くのアプリは改修なしでそのまま動きます。</p>
-        <div class="analogy"><b>意味：</b>「本家 Ethereum と歩調を合わせ、開発者が迷わない」。</div>
-      </div>
-    </div>
-
-    <div class="grid grid-2" style="margin-top:24px">
-      <div class="card">
-        <div class="meta">利用者への影響</div>
-        <h3>何もしなくていい</h3>
-        <p>ユーザー側の作業は不要。Base が「より速く・安全・安く」なるだけ。Ethereum への出金は multiproof の成熟とともに速くなる。</p>
-      </div>
-      <div class="card">
-        <div class="meta">守りの本気度</div>
-        <h3>監査コンペ 最大 $25万</h3>
-        <p>稼働前に Immunefi の監査コンペ（4/21–5/4）を実施。重大脆弱性に最大 $250,000 の報奨。「まず安全」を数字で示した。</p>
-      </div>
-    </div>
-
-    <p class="note" style="margin-top:22px">
-      稼働日 2026-05-13 と各性能値は公式blogに記載されています<sup class="fn"><a href="#ref-3">[3]</a></sup><sup class="fn"><a href="#ref-4">[4]</a></sup>（稼働ニュースは<sup class="fn"><a href="#ref-16">[16]</a></sup>）。
     </p>
   </div>
 </section>
