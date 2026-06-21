@@ -338,22 +338,24 @@
   .donut-legend{font-size:.9rem;color:#aab6d2;} .donut-legend b{color:#fff;}
   /* @property がある環境では数値も滑らかに。無くても最終値は出る */
 
-  /* --- バー（汎用・シェア可視化。--w で幅を確定。リビールは scaleX で演出するだけ＝
-         JS未発動でも幅は --w のまま残り、各チェーンの差が必ず見える堅牢設計） --- */
+  /* --- バー（汎用・シェア可視化。各 .bar-fill の inline style="width:NN%" で長さ＝量を確定。
+         JS非依存で常に正しい幅で描画される堅牢設計。最大値=100%基準で比例。 --- */
   .bars{display:grid;gap:12px;margin-top:6px;}
-  .bar-row{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;font-size:.85rem;}
-  /* トラック（背景）はハッキリ見える灰色に。fill（塗り）との明暗差で長さが読める。 */
-  .bar-track{height:14px;border-radius:7px;background:#e3e9f5;overflow:hidden;}
-  /* 塗りは width:var(--w) だけで長さを確定（＝JSに一切依存しない）。
-     色は濃い青の単色で、各チェーンの差が一目で読める。
-     ※ 以前 transform:scaleX(0) を既定にして全バーが不可視になるバグ、
-        さらに薄いグラデでトラックと見分けが付かないバグがあった（2026-06-22 再修正）。 */
-  .bar-fill{height:100%;width:var(--w);border-radius:7px;background:var(--base-blue);
-            transition:width 1.1s cubic-bezier(.2,.8,.2,1);}
-  /* Base 以外（控えめ色）の行：トラックよりは濃いグレー青で、塗りだと分かるように。 */
-  .bar-fill.muted{background:#9fb0d4;}
-  .bar-val{font-weight:800;color:var(--base-blue);text-align:right;}
+  .bar-row{display:grid;grid-template-columns:128px 1fr 132px;align-items:center;gap:10px;font-size:.85rem;}
+  /* トラック（背景）= 薄い枠だけ。fill（塗り）が長さ＝量を表す主役。 */
+  .bar-track{height:16px;border-radius:8px;background:#eef1f8;overflow:hidden;}
+  /* 塗りは inline style の width:**% で長さを確定（＝JSにもCSS変数にも一切依存しない最堅実装）。
+     ※ 以前 var(--w) 経由でトラックと見分けが付かず全バー満タンに見えるバグ（2026-06-22 再々修正＝inline width直書きへ）。 */
+  .bar-fill{height:100%;border-radius:8px;background:var(--base-blue);min-width:3px;}
+  /* Base 行（主役）：濃い青のグラデで一段映えさせる。 */
+  .bar-fill.lead{background:linear-gradient(90deg,#0052ff,#3b82ff);box-shadow:0 1px 6px rgba(0,82,255,.35);}
+  /* Base 以外：はっきり濃いグレー青。トラック(#eef1f8)と明確に差をつける。 */
+  .bar-fill.muted{background:#aeb9d4;}
+  /* 値ラベル＋倍率バッジを横並びに */
+  .bar-val{font-weight:800;color:var(--base-blue);text-align:right;white-space:nowrap;}
   .bar-val.muted{color:var(--ink-soft);font-weight:700;}
+  .bar-mult{display:inline-block;margin-left:7px;font-size:.7rem;font-weight:800;color:#0052ff;
+            background:rgba(0,82,255,.10);border:1px solid rgba(0,82,255,.28);border-radius:999px;padding:1px 8px;vertical-align:middle;}
 
   /* --- ⑥ 出金ファイナリティの帯（過去→Beryl→Azul の3段）。
          PDFデッキ p5 "Withdrawal Finality" の流儀を踏襲。
@@ -442,7 +444,7 @@
     .reveal{opacity:1!important;transform:none!important;transition:none!important;}
     .lane .car,.gap-bar::after,.stack .pkt,.mcp-dot{animation:none!important;}
     .lane.l2 .car.b,.lane.l2 .car.c{display:none;}
-    .bar-fill{transition:none!important;transform:scaleX(1)!important;width:var(--w)!important;}
+    .bar-fill{transition:none!important;}
     .donut{transition:none!important;}
     html{scroll-behavior:auto;}
   }
@@ -582,32 +584,32 @@
       <div class="bars">
         <div class="bar-row">
           <span><b>Base</b></span>
-          <span class="bar-track"><span class="bar-fill" style="--w:100%"></span></span>
-          <span class="bar-val">43%</span>
+          <span class="bar-track"><span class="bar-fill lead" style="width:100%"></span></span>
+          <span class="bar-val">43%<span class="bar-mult">2位の3.3倍</span></span>
         </div>
         <div class="bar-row">
           <span>Ethereum</span>
-          <span class="bar-track"><span class="bar-fill muted" style="--w:30%"></span></span>
+          <span class="bar-track"><span class="bar-fill muted" style="width:30.2%"></span></span>
           <span class="bar-val muted">13%</span>
         </div>
         <div class="bar-row">
           <span>Arbitrum</span>
-          <span class="bar-track"><span class="bar-fill muted" style="--w:28%"></span></span>
+          <span class="bar-track"><span class="bar-fill muted" style="width:27.9%"></span></span>
           <span class="bar-val muted">12%</span>
         </div>
         <div class="bar-row">
           <span>BNB Chain</span>
-          <span class="bar-track"><span class="bar-fill muted" style="--w:23%"></span></span>
+          <span class="bar-track"><span class="bar-fill muted" style="width:23.3%"></span></span>
           <span class="bar-val muted">10%</span>
         </div>
         <div class="bar-row">
           <span>HyperCore</span>
-          <span class="bar-track"><span class="bar-fill muted" style="--w:23%"></span></span>
+          <span class="bar-track"><span class="bar-fill muted" style="width:23.3%"></span></span>
           <span class="bar-val muted">10%</span>
         </div>
         <div class="bar-row">
           <span>Solana</span>
-          <span class="bar-track"><span class="bar-fill muted" style="--w:21%"></span></span>
+          <span class="bar-track"><span class="bar-fill muted" style="width:20.9%"></span></span>
           <span class="bar-val muted">9%</span>
         </div>
       </div>
@@ -623,22 +625,22 @@
       <div class="bars">
         <div class="bar-row">
           <span><b>Base</b></span>
-          <span class="bar-track"><span class="bar-fill" style="--w:100%"></span></span>
-          <span class="bar-val">$4.2B</span>
+          <span class="bar-track"><span class="bar-fill lead" style="width:100%"></span></span>
+          <span class="bar-val">$4.2B<span class="bar-mult">2位の3.2倍</span></span>
         </div>
         <div class="bar-row">
           <span>Arbitrum</span>
-          <span class="bar-track"><span class="bar-fill muted" style="--w:31%"></span></span>
+          <span class="bar-track"><span class="bar-fill muted" style="width:31.0%"></span></span>
           <span class="bar-val muted">$1.3B</span>
         </div>
         <div class="bar-row">
           <span>Polygon</span>
-          <span class="bar-track"><span class="bar-fill muted" style="--w:25%"></span></span>
+          <span class="bar-track"><span class="bar-fill muted" style="width:23.8%"></span></span>
           <span class="bar-val muted">$1.0B</span>
         </div>
         <div class="bar-row">
           <span>OP Mainnet</span>
-          <span class="bar-track"><span class="bar-fill muted" style="--w:7%"></span></span>
+          <span class="bar-track"><span class="bar-fill muted" style="width:7.1%"></span></span>
           <span class="bar-val muted">$0.3B</span>
         </div>
       </div>
@@ -647,22 +649,22 @@
       <div class="bars">
         <div class="bar-row">
           <span><b>Base</b></span>
-          <span class="bar-track"><span class="bar-fill" style="--w:100%"></span></span>
-          <span class="bar-val">$4.86B</span>
+          <span class="bar-track"><span class="bar-fill lead" style="width:100%"></span></span>
+          <span class="bar-val">$4.86B<span class="bar-mult">L2で1位</span></span>
         </div>
         <div class="bar-row">
           <span>Arbitrum</span>
-          <span class="bar-track"><span class="bar-fill muted" style="--w:79%"></span></span>
+          <span class="bar-track"><span class="bar-fill muted" style="width:79.4%"></span></span>
           <span class="bar-val muted">$3.86B</span>
         </div>
         <div class="bar-row">
           <span>Polygon</span>
-          <span class="bar-track"><span class="bar-fill muted" style="--w:70%"></span></span>
+          <span class="bar-track"><span class="bar-fill muted" style="width:69.8%"></span></span>
           <span class="bar-val muted">$3.39B</span>
         </div>
         <div class="bar-row">
           <span>OP Mainnet</span>
-          <span class="bar-track"><span class="bar-fill muted" style="--w:11%"></span></span>
+          <span class="bar-track"><span class="bar-fill muted" style="width:11.3%"></span></span>
           <span class="bar-val muted">$0.55B</span>
         </div>
       </div>
@@ -695,8 +697,11 @@
       <div class="card">
         <div class="meta">安全性 / 分散化</div>
         <h3>multiproof（2系統の鍵）</h3>
-        <p>2種類の安全確認（TEE と ZK ＝異なる方式の証明）を併用。片方が壊れても止まらず、両方が一致すれば出金が最短1日で確定（＝特急経路。ただしコストが高く現状はまれで、多くの人が通る通常経路は Beryl で5日に）。「運営者に依存しない」状態へ近づく、大きな一歩です。</p>
-        <div class="analogy"><b>たとえ：</b>「鍵を2系統にして、片方が壊れても止まらない金庫」。</div>
+        <p><b>2種類の安全確認（TEE と ZK ＝異なる方式の証明）を併用</b>します。出金の正しさを、ハードウェアで守られた実行環境（TEE）と、数学的に検証できる証明（ZK）の<b>2つの目で</b>チェックする仕組みです。<br>
+          ・<b>通常経路</b>：どちらか<b>一方の証明</b>があれば確定（単一証明パス）。Beryl でこの待ち時間を <b>7日 → 5日</b>に短縮。多くの人が通るのはこちら。<br>
+          ・<b>特急経路</b>：<b>両方の証明が一致</b>すれば <b>最短1日</b>で確定。ただし ZK 証明の生成コストが高く、現状はまれ。<br>
+          1つの番人に頼らず複数の検証を組み合わせることで、「運営者に依存しない」状態へ近づく、大きな一歩です。</p>
+        <div class="analogy"><b>たとえ：</b>「種類の違う2本の鍵を用意した金庫。普段はどちらか1本で開け、2本が揃えば“特急レーン”で最速で開く」。</div>
       </div>
       <div class="card">
         <div class="meta">性能</div>
