@@ -49,10 +49,10 @@
     /* 和文ゴシック(Zen Kaku) + 欧文/数字(Inter)。OSフォントへフォールバック */
     --font-sans:"Inter","Zen Kaku Gothic New",-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
     --font-num:"Inter",-apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif;
-    /* 段階的な影スケール（カード/図/浮き） */
-    --sh-1:0 1px 2px rgba(10,30,90,.04), 0 2px 8px rgba(10,30,90,.04);
-    --sh-2:0 4px 14px rgba(10,30,90,.06), 0 12px 32px rgba(10,30,90,.06);
-    --sh-3:0 12px 28px rgba(10,30,90,.10), 0 28px 60px rgba(10,30,90,.10);
+    /* 段階的な影スケール（カード/図/浮き）。近接1pxの輪郭＋遠方の柔らかい拡散で“浮き”を上品に */
+    --sh-1:0 1px 1px rgba(10,30,90,.04), 0 2px 6px rgba(10,30,90,.045);
+    --sh-2:0 2px 6px rgba(10,30,90,.05), 0 10px 26px rgba(10,30,90,.06);
+    --sh-3:0 6px 18px rgba(10,30,90,.07), 0 20px 46px rgba(10,30,90,.08);
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -69,7 +69,15 @@
     -moz-osx-font-smoothing:grayscale;
   }
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
-  section{padding:104px 0;border-bottom:1px solid var(--line-soft);}
+  section{padding:104px 0;position:relative;}
+  /* セクション境界は全幅ベタ線でなく、中央で濃く端で消えるヘアラインに（“仕様書”の規律を上品に） */
+  section + section::before{
+    content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:min(var(--maxw),calc(100% - 56px));height:1px;
+    background:linear-gradient(90deg,transparent,var(--line),transparent);
+  }
+  /* 濃色セクション（#agents）への入り際は線を出さない（色の境目自体が区切りになる） */
+  #agents::before{display:none;}
   h1,h2,h3{line-height:1.32;letter-spacing:-.005em;font-weight:700;}
   h2{font-size:clamp(1.6rem,3.2vw,2.3rem);font-weight:900;margin:.1em 0 .55em;max-width:24ch;letter-spacing:-.02em;line-break:strict;}
   h3{font-weight:700;}
@@ -87,6 +95,9 @@
   .lead{font-size:1.16rem;color:var(--ink-soft);max-width:74ch;line-height:1.9;}
   a{color:var(--base-blue);}
   b,strong{font-weight:700;}
+  /* キーボード操作の可視フォーカス（マウス時は出さない）。a11yの最低ラインを実装で担保 */
+  :focus-visible{outline:2px solid var(--base-blue);outline-offset:3px;border-radius:4px;}
+  a:focus-visible,.btn:focus-visible{outline-offset:4px;}
 
   /* ---------- nav ---------- */
   nav{
@@ -144,10 +155,10 @@
     padding:24px 22px;box-shadow:var(--sh-1);
     transition:box-shadow .2s,transform .2s;
   }
-  .stat:hover{box-shadow:var(--sh-2);transform:translateY(-2px);}
+  .stat:hover{box-shadow:var(--sh-2);transform:translateY(-3px);border-color:#d7e0f4;}
   .stat .num{
     font-family:var(--font-num);font-variant-numeric:tabular-nums;
-    font-size:2rem;font-weight:800;color:var(--ink);letter-spacing:-.03em;line-height:1.15;
+    font-size:2.15rem;font-weight:850;color:var(--ink);letter-spacing:-.035em;line-height:1.12;
   }
   .stat .lbl{font-size:.85rem;color:var(--ink-soft);margin-top:7px;line-height:1.65;}
   .stat .src{font-size:.7rem;color:var(--ink-mute);margin-top:11px;letter-spacing:.01em;}
