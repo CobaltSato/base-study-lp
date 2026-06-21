@@ -17,6 +17,13 @@
       * 聴衆視点: Azulカードの専門語を平易化（TPS開く / base-reth-node・base-consensus・CLZ・MODEXP・"Stage 2"等の生コード名を本文から除去）、
         Reth V2 見出しに意味ラベル付与、$19兆ラベルにフロー/ストックの別を明記、B20「2つの型」を平易化、デモ文を聴衆向けに再構成。
       * 内部メモ（要検証・承認線）は全てHTMLコメント内（聴衆非表示）であることを確認。脚注[1-18]は全て対応するref/アンカーに解決。
+  - 2026-06-22 更新（DefiLlama 6/22 クリップ＝sources/Chain Rankings… (TVL).md / (StableCoin).md を1次として反映）:
+      * 順位を更新: TVL ＝「全チェーン5位/ETH系L2最大」→「L2で1位・全チェーン6位」（6/22は Bitcoin が僅差で上、Base $4.224B vs BTC $4.225B）。
+      * Hero stat の「空ブロック99%減」を「ステーブル時価総額 約$4.86B（L2で1位・全チェーン6位）」に置換（ユーザー指示: MCapに置換）。
+      * #why に「L2同士の比較」viz（TVL／Stables MCap の2段バー＝Base 1位）を追加。他チェーン比較を視覚化。
+      * Hero冒頭に「数字でみる Base（DefiLlama・リアルタイム）」リンク（defillama.com/chain/base）を追加。
+      * ref-13/ref-19 を 6/22時点・L2で1位 に更新。methodology節と footer 日付も 6/22 に同期。
+      * 出所: いずれも DefiLlama（第三者統計）。Base公式値ではないため「L2で1位」は中立統計で裏取り可。
 -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -466,23 +473,34 @@
     <p class="lead">
       Coinbase が作った、<b>速くて安いお金のネット</b>（Ethereum の L2）。
       秒未満の速さ・1セント未満の手数料で、株・通貨・決済・AIの取引を 24時間365日つなぐ──
-      その「いま」を、1次情報だけで視覚的にまとめました。
+      その「いま」を視覚的にまとめました。
     </p>
-    <p class="hero-sub">
-      ※各数字には出典と時点を併記しています。第三者の統計で確認できたものと、Base 公式が発表した値は、それぞれ区別して示しています。
-    </p>
+    <!--
+      内部メモ（聴衆には出さない・2026-06-22 ユーザー指示で表→内部に退避）:
+      下記の“作り方の説明”メタ文言は聴衆向けLPには表示しない。方針自体は維持する:
+        ・各数字には出典と時点を併記する。
+        ・第三者の統計で確認できた値と、Base 公式が発表した値は区別して示す。
+      （hero冒頭の「1次情報だけで」も同様の理由で本文から除去。根拠の運用は CLAUDE.md §1 規則9/11/12 に従う。）
+      旧・聴衆表示テキスト:
+      <p class="hero-sub">※各数字には出典と時点を併記しています。第三者の統計で確認できたものと、Base 公式が発表した値は、それぞれ区別して示しています。</p>
+    -->
 
     <div class="cta-row">
       <a class="btn btn-primary" href="#why">ざっと見る ↓</a>
       <a class="btn btn-ghost" href="#sources">出典一覧へ</a>
     </div>
 
-    <!-- 数字バンド：聴衆に刺さる規模感を最初に -->
+    <!-- 数字バンド：聴衆に刺さる規模感を最初に。数字は DefiLlama 2026-06-22 クリップ(1次)で裏取り。 -->
     <div class="stats">
       <div class="stat">
         <div class="num">約<span class="counting" data-to="4.2" data-prefix="$" data-suffix="B">$4.2B</span></div>
-        <div class="lbl">Base の TVL（預け入れ総額）。<b>全チェーン中 第5位</b>・<b>ETH系L2では最大</b>（2位 Arbitrum の約3倍）</div>
-        <div class="src">出典: DefiLlama, 2026-06-21 時点 <a href="#ref-19" style="text-decoration:none">[19]</a></div>
+        <div class="lbl">Base の TVL（預け入れ総額）。<b>L2では1位</b>・全チェーンでも第6位（2位 Arbitrum $1.3B の約3倍）</div>
+        <div class="src">出典: DefiLlama, 2026-06-22 時点 <a href="#ref-19" style="text-decoration:none">[19]</a></div>
+      </div>
+      <div class="stat">
+        <div class="num">約$4.86B</div>
+        <div class="lbl">ステーブルコインの時価総額（Base 上）。<b>L2では1位</b>・全チェーンでも第6位（2位 Arbitrum $3.86B を上回る）</div>
+        <div class="src">出典: DefiLlama, 2026-06-22 時点 <a href="#ref-13" style="text-decoration:none">[13]</a></div>
       </div>
       <div class="stat">
         <div class="num">約<span class="counting" data-to="43" data-suffix="%">43%</span></div>
@@ -494,12 +512,13 @@
         <div class="lbl">2026年に Base 上で動いたステーブル決済の累計額。預け入れ残高（左の TVL）とは別物の「流れた総額」（Base公式発表）</div>
         <div class="src">出典: Base 公式, 2026 <a href="#ref-1" style="text-decoration:none">[1]</a></div>
       </div>
-      <div class="stat">
-        <div class="num">約<span class="counting" data-to="99" data-suffix="%">99%</span>減</div>
-        <div class="lbl">空ブロックの削減（≈200/日 → ≈2/日, Azulで）</div>
-        <div class="src">出典: Base公式blog (Azul) <a href="#ref-3" style="text-decoration:none">[3]</a></div>
-      </div>
     </div>
+
+    <!-- 「数字でみる Base」へのリンク：DefiLlama の Base チェーンページ（リアルタイムの数字一覧） -->
+    <p class="hero-sub" style="margin-top:18px">
+      📊 <a href="https://defillama.com/chain/base" target="_blank" rel="noopener" style="font-weight:700;text-decoration:underline">数字でみる Base（DefiLlama・リアルタイム）→</a>
+      <span style="color:var(--ink-mute)">TVL・ステーブル時価総額・手数料などを他チェーンと並べて確認できます。</span>
+    </p>
   </div>
 </header>
 
@@ -592,8 +611,68 @@
       <p class="viz-cap">オンチェーンのBTC現物取引（週次・上位6チェーンで約97%）のうち <b>約43%が Base 上</b> ── チェーン別で単独1位。第三者集計（2026-03時点）で確認できた値です。<sup class="fn"><a href="#ref-14">[14]</a></sup><br><span style="color:var(--ink-soft);font-size:.82em">※ ここでの「現物取引」はチェーン上での BTC の<b>売買（スワップ）</b>を指す。Bitcoin本体チェーン（L1）での BTC のやり取りは送金であり売買ではないため、この集計には含まれない。</span></p>
     </div>
 
+    <!-- 図: 他チェーンとの比較（L2では1位）。DefiLlama 2026-06-22 クリップ(1次)から。
+         ETH等のL1は桁が違い棒が潰れるため、まず「L2同士」で比較し1位を明示。全チェーン順位は数字で併記。 -->
+    <div class="viz reveal" aria-hidden="true">
+      <p class="viz-title">図解：L2同士で比べると ── Base は TVL でもステーブル時価総額でも1位</p>
+
+      <p style="font-size:.9rem;color:var(--ink-soft);margin:0 0 6px;font-weight:700">① 預け入れ総額（DeFi TVL）</p>
+      <div class="bars">
+        <div class="bar-row">
+          <span><b>Base</b></span>
+          <span class="bar-track"><span class="bar-fill" style="--w:100%"></span></span>
+          <span class="bar-val">$4.2B</span>
+        </div>
+        <div class="bar-row">
+          <span>Arbitrum</span>
+          <span class="bar-track"><span class="bar-fill muted" style="--w:31%"></span></span>
+          <span class="bar-val muted">$1.3B</span>
+        </div>
+        <div class="bar-row">
+          <span>Polygon</span>
+          <span class="bar-track"><span class="bar-fill muted" style="--w:25%"></span></span>
+          <span class="bar-val muted">$1.0B</span>
+        </div>
+        <div class="bar-row">
+          <span>OP Mainnet</span>
+          <span class="bar-track"><span class="bar-fill muted" style="--w:7%"></span></span>
+          <span class="bar-val muted">$0.3B</span>
+        </div>
+      </div>
+
+      <p style="font-size:.9rem;color:var(--ink-soft);margin:22px 0 6px;font-weight:700">② ステーブルコインの時価総額（Stables MCap）</p>
+      <div class="bars">
+        <div class="bar-row">
+          <span><b>Base</b></span>
+          <span class="bar-track"><span class="bar-fill" style="--w:100%"></span></span>
+          <span class="bar-val">$4.86B</span>
+        </div>
+        <div class="bar-row">
+          <span>Arbitrum</span>
+          <span class="bar-track"><span class="bar-fill muted" style="--w:79%"></span></span>
+          <span class="bar-val muted">$3.86B</span>
+        </div>
+        <div class="bar-row">
+          <span>Polygon</span>
+          <span class="bar-track"><span class="bar-fill muted" style="--w:70%"></span></span>
+          <span class="bar-val muted">$3.39B</span>
+        </div>
+        <div class="bar-row">
+          <span>OP Mainnet</span>
+          <span class="bar-track"><span class="bar-fill muted" style="--w:11%"></span></span>
+          <span class="bar-val muted">$0.55B</span>
+        </div>
+      </div>
+
+      <p class="viz-cap">
+        <b>主要 L2 で比べると、Base は TVL でもステーブル時価総額でも1位。</b>
+        全チェーンに広げても、どちらも第6位（上位は Ethereum・Tron・Solana・BSC など桁違いの L1）。
+        2026-06-22 時点・DefiLlama。<sup class="fn"><a href="#ref-19">[19]</a></sup><sup class="fn"><a href="#ref-13">[13]</a></sup>
+      </p>
+    </div>
+
     <p class="note" style="margin-top:22px">
-      BTC現物シェア（約43%）は第三者の統計で確認できた値です<sup class="fn"><a href="#ref-14">[14]</a></sup>。$19兆の決済額は Base 公式が発表した値です<sup class="fn"><a href="#ref-1">[1]</a></sup>。
+      BTC現物シェア（約43%）は第三者の統計で確認できた値です<sup class="fn"><a href="#ref-14">[14]</a></sup>。TVL・ステーブル時価総額の順位は DefiLlama（2026-06-22）で確認した値です<sup class="fn"><a href="#ref-19">[19]</a></sup><sup class="fn"><a href="#ref-13">[13]</a></sup>。$19兆の決済額は Base 公式が発表した値です<sup class="fn"><a href="#ref-1">[1]</a></sup>。
     </p>
   </div>
 </section>
@@ -1150,10 +1229,10 @@
         <div class="meta">① 第三者の統計で確認できる数字</div>
         <h3>中立なデータソースで裏づく</h3>
         <p>
-          ・TVL 約 <b>$4.2B</b>（DefiLlama, 2026-06-21・<b>全チェーン5位</b>/ETH系L2で最大）<sup class="fn"><a href="#ref-19">[19]</a></sup><br>
-          ・ステーブル時価総額 約 <b>$4.87B</b>（DefiLlama, 2026-06-21）<sup class="fn"><a href="#ref-13">[13]</a></sup><br>
+          ・TVL 約 <b>$4.2B</b>（DefiLlama, 2026-06-22・<b>L2で1位</b>/全チェーン6位）<sup class="fn"><a href="#ref-19">[19]</a></sup><br>
+          ・ステーブル時価総額 約 <b>$4.86B</b>（DefiLlama, 2026-06-22・<b>L2で1位</b>/全チェーン6位）<sup class="fn"><a href="#ref-13">[13]</a></sup><br>
           ・オンチェーンBTC現物シェア 約 <b>43%</b>（Blockworks/PANews, 2026-03）<br>
-          ・空ブロック約99%減・5,000 TPS（Base 公式 / CMC）
+          ・5,000 TPS（Base 公式 / CMC）
         </p>
       </div>
       <div class="card">
@@ -1198,13 +1277,13 @@
         <li id="ref-10"><span class="src-name">MXNB Stablecoin（Bitso Business 公式）</span> ─ <a href="https://bitso.com/business/products/mxnb-stablecoin" target="_blank" rel="noopener">bitso.com/business/products/mxnb-stablecoin</a>　<span class="badge">発行体公式</span></li>
         <li id="ref-11"><span class="src-name">x402（公式）</span> ─ <a href="https://www.x402.org/" target="_blank" rel="noopener">x402.org</a>　<span class="badge">公式</span></li>
         <li id="ref-12"><span class="src-name">ERC-3643（T-REX, 証券トークン標準）公式</span> ─ <a href="https://www.erc3643.org/" target="_blank" rel="noopener">erc3643.org</a>　<span class="badge">参考</span></li>
-        <li id="ref-13"><span class="src-name">Base チェーン統計（TVL・ステーブル時価総額）</span> ─ <a href="https://defillama.com/chain/base" target="_blank" rel="noopener">defillama.com/chain/base</a>（2026-06時点）　<span class="badge">第三者統計</span></li>
+        <li id="ref-13"><span class="src-name">Base チェーン統計（TVL・ステーブル時価総額。ステーブル時価総額 ≈$4.86B＝L2で1位）</span> ─ <a href="https://defillama.com/chain/base" target="_blank" rel="noopener">defillama.com/chain/base</a>（2026-06-22時点）　<span class="badge">第三者統計</span></li>
         <li id="ref-14"><span class="src-name">オンチェーンBTC現物シェア（Blockworks 集計, Base ≈43%）</span> ─ <a href="https://www.panewslab.com/en/articles/019cf705-d802-71ef-865c-e58e6d18d165" target="_blank" rel="noopener">panewslab.com/…</a>（2026-03時点）　<span class="badge">第三者統計</span></li>
         <li id="ref-15"><span class="src-name">a16z crypto「Stablecoins are going local」（非USDステーブルの潮流）</span> ─ <a href="https://a16zcrypto.substack.com/p/stablecoins-are-going-local" target="_blank" rel="noopener">a16zcrypto.substack.com/p/stablecoins-are-going-local</a>　<span class="badge">参考</span></li>
         <li id="ref-16"><span class="src-name">Base Azul 稼働ニュース（CoinMarketCap Academy, 2026-05-30）</span> ─ <a href="https://coinmarketcap.com/academy/article/base-azul-upgrade-mainnet" target="_blank" rel="noopener">coinmarketcap.com/academy/…/base-azul-upgrade-mainnet</a>　<span class="badge" style="background:#fde6cf;color:#92400e;">二次・補助</span></li>
         <li id="ref-17"><span class="src-name">Model Context Protocol（MCP）公式仕様（Anthropic）</span> ─ <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">modelcontextprotocol.io</a>　<span class="badge">規格公式</span></li>
         <li id="ref-18"><span class="src-name">Base Account（自己管理のスマートウォレット／ERC-4337）＝ サインインはメールOTP・パスキー・リカバリーフレーズ</span> ─ <a href="https://account.base.app/" target="_blank" rel="noopener">account.base.app</a> ／ <a href="https://docs.base.org/base-account/overview/what-is-base-account" target="_blank" rel="noopener">docs.base.org/base-account/…</a>　<span class="badge">公式docs</span></li>
-        <li id="ref-19"><span class="src-name">全チェーンの TVL ランキング（Base ＝ 全チェーン5位・ETH系L2で最大）</span> ─ <a href="https://defillama.com/chains" target="_blank" rel="noopener">defillama.com/chains</a>（2026-06-21時点）　<span class="badge">第三者統計</span></li>
+        <li id="ref-19"><span class="src-name">全チェーンの TVL ランキング（Base ＝ L2で1位・全チェーン6位。ステーブル時価総額でも L2で1位）</span> ─ <a href="https://defillama.com/chains" target="_blank" rel="noopener">defillama.com/chains</a>（2026-06-22時点）　<span class="badge">第三者統計</span></li>
       </ol>
     </div>
 
@@ -1220,7 +1299,7 @@
 <!-- ====================== FOOTER ====================== -->
 <footer>
   <div class="wrap">
-    <span>第3回Base勉強会 紹介ページ ・ 2026-06-21</span>
+    <span>第3回Base勉強会 紹介ページ ・ 2026-06-22</span>
     <span class="note">対象 ＝ Coinbase の Base（Ethereum L2）。同名の倉庫SaaS "Base" とは無関係。</span>
   </div>
 </footer>
