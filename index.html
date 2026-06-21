@@ -475,8 +475,8 @@
     <div class="stats">
       <div class="stat">
         <div class="num">約<span class="counting" data-to="4.2" data-prefix="$" data-suffix="B">$4.2B</span></div>
-        <div class="lbl">Base の TVL（預け入れ総額）。主要 ETH L2 の一角</div>
-        <div class="src">出典: DefiLlama, 2026-06 時点 <a href="#ref-13" style="text-decoration:none">[13]</a></div>
+        <div class="lbl">Base の TVL（預け入れ総額）。<b>全チェーン中 第5位</b>・<b>ETH系L2では最大</b>（2位 Arbitrum の約3倍）</div>
+        <div class="src">出典: DefiLlama, 2026-06-21 時点 <a href="#ref-19" style="text-decoration:none">[19]</a></div>
       </div>
       <div class="stat">
         <div class="num">約<span class="counting" data-to="43" data-suffix="%">43%</span></div>
@@ -726,8 +726,8 @@
       <div class="card">
         <div class="meta">速い・安い</div>
         <h3>Rust precompile で実装</h3>
-        <p>ふつうのトークンは <b>Solidity で書いて“アプリ”として載せ</b>、仮想マシン（EVM）越しに動くので重い。B20 は違い、<b>チェーン本体に Rust で作り込んだ“標準機能”</b>。EVM を介さず直接動くので速く・安い。それでいて ERC-20 と完全互換（既存ウォレット・取引所はそのまま使える）。</p>
-        <div class="analogy"><b>たとえ：</b>後から入れる<b>アプリ</b>（Solidity）ではなく、スマホに最初から入っている<b>OS標準機能</b>（B20）。自由に作れるのはアプリ、速くて省電力なのはOS機能。</div>
+        <p><b>チェーン本体に作り込んだ標準機能</b>なので、仮想マシン（EVM）を介さず直接動いて速く・安い。ERC-20 互換で既存ウォレット・取引所もそのまま。</p>
+        <div class="analogy"><b>たとえ：</b>後から入れる<b>アプリ</b>ではなく、スマホに最初から入っている<b>OS標準機能</b>。自由なのはアプリ、速くて省電力なのはOS機能。</div>
       </div>
       <div class="card">
         <div class="meta">規制対応</div>
@@ -807,24 +807,21 @@
     <div class="card" style="margin-top:28px;border-left:4px solid var(--base-blue);">
       <div class="meta">「コンプラ対応トークン」は他にもある。B20は何が違う?</div>
       <p style="margin:6px 0 14px">
-        実は規制対応トークンの標準は以前からあります（例: <b>ERC-3643</b>＝証券トークンの国際標準, ERC-1400 など）。
-        ただしそれらは<b>すべて「スマートコントラクト（チェーンの上に乗せるアプリ）」として各発行体が実装</b>します。
-        B20 の構造的な違いはここです ── <b>チェーン本体に作り込んだ機能（Rust precompile）</b>であること。
+        規制対応トークンの標準は以前からあります（例: <b>ERC-3643</b>＝証券トークンの国際標準）。
+        違いは<b>「機能」ではなく「作る“場所”」</b>です。
       </p>
       <div class="grid grid-2" style="margin-top:0;gap:14px">
         <div class="analogy" style="margin-top:0">
           <b>従来（ERC-3643 等）</b><br>
-          各発行体がコンプラ機能を<b>自前で実装→個別に監査</b>。発行体ごとに作り直し・バグの混入リスクが分散。
+          各発行体が<b>自前で実装→個別に監査</b>（＝後入れのアプリ）。作り直し・バグ混入のリスクが分散。
         </div>
         <div class="analogy" style="margin-top:0">
           <b>B20</b><br>
-          Base が<b>一度実装・監査（Base＋Spearbit）した同じ部品</b>を全発行体が使う。ERC-20 と完全互換でウォレット・取引所もそのまま。
+          Base が<b>一度実装・監査（Base＋Spearbit）した同じ部品</b>を全発行体が使う（＝OS標準機能）。ERC-20 互換でウォレットもそのまま。
         </div>
       </div>
-      <p style="margin:14px 0 0;font-size:.92rem;color:var(--ink-soft)">
-        つまり「機能で他を圧倒」ではなく<b>「実装する“場所”が違う（アプリ→OS）」</b>のが本質。だから速く・安く、将来は
-        「自分のトークンでガス代を払う」など<b>チェーン側でしかできない拡張</b>（Beryl の次の Cobalt アップグレードで予定）にも踏み込めます。
-        <span class="note">※ 比較対象として ERC-3643（証券トークン標準）を参照<sup class="fn"><a href="#ref-12">[12]</a></sup>。「B20が優れている」と断定する中立比較研究は公開されていないため、ここは“構造の違い”として示しています。</span>
+      <p style="margin:14px 0 0;font-size:.88rem;color:var(--ink-mute)">
+        <span class="note">※ 比較対象は ERC-3643<sup class="fn"><a href="#ref-12">[12]</a></sup>。「B20が優れている」と断定する中立比較は未公開のため“構造の違い”として提示。将来は「自分のトークンでガス代を払う」等のチェーン側拡張も予定（次の Cobalt）。</span>
       </p>
     </div>
 
@@ -845,7 +842,7 @@
     </p>
     <!-- 内部メモ（聴衆には出さない）: 円(JPY)は要検証。講演 "the yen all live on Base" だが、JPYC(Eth/Polygon/Avalanche/Kaia)・GYEN(Eth/Stellar/Solana)とも発行体公式にBase記載なし(2026-06時点)。本文では「円」を断定的に前面に出さず、各国通貨という一般表現にとどめる。詳細は NEXT.md の要検証参照。 -->
     <p class="note" style="margin-top:-10px">
-      なお日本の<b>円（JPY）</b>については、Base 公式が対象通貨として<b>言及はしている</b>ものの、<b>具体的な対応は未定</b>です（主要な円ステーブル JPYC・GYEN などは現在おもに Ethereum・Polygon・Solana で利用、2026-06時点）。各国通貨が同じネットワークへ集まる流れの中で、円は今後の展開対象という位置づけです。
+      ※ 日本の<b>円（JPY）</b>は Base 公式が<b>言及はしている</b>ものの<b>具体的な対応は未定</b>（主要な円ステーブル JPYC・GYEN は現在おもに Ethereum・Polygon・Solana で利用、2026-06時点）。今後の展開対象という位置づけです。
     </p>
 
     <figure>
@@ -976,10 +973,8 @@
       <p class="viz-title">図解：Base MCP の仕組み ── 「話す」が「オンチェーン操作」に変わるまで</p>
 
       <p style="color:#c7d0e6;font-size:.92rem;margin:0 0 18px;line-height:1.7">
-        <b style="color:#fff">MCP（Model Context Protocol）</b>は、AIに外部ツールをつなぐ共通の差し込み口です。
-        「USB-C のように、AI とアプリの接続規格を 1 本に揃えるもの」とイメージしてください。
-        <b style="color:#fff">Base MCP</b> は、その差し込み口に <b style="color:#fff">あなたのウォレット＝Base への “手”</b> をつなぐ部品。
-        つないだ瞬間から、AI は対話のまま残高確認・送金・swap を実行できるようになります。
+        <b style="color:#fff">MCP</b> ＝ AI とアプリをつなぐ共通の差し込み口（<b style="color:#fff">USB-C の AI 版</b>）。
+        <b style="color:#fff">Base MCP</b> はそこに<b style="color:#fff">あなたのウォレット</b>をつなぐ部品。下の図の①→④で動きます。
       </p>
 
       <div class="mcp-flow">
@@ -999,7 +994,7 @@
         <div class="mcp-node">
           <div class="mcp-ic" aria-hidden="true">👛</div>
           <p class="mcp-h">③ あなたのウォレット<br><span style="font-size:.8em;font-weight:700;color:#9fb0d4">（Base Account）</span></p>
-          <p class="mcp-d"><b style="color:#cdd8f2">account.base.app</b> で作る自分のウォレット。<b style="color:#cdd8f2">メールのワンタイムコード（OTP）やパスキー</b>でサインインでき、パスワード不要。あなたが<b style="color:#cdd8f2">許可した範囲だけ</b>署名・実行し、鍵は常に手元（自己管理）。AI が勝手に動かすことはない。<sup class="fn"><a href="#ref-18" style="color:#8fa0c4">[18]</a></sup></p>
+          <p class="mcp-d"><b style="color:#cdd8f2">account.base.app</b> で作る自分のウォレット。<b style="color:#cdd8f2">許可した範囲だけ</b>署名・実行し、鍵は常に手元。AI が勝手に動かすことはない。<sup class="fn"><a href="#ref-18" style="color:#8fa0c4">[18]</a></sup></p>
         </div>
         <div class="mcp-arrow" aria-hidden="true">→</div>
         <div class="mcp-node">
@@ -1129,8 +1124,8 @@
         <div class="meta">① 第三者の統計で確認できる数字</div>
         <h3>中立なデータソースで裏づく</h3>
         <p>
-          ・TVL 約 <b>$4.2B</b>（DefiLlama, 2026-06）<br>
-          ・ステーブル時価総額 約 <b>$4.78B</b>（DefiLlama, 2026-06）<br>
+          ・TVL 約 <b>$4.2B</b>（DefiLlama, 2026-06-21・<b>全チェーン5位</b>/ETH系L2で最大）<sup class="fn"><a href="#ref-19">[19]</a></sup><br>
+          ・ステーブル時価総額 約 <b>$4.87B</b>（DefiLlama, 2026-06-21）<sup class="fn"><a href="#ref-13">[13]</a></sup><br>
           ・オンチェーンBTC現物シェア 約 <b>43%</b>（Blockworks/PANews, 2026-03）<br>
           ・空ブロック約99%減・5,000 TPS（Base 公式 / CMC）
         </p>
@@ -1183,6 +1178,7 @@
         <li id="ref-16"><span class="src-name">Base Azul 稼働ニュース（CoinMarketCap Academy, 2026-05-30）</span> ─ <a href="https://coinmarketcap.com/academy/article/base-azul-upgrade-mainnet" target="_blank" rel="noopener">coinmarketcap.com/academy/…/base-azul-upgrade-mainnet</a>　<span class="badge" style="background:#fde6cf;color:#92400e;">二次・補助</span></li>
         <li id="ref-17"><span class="src-name">Model Context Protocol（MCP）公式仕様（Anthropic）</span> ─ <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">modelcontextprotocol.io</a>　<span class="badge">規格公式</span></li>
         <li id="ref-18"><span class="src-name">Base Account（自己管理のスマートウォレット／ERC-4337）＝ サインインはメールOTP・パスキー・リカバリーフレーズ</span> ─ <a href="https://account.base.app/" target="_blank" rel="noopener">account.base.app</a> ／ <a href="https://docs.base.org/base-account/overview/what-is-base-account" target="_blank" rel="noopener">docs.base.org/base-account/…</a>　<span class="badge">公式docs</span></li>
+        <li id="ref-19"><span class="src-name">全チェーンの TVL ランキング（Base ＝ 全チェーン5位・ETH系L2で最大）</span> ─ <a href="https://defillama.com/chains" target="_blank" rel="noopener">defillama.com/chains</a>（2026-06-21時点）　<span class="badge">第三者統計</span></li>
       </ol>
     </div>
 
