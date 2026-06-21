@@ -331,13 +331,19 @@
   .donut-legend{font-size:.9rem;color:#aab6d2;} .donut-legend b{color:#fff;}
   /* @property がある環境では数値も滑らかに。無くても最終値は出る */
 
-  /* --- バー（汎用・シェア可視化。--w で幅、リビールで伸びる） --- */
+  /* --- バー（汎用・シェア可視化。--w で幅を確定。リビールは scaleX で演出するだけ＝
+         JS未発動でも幅は --w のまま残り、各チェーンの差が必ず見える堅牢設計） --- */
   .bars{display:grid;gap:12px;margin-top:6px;}
-  .bar-row{display:grid;grid-template-columns:120px 1fr 54px;align-items:center;gap:10px;font-size:.85rem;}
+  .bar-row{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;font-size:.85rem;}
   .bar-track{height:14px;border-radius:7px;background:var(--mist);overflow:hidden;}
-  .bar-fill{height:100%;width:0;border-radius:7px;background:linear-gradient(90deg,var(--base-blue),#7aa2ff);transition:width 1.3s cubic-bezier(.2,.8,.2,1);}
-  .reveal.in .bar-fill{width:var(--w);}
+  /* 幅は常に --w（差は最初から確定）。演出は左基点の scaleX のみ */
+  .bar-fill{height:100%;width:var(--w);border-radius:7px;background:linear-gradient(90deg,var(--base-blue),#7aa2ff);
+            transform:scaleX(0);transform-origin:left center;transition:transform 1.2s cubic-bezier(.2,.8,.2,1);}
+  .reveal.in .bar-fill{transform:scaleX(1);}
+  /* Base 以外（控えめ色）の行 */
+  .bar-fill.muted{background:linear-gradient(90deg,#aab6d2,#cdd6e8);}
   .bar-val{font-weight:800;color:var(--base-blue);text-align:right;}
+  .bar-val.muted{color:var(--ink-soft);font-weight:700;}
 
   /* --- ⑥ 出金ファイナリティの帯（過去→Beryl→Azul の3段）。
          PDFデッキ p5 "Withdrawal Finality" の流儀を踏襲。
@@ -426,7 +432,7 @@
     .reveal{opacity:1!important;transform:none!important;transition:none!important;}
     .lane .car,.gap-bar::after,.stack .pkt,.mcp-dot{animation:none!important;}
     .lane.l2 .car.b,.lane.l2 .car.c{display:none;}
-    .bar-fill{transition:none!important;width:var(--w)!important;}
+    .bar-fill{transition:none!important;transform:scaleX(1)!important;width:var(--w)!important;}
     .donut{transition:none!important;}
     html{scroll-behavior:auto;}
   }
@@ -480,7 +486,7 @@
       </div>
       <div class="stat">
         <div class="num">約<span class="counting" data-to="43" data-suffix="%">43%</span></div>
-        <div class="lbl">オンチェーンBTC現物取引のシェア（全チェーン中で最大）</div>
+        <div class="lbl">オンチェーンのBTC現物取引シェア（チェーン別で単独1位）</div>
         <div class="src">出典: Blockworks/PANews, 2026-03 <a href="#ref-14" style="text-decoration:none">[14]</a></div>
       </div>
       <div class="stat">
@@ -550,20 +556,40 @@
 
     <!-- 図⑤: BTC現物シェア≈43%（第三者統計で裏取り済みの数字）をバーで -->
     <div class="viz reveal" aria-hidden="true">
-      <p class="viz-title">図解：オンチェーンBTC現物取引のシェア ── Base が全チェーン中で最大</p>
+      <p class="viz-title">図解：オンチェーンのBTC現物取引シェア（チェーン別）── Base が単独1位</p>
       <div class="bars">
         <div class="bar-row">
           <span><b>Base</b></span>
-          <span class="bar-track"><span class="bar-fill" style="--w:43%"></span></span>
-          <span class="bar-val">≈43%</span>
+          <span class="bar-track"><span class="bar-fill" style="--w:100%"></span></span>
+          <span class="bar-val">43%</span>
         </div>
         <div class="bar-row">
-          <span>その他チェーン合計</span>
-          <span class="bar-track"><span class="bar-fill" style="--w:57%;background:linear-gradient(90deg,#aab6d2,#cdd6e8)"></span></span>
-          <span class="bar-val" style="color:var(--ink-soft)">≈57%</span>
+          <span>Ethereum</span>
+          <span class="bar-track"><span class="bar-fill muted" style="--w:30%"></span></span>
+          <span class="bar-val muted">13%</span>
+        </div>
+        <div class="bar-row">
+          <span>Arbitrum</span>
+          <span class="bar-track"><span class="bar-fill muted" style="--w:28%"></span></span>
+          <span class="bar-val muted">12%</span>
+        </div>
+        <div class="bar-row">
+          <span>BNB Chain</span>
+          <span class="bar-track"><span class="bar-fill muted" style="--w:23%"></span></span>
+          <span class="bar-val muted">10%</span>
+        </div>
+        <div class="bar-row">
+          <span>HyperCore</span>
+          <span class="bar-track"><span class="bar-fill muted" style="--w:23%"></span></span>
+          <span class="bar-val muted">10%</span>
+        </div>
+        <div class="bar-row">
+          <span>Solana</span>
+          <span class="bar-track"><span class="bar-fill muted" style="--w:21%"></span></span>
+          <span class="bar-val muted">9%</span>
         </div>
       </div>
-      <p class="viz-cap">オンチェーンのBTC現物取引のうち約43%が Base 上 ── 単独のチェーンとして最大。第三者集計で確認できた値です。<sup class="fn"><a href="#ref-14">[14]</a></sup></p>
+      <p class="viz-cap">オンチェーンのBTC現物取引（週次・上位6チェーンで約97%）のうち <b>約43%が Base 上</b> ── チェーン別で単独1位。第三者集計（2026-03時点）で確認できた値です。<sup class="fn"><a href="#ref-14">[14]</a></sup></p>
     </div>
 
     <p class="note" style="margin-top:22px">
