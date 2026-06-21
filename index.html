@@ -344,9 +344,16 @@
   .bar-row{display:grid;grid-template-columns:128px 1fr 54px;align-items:center;gap:10px;font-size:.85rem;}
   .bar-track{height:14px;border-radius:7px;background:var(--mist);overflow:hidden;}
   /* 幅は常に --w（差は最初から確定）。演出は左基点の scaleX のみ */
+  /* 幅は常に --w で確定し、既定で完全表示（scaleX(1)）。
+     ＝ JS（IntersectionObserver）が発火してもしなくても、各チェーンの差は必ず見える。
+     以前は既定 scaleX(0) で .reveal.in が付くまで全バーが不可視になるバグがあった（2026-06-22 修正）。
+     リビールの“伸びる”演出は .reveal.in が付いたときだけ 0→1 で上書きする任意の装飾。 */
   .bar-fill{height:100%;width:var(--w);border-radius:7px;background:linear-gradient(90deg,var(--base-blue),#7aa2ff);
-            transform:scaleX(0);transform-origin:left center;transition:transform 1.2s cubic-bezier(.2,.8,.2,1);}
-  .reveal.in .bar-fill{transform:scaleX(1);}
+            transform:scaleX(1);transform-origin:left center;transition:transform 1.2s cubic-bezier(.2,.8,.2,1);}
+  /* リビール対象（.reveal）の中にあるバーだけ、未発火→発火で 0→1 のアニメをかける。
+     .reveal を付けていない図のバーは常に scaleX(1) のまま。 */
+  .reveal.in .bar-fill{animation:barGrow 1.2s cubic-bezier(.2,.8,.2,1);}
+  @keyframes barGrow{from{transform:scaleX(0);}to{transform:scaleX(1);}}
   /* Base 以外（控えめ色）の行 */
   .bar-fill.muted{background:linear-gradient(90deg,#aab6d2,#cdd6e8);}
   .bar-val{font-weight:800;color:var(--base-blue);text-align:right;}
