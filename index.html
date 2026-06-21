@@ -1133,6 +1133,28 @@
       </figcaption>
     </figure>
 
+    <!-- 図: ①→③の“実際にやってみた”実例。AIに頼む→Base Accountで承認、の2枚。
+         左=AIが操作を組み立て承認待ち→完了（機微なURL/内部calldataはマスク済み）。右=Base Accountの承認画面（−1 USDC/+MUSDC）。 -->
+    <div style="margin-top:8px">
+      <p class="viz-title" style="text-align:center">実例：AI に頼む → あなたが承認 ── Moonwell に 1 USDC を“貸す”を対話だけで</p>
+      <div class="grid grid-2" style="gap:18px;align-items:start;margin-top:14px">
+        <figure style="margin:0">
+          <img src="images/mcp-demo-agent.png"
+               alt="AIエージェントが Moonwell への USDC 供給操作を組み立て、承認待ちになり、ユーザー承認後に「完了。1 USDC を Moonwell に供給（lend）しました」と表示する画面。" />
+          <figcaption style="color:#9fb0d4">
+            ▲ <b style="color:#cdd8f2">① あなた → AI</b>：「Moonwell に 1 USDC 貸して」と頼むと、AI が操作を組み立て<b style="color:#cdd8f2">承認リンク</b>を出し、あなたの確定後に完了まで進む。<b style="color:#cdd8f2">鍵も最終承認もあなたの手元</b>。
+          </figcaption>
+        </figure>
+        <figure style="margin:0">
+          <img src="images/mcp-demo-approve.png"
+               alt="Base Account の承認画面。Asset changes（推定）に −1 USDC / +43.642 MUSDC、Network: Base、Cancel と Confirm のボタン。" />
+          <figcaption style="color:#9fb0d4">
+            ▲ <b style="color:#cdd8f2">③ あなたのウォレット（Base Account）</b>の承認画面。<b style="color:#cdd8f2">−1 USDC / +43.642 MUSDC</b>（＝供給で受け取る預かり証）と手数料を確認し、<b style="color:#cdd8f2">Confirm</b> で確定。押すまで資金は動かない。
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+
     <!-- 図④: 「x402決済の約9割がBase上」をドーナツで（Base公式発表値） -->
     <div class="viz on-dark reveal" aria-hidden="true">
       <p class="viz-title">図解：AI同士の支払い（x402）── 約9割が Base 上で完了</p>
@@ -1173,8 +1195,7 @@
       <div class="card" style="background:#141a2b;border-color:#243049;">
         <div class="meta" style="color:#7aa2ff">体験 / 勉強会でのデモ</div>
         <h3 style="color:#fff">いつものツールから</h3>
-        <p style="color:#aab6d2">Aerodrome / Uniswap で流動性提供、Morpho で借入まで、対話のまま完結。勉強会では、この「話しかけるだけ」の操作を録画ベースで安全にお見せします。
-        <span class="flag">勉強会では録画／ログ再生で安全にデモ</span></p>
+        <p style="color:#aab6d2">Aerodrome / Uniswap で流動性提供、Morpho で借入まで、対話のまま完結。勉強会では、この「話しかけるだけ」の操作を実例とあわせてお見せします。</p>
       </div>
     </div>
 
