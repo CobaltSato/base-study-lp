@@ -463,25 +463,74 @@
   }
 
   /* --- ⑤ Base MCP フロー図（AI → MCP → あなたの許可 → ウォレット → オンチェーン）。
-         4ノードを矢印でつなぎ、データの粒（dot）が左→右に流れる。on-dark 前提 --- */
+         4ノードを矢印でつなぎ、「頼み」が①→②→③→④へ伝わる様子を“リレー点灯”で見せる。on-dark 前提。
+         アニメは reveal.in で起動し、prefers-reduced-motion では全停止＝最終状態で静止。--- */
   .mcp-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;align-items:stretch;}
   @media(max-width:680px){.mcp-flow{grid-template-columns:1fr;}}
-  .mcp-node{position:relative;background:#1b2236;border:1px solid #2c3550;border-radius:12px;padding:16px 14px;text-align:center;}
+  .mcp-node{
+    position:relative;background:#1b2236;border:1px solid #2c3550;border-radius:12px;padding:16px 14px;text-align:center;
+    transition:border-color .4s ease,box-shadow .4s ease,transform .4s ease,background .4s ease;
+  }
   .mcp-node.hub{background:linear-gradient(180deg,#15306b,#0f234f);border-color:var(--base-blue);}
-  .mcp-node .mcp-ic{font-size:1.5rem;line-height:1;margin-bottom:8px;}
+  .mcp-node .mcp-ic{font-size:1.5rem;line-height:1;margin-bottom:8px;display:inline-block;transition:transform .4s ease;}
   .mcp-node .mcp-h{font-size:.92rem;font-weight:800;color:#fff;margin:0 0 4px;}
   .mcp-node .mcp-d{font-size:.76rem;color:#9fb0d4;margin:0;line-height:1.5;}
+  /* リレー点灯：各ノードが順番に“アクティブ”になる。data-step 順に delay をずらす（CSS変数 --t）。
+     1サイクル ≈ 4.8s。アクティブ時は青く縁取り＋わずかに浮き、アイコンが軽く弾む。 */
+  .reveal.in .mcp-node{animation:mcpActivate 4.8s ease-in-out infinite;animation-delay:var(--t,0s);}
+  .reveal.in .mcp-node .mcp-ic{animation:mcpPop 4.8s ease-in-out infinite;animation-delay:var(--t,0s);}
+  @keyframes mcpActivate{
+    0%,14%   {border-color:#2c3550;box-shadow:none;transform:translateY(0);}
+    4%,10%   {border-color:var(--base-blue);box-shadow:0 0 0 1px var(--base-blue),0 8px 26px rgba(0,82,255,.35);transform:translateY(-3px);}
+    100%     {border-color:#2c3550;box-shadow:none;transform:translateY(0);}
+  }
+  /* hub(②) はベース色が青なので、アクティブ時はさらに明るい縁＋強めの光に */
+  .reveal.in .mcp-node.hub{animation-name:mcpActivateHub;}
+  @keyframes mcpActivateHub{
+    0%,14%   {border-color:var(--base-blue);box-shadow:none;transform:translateY(0);}
+    4%,10%   {border-color:#7aa2ff;box-shadow:0 0 0 1px #7aa2ff,0 10px 30px rgba(0,82,255,.5);transform:translateY(-3px);}
+    100%     {border-color:var(--base-blue);box-shadow:none;transform:translateY(0);}
+  }
+  @keyframes mcpPop{0%,3%,11%,100%{transform:scale(1);}6%{transform:scale(1.22);}}
+
   /* ノード間の矢印。横並び時は右辺中央、縦積み時は下辺中央に出す */
-  .mcp-arrow{position:relative;display:flex;align-items:center;justify-content:center;color:#5c6e9c;font-weight:900;font-size:1.1rem;min-width:34px;}
+  .mcp-arrow{position:relative;display:flex;align-items:center;justify-content:center;color:#5c6e9c;font-weight:900;font-size:1.1rem;min-width:34px;overflow:visible;}
   @media(max-width:680px){.mcp-arrow{min-height:26px;transform:rotate(90deg);}}
-  /* 「許可ゲート」バッジ：あなたが鍵を握ることを強調 */
+  /* 矢印にも“通過”の合図：頼みが通る瞬間だけ青く光って前へスッと動く（リレーに同期）。
+     3つの矢印は data-step 1→2→3 で順に。--t で各 delay を指定。 */
+  .reveal.in .mcp-arrow{animation:mcpArrow 4.8s ease-in-out infinite;animation-delay:var(--ta,0s);}
+  @keyframes mcpArrow{
+    0%,12%,100%{color:#5c6e9c;transform:translateX(0);text-shadow:none;}
+    6%        {color:#7aa2ff;transform:translateX(4px);text-shadow:0 0 12px rgba(0,82,255,.8);}
+  }
+  @media(max-width:680px){
+    /* 縦積み時は回転を保ったまま下方向へ動かす */
+    @keyframes mcpArrow{
+      0%,12%,100%{color:#5c6e9c;text-shadow:none;}
+      6%        {color:#7aa2ff;text-shadow:0 0 12px rgba(0,82,255,.8);}
+    }
+  }
+  /* 「許可ゲート」バッジ：あなたが鍵を握ることを強調。②が通過する瞬間に鍵が反応して脈打つ。 */
   .mcp-gate{display:inline-block;margin-top:8px;font-size:.7rem;font-weight:800;color:#ffd28a;background:rgba(255,180,60,.12);border:1px solid rgba(255,180,60,.35);border-radius:999px;padding:2px 9px;}
-  /* 流れる粒（reveal で起動） */
-  .mcp-pipe{position:relative;height:4px;border-radius:2px;background:#26314a;margin:18px 2px 6px;overflow:hidden;}
-  .reveal.in .mcp-dot{animation:mcpRun 3s linear infinite;}
-  .mcp-dot{position:absolute;top:50%;left:-8px;width:8px;height:8px;border-radius:50%;background:var(--base-blue);transform:translateY(-50%);box-shadow:0 0 0 4px rgba(0,82,255,.2);}
-  .mcp-dot.b{animation-delay:1s;} .mcp-dot.c{animation-delay:2s;}
-  @keyframes mcpRun{from{left:-8px;}to{left:calc(100% + 8px);}}
+  .reveal.in .mcp-gate{animation:mcpGate 4.8s ease-in-out infinite;animation-delay:1.2s;}
+  @keyframes mcpGate{
+    0%,16%,100%{box-shadow:none;border-color:rgba(255,180,60,.35);transform:scale(1);}
+    8%         {box-shadow:0 0 16px rgba(255,180,60,.55);border-color:rgba(255,200,90,.9);transform:scale(1.06);}
+  }
+  /* 下の“確定レール”：頼みが①→④を通り抜けると進捗フィルが左から右へ満ち、粒が流れる。
+     リレー本体(4.8s)と同周期で同期させ、図全体が一つの流れとして読めるようにする。 */
+  .mcp-pipe{position:relative;height:5px;border-radius:3px;background:#26314a;margin:20px 2px 6px;overflow:hidden;}
+  /* 進捗フィル：左端から伸びて右端で満ち、フッと消えてループ（＝1サイクルの“到達”を表す） */
+  .mcp-pipe::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:0;border-radius:3px;
+    background:linear-gradient(90deg,rgba(0,82,255,.35),var(--base-blue));
+  }
+  .reveal.in .mcp-pipe::before{animation:mcpFill 4.8s ease-in-out infinite;}
+  @keyframes mcpFill{0%{width:0;opacity:.9;}70%{width:100%;opacity:.9;}85%,100%{width:100%;opacity:0;}}
+  .reveal.in .mcp-dot{animation:mcpRun 2.4s cubic-bezier(.5,0,.5,1) infinite;}
+  .mcp-dot{position:absolute;top:50%;left:-9px;width:9px;height:9px;border-radius:50%;background:#bcd2ff;transform:translateY(-50%);box-shadow:0 0 10px 2px rgba(122,162,255,.7),0 0 0 4px rgba(0,82,255,.18);}
+  .mcp-dot.b{animation-delay:.8s;} .mcp-dot.c{animation-delay:1.6s;}
+  @keyframes mcpRun{from{left:-9px;}to{left:calc(100% + 9px);}}
 
   /* --- カウントアップ（hero の数字。JS で count）--- */
   .counting{font-variant-numeric:tabular-nums;}
@@ -498,6 +547,9 @@
   @media (prefers-reduced-motion: reduce){
     .reveal{opacity:1!important;transform:none!important;transition:none!important;}
     .lane .car,.gap-bar::after,.stack .pkt,.mcp-dot{animation:none!important;}
+    /* MCPフローのリレー点灯系も全停止＝静止した最終状態で読める（縁取り・浮きは出さない） */
+    .mcp-node,.mcp-node .mcp-ic,.mcp-arrow,.mcp-gate,.mcp-pipe::before{animation:none!important;transform:none!important;box-shadow:none!important;}
+    .mcp-node.hub{box-shadow:none!important;}
     .lane.l2 .car.b,.lane.l2 .car.c{display:none;}
     .bar-fill{transition:none!important;}
     .track .bar,.track .goal{transition:none!important;}
@@ -1165,26 +1217,26 @@
       </p>
 
       <div class="mcp-flow">
-        <div class="mcp-node">
+        <div class="mcp-node" style="--t:0s">
           <div class="mcp-ic" aria-hidden="true">🗣️</div>
           <p class="mcp-h">① あなた → AI</p>
           <p class="mcp-d">「jesse.base.eth に 10 USDC 送って」と<b style="color:#cdd8f2">普段の言葉</b>で頼む。<br>Claude / Codex / Hermes / OpenClaw など、使い慣れたツールでOK。</p>
         </div>
-        <div class="mcp-arrow" aria-hidden="true">→</div>
-        <div class="mcp-node hub">
+        <div class="mcp-arrow" aria-hidden="true" style="--ta:.45s">→</div>
+        <div class="mcp-node hub" style="--t:.9s">
           <div class="mcp-ic" aria-hidden="true">🔌</div>
           <p class="mcp-h">② Base MCP</p>
           <p class="mcp-d">頼みを<b style="color:#cdd8f2">オンチェーンの操作</b>へ翻訳する差し込み口。AI とウォレットの間に立つ“通訳兼ゲート”。</p>
           <span class="mcp-gate">🔑 許可はあなたが管理</span>
         </div>
-        <div class="mcp-arrow" aria-hidden="true">→</div>
-        <div class="mcp-node">
+        <div class="mcp-arrow" aria-hidden="true" style="--ta:1.35s">→</div>
+        <div class="mcp-node" style="--t:1.8s">
           <div class="mcp-ic" aria-hidden="true">👛</div>
           <p class="mcp-h">③ あなたのウォレット<br><span style="font-size:.8em;font-weight:700;color:#9fb0d4">（Base Account）</span></p>
           <p class="mcp-d"><b style="color:#cdd8f2">account.base.app</b> で作る自分のウォレット。<b style="color:#cdd8f2">許可した範囲だけ</b>署名・実行し、鍵は常に手元。AI が勝手に動かすことはない。<sup class="fn"><a href="#ref-18" style="color:#8fa0c4">[18]</a></sup></p>
         </div>
-        <div class="mcp-arrow" aria-hidden="true">→</div>
-        <div class="mcp-node">
+        <div class="mcp-arrow" aria-hidden="true" style="--ta:2.25s">→</div>
+        <div class="mcp-node" style="--t:2.7s">
           <div class="mcp-ic" aria-hidden="true">⛓️</div>
           <p class="mcp-h">④ Base（オンチェーン）</p>
           <p class="mcp-d">送金・swap・Aerodrome/Uniswap で流動性提供・Morpho で借入まで、<b style="color:#cdd8f2">数秒・低コスト</b>で確定。</p>
