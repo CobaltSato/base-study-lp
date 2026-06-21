@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Base ＝ 世界の金融のためのブロックチェーン｜第3回Base勉強会 紹介ページ</title>
+<!--
+  Base 勉強会 紹介LP（ビジネス訴求・視覚重視 / 非エンジニア混在向け）
+  - 数字・日付・固有名は 02-derived/context/SoR.md の正本で裏取り。未確認は [要検証] を明示。
+  - 主張の根拠は 01-primary/**（1次資料）のみ。02-derived/** 同士を根拠にしない（推論の連鎖防止）。
+  - 画像は ../../01-primary/keynote-images/ を相対参照（リポジトリ内から開く前提）。
+  - これは紹介ページであり「発表確定版」ではない（CLAUDE.md §3 承認線）。
+  - 2026-06-21 視覚リファイン: 中身（数字・出典・脚注・主張）は不変。<style>内のみ調整（タイポ/余白/質感）。
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --base-blue:#0052ff;
+    --base-blue-deep:#0039b3;
+    --ink:#0a0e1a;
+    --ink-soft:#454e60;
+    --ink-mute:#8a93a8;
+    --paper:#ffffff;
+    --mist:#f4f7ff;
+    --mist-2:#eef3ff;
+    --line:#e7ecf6;
+    --line-soft:#eef1f9;
+    --flag:#b54708;
+    --flag-bg:#fff7ef;
+    --radius:16px;
+    --radius-lg:22px;
+    --maxw:1080px;
+    /* 和文ゴシック(Zen Kaku) + 欧文/数字(Inter)。OSフォントへフォールバック */
+    --font-sans:"Inter","Zen Kaku Gothic New",-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+    --font-num:"Inter",-apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif;
+    /* 段階的な影スケール（カード/図/浮き） */
+    --sh-1:0 1px 2px rgba(10,30,90,.04), 0 2px 8px rgba(10,30,90,.04);
+    --sh-2:0 4px 14px rgba(10,30,90,.06), 0 12px 32px rgba(10,30,90,.06);
+    --sh-3:0 12px 28px rgba(10,30,90,.10), 0 28px 60px rgba(10,30,90,.10);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:var(--font-sans);
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.85;
+    letter-spacing:.01em;
+    font-feature-settings:"palt" 1;       /* 和文の詰め組で整って見える */
+    text-rendering:optimizeLegibility;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  section{padding:104px 0;border-bottom:1px solid var(--line-soft);}
+  h1,h2,h3{line-height:1.32;letter-spacing:-.005em;font-weight:700;}
+  h2{font-size:clamp(1.6rem,3.2vw,2.3rem);font-weight:900;margin:.1em 0 .55em;max-width:24ch;letter-spacing:-.02em;line-break:strict;}
+  h3{font-weight:700;}
+  /* セクション見出しの上に細いヘアラインを引き“仕様書”の規律を与える（装飾でなく区切り） */
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:var(--font-num);
+    font-size:.74rem;font-weight:700;letter-spacing:.18em;
+    color:var(--base-blue);text-transform:uppercase;margin:0 0 18px;
+  }
+  .eyebrow::before{
+    content:"";width:26px;height:2px;border-radius:2px;
+    background:linear-gradient(90deg,var(--base-blue),rgba(0,82,255,.25));
+  }
+  .lead{font-size:1.16rem;color:var(--ink-soft);max-width:74ch;line-height:1.9;}
+  a{color:var(--base-blue);}
+  b,strong{font-weight:700;}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);
+    backdrop-filter:saturate(180%) blur(16px);-webkit-backdrop-filter:saturate(180%) blur(16px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex;align-items:center;gap:20px;height:62px;}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:1rem;letter-spacing:-.01em;}
+  .brand .dot{width:17px;height:17px;border-radius:5px;background:var(--base-blue);display:inline-block;box-shadow:0 2px 8px rgba(0,82,255,.35);}
+  nav .links{margin-left:auto;display:flex;gap:6px;font-size:.86rem;font-weight:600;}
+  nav .links a{color:var(--ink-soft);text-decoration:none;padding:7px 11px;border-radius:9px;transition:color .18s,background .18s;}
+  nav .links a:hover{color:var(--base-blue);background:var(--mist-2);}
+  @media(max-width:760px){nav .links{display:none;}}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;overflow:hidden;
+    background:
+      radial-gradient(1100px 460px at 82% -12%, rgba(0,82,255,.16), transparent 58%),
+      radial-gradient(800px 400px at 6% 8%, rgba(0,82,255,.05), transparent 60%),
+      linear-gradient(180deg, #f6f9ff 0%, #ffffff 78%);
+    border-bottom:1px solid var(--line);
+    padding:128px 0 104px;
+  }
+  .hero h1{
+    font-size:clamp(2.2rem,5.4vw,3.8rem);margin:0 0 26px;
+    font-weight:900;line-height:1.2;letter-spacing:-.035em;
+    word-break:keep-all;line-break:strict;  /* 和文の途中改行・行末1字残りを抑制 */
+  }
+  .hero h1 .hl{
+    color:var(--base-blue);
+    background:linear-gradient(180deg,transparent 64%,rgba(0,82,255,.12) 64%);
+  }
+  .hero .lead{font-size:1.22rem;line-height:1.95;max-width:70ch;}
+  .hero-sub{margin-top:14px;font-size:.9rem;color:var(--ink-mute);line-height:1.8;}
+  .cta-row{margin-top:38px;display:flex;gap:13px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:7px;padding:13px 26px;border-radius:999px;font-weight:700;
+    text-decoration:none;font-size:.96rem;transition:transform .18s,box-shadow .18s,background .18s,border-color .18s;
+  }
+  .btn-primary{background:var(--base-blue);color:#fff;box-shadow:0 6px 20px rgba(0,82,255,.28);}
+  .btn-primary:hover{background:var(--base-blue-deep);transform:translateY(-1px);box-shadow:0 10px 26px rgba(0,82,255,.34);}
+  .btn-ghost{border:1.5px solid var(--line);color:var(--ink);background:rgba(255,255,255,.6);}
+  .btn-ghost:hover{border-color:var(--base-blue);color:var(--base-blue);transform:translateY(-1px);}
+
+  /* ---------- stat band ---------- */
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:60px;
+  }
+  @media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr);}}
+  .stat{
+    background:linear-gradient(180deg,#fff,var(--mist));
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px 22px;box-shadow:var(--sh-1);
+    transition:box-shadow .2s,transform .2s;
+  }
+  .stat:hover{box-shadow:var(--sh-2);transform:translateY(-2px);}
+  .stat .num{
+    font-family:var(--font-num);font-variant-numeric:tabular-nums;
+    font-size:2rem;font-weight:800;color:var(--ink);letter-spacing:-.03em;line-height:1.15;
+  }
+  .stat .lbl{font-size:.85rem;color:var(--ink-soft);margin-top:7px;line-height:1.65;}
+  .stat .src{font-size:.7rem;color:var(--ink-mute);margin-top:11px;letter-spacing:.01em;}
+
+  /* ---------- generic cards ---------- */
+  .grid{display:grid;gap:18px;margin-top:46px;}
+  .grid-3{grid-template-columns:repeat(3,1fr);}
+  .grid-2{grid-template-columns:repeat(2,1fr);}
+  @media(max-width:840px){.grid-3,.grid-2{grid-template-columns:1fr;}}
+  .card{
+    background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
+    padding:28px 26px;box-shadow:var(--sh-1);
+    transition:box-shadow .22s ease,transform .22s ease,border-color .22s ease;
+  }
+  .card:hover{box-shadow:var(--sh-3);transform:translateY(-3px);border-color:#d7e0f4;}
+  .card h3{margin:0 0 11px;font-size:1.12rem;letter-spacing:-.01em;}
+  .card p{margin:0;color:var(--ink-soft);font-size:.94rem;line-height:1.85;}
+  /* meta ラベルは番号タグ風に：仕様書の規律を小さく効かせる */
+  .card .meta{
+    font-family:var(--font-num);font-size:.74rem;color:var(--base-blue);font-weight:700;
+    letter-spacing:.08em;text-transform:uppercase;margin-bottom:11px;
+    display:inline-block;
+  }
+
+  /* analogy pill (glossary 言い換え) */
+  .analogy{
+    margin-top:16px;padding:13px 16px;background:var(--mist);border:1px solid var(--line-soft);
+    border-radius:12px;font-size:.89rem;color:var(--ink-soft);line-height:1.8;
+  }
+  .analogy b{color:var(--base-blue-deep);}
+
+  /* ---------- figure ---------- */
+  figure{margin:44px 0 0;}
+  figure img{
+    width:100%;height:auto;display:block;border-radius:var(--radius-lg);
+    border:1px solid var(--line);box-shadow:var(--sh-3);
+    background:#dfe4ee;
+  }
+  figcaption{font-size:.84rem;color:var(--ink-soft);margin-top:14px;line-height:1.7;}
+
+  /* ---------- timeline ---------- */
+  .timeline{margin-top:46px;border-left:2px solid var(--line);padding-left:30px;}
+  .tl-item{position:relative;padding:0 0 34px;}
+  .tl-item::before{
+    content:"";position:absolute;left:-38px;top:5px;width:13px;height:13px;
+    border-radius:50%;background:var(--base-blue);border:3px solid #fff;box-shadow:0 0 0 2px var(--base-blue),0 2px 8px rgba(0,82,255,.3);
+  }
+  .tl-item.future::before{background:#fff;box-shadow:0 0 0 2px var(--base-blue);}
+  .tl-date{font-family:var(--font-num);font-weight:700;font-size:.92rem;color:var(--base-blue);letter-spacing:.01em;}
+  .tl-body{color:var(--ink-soft);font-size:.94rem;margin-top:3px;line-height:1.8;}
+
+  /* ---------- flags / verify ---------- */
+  .flag{
+    background:var(--flag-bg);border:1px solid #f3c89a;color:var(--flag);
+    border-radius:8px;padding:3px 10px;font-size:.72rem;font-weight:700;
+    display:inline-block;vertical-align:middle;letter-spacing:.01em;
+  }
+  .verify-box{
+    margin-top:46px;background:var(--flag-bg);border:1px solid #f3c89a;border-radius:var(--radius);
+    padding:24px 26px;
+  }
+  .verify-box h3{margin:0 0 12px;color:var(--flag);font-size:1.02rem;}
+  .verify-box ul{margin:0;padding-left:20px;color:#7a4a13;font-size:.92rem;}
+  .verify-box li{margin:6px 0;}
+
+  /* ---------- sources ---------- */
+  .src-list{margin-top:20px;display:grid;gap:10px;}
+  .src-row{
+    display:flex;gap:12px;align-items:baseline;font-size:.9rem;
+    padding:12px 14px;background:var(--mist);border-radius:12px;border:1px solid var(--line);
+  }
+  .src-row .k{font-weight:800;color:var(--base-blue);white-space:nowrap;}
+  .src-row .u{color:var(--ink-soft);word-break:break-all;}
+  .src-row .u a{color:var(--base-blue);text-decoration:underline;}
+  figcaption a{color:inherit;text-decoration:underline;}
+  .badge{
+    font-family:var(--font-num);font-size:.68rem;font-weight:600;padding:3px 9px;border-radius:999px;
+    background:#e9efff;color:var(--base-blue-deep);letter-spacing:.02em;white-space:nowrap;
+  }
+
+  footer{padding:54px 0;color:var(--ink-soft);font-size:.85rem;background:var(--mist);border-top:1px solid var(--line);}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;}
+  .note{font-size:.82rem;color:var(--ink-mute);line-height:1.75;}
+
+  /* footnote markers: 本文に [1] を上付きで、末尾に番号リスト */
+  sup.fn{font-family:var(--font-num);font-size:.62em;font-weight:700;color:var(--base-blue);vertical-align:super;line-height:0;}
+  sup.fn a{color:var(--base-blue);text-decoration:none;}
+  sup.fn a:hover{text-decoration:underline;}
+  .refs{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);}
+  .refs ol{margin:0;padding-left:0;list-style:none;counter-reset:ref;}
+  .refs li{
+    counter-increment:ref;font-size:.82rem;line-height:1.7;color:var(--ink-soft);
+    padding:6px 0 6px 34px;position:relative;
+  }
+  .refs li::before{
+    content:"["counter(ref)"]";position:absolute;left:0;top:6px;
+    font-family:var(--font-num);font-weight:700;color:var(--base-blue);font-size:.92em;
+  }
+  .refs li a{color:var(--base-blue);text-decoration:underline;word-break:break-all;}
+  .refs .src-name{color:var(--ink);font-weight:600;}
+
+  /* citation: タイトル → 下にリンク の2段 */
+  .cite{margin-top:6px;font-size:.82rem;line-height:1.5;}
+  .cite .t{display:block;color:var(--ink-soft);font-weight:600;}
+  .cite a{display:block;color:var(--base-blue);text-decoration:underline;word-break:break-all;}
+  .cite.on-dark .t{color:#aab6d2;}
+  .cite.on-dark a{color:#9fb0d4;}
+
+  /* ============================================================
+     図・アニメーション（1次情報の視覚化）
+     方針: 既存の事実だけを図にする（新しい主張は足さない）。
+     すべて純CSS/SVG・外部依存なし。動きが苦手な人向けに
+     prefers-reduced-motion で停止する。
+     ============================================================ */
+
+  /* --- スクロール・リビール（共通）。.reveal を付けた要素が
+         画面に入ると下からふわっと出る。JSは IntersectionObserver --- */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
+  .reveal.d1{transition-delay:.08s;} .reveal.d2{transition-delay:.16s;}
+  .reveal.d3{transition-delay:.24s;} .reveal.d4{transition-delay:.32s;}
+
+  /* --- 図のシェル（白カード状の図枠） --- */
+  .viz{
+    margin-top:42px;background:var(--paper);border:1px solid var(--line);
+    border-radius:var(--radius-lg);padding:28px 26px;box-shadow:var(--sh-2);
+  }
+  .viz.on-dark{background:#141a2b;border-color:#243049;box-shadow:none;}
+  .viz-title{font-size:.82rem;font-weight:700;letter-spacing:.05em;color:var(--base-blue);margin:0 0 18px;}
+  .viz.on-dark .viz-title{color:#7aa2ff;}
+  .viz-cap{font-size:.84rem;color:var(--ink-soft);margin:14px 0 0;}
+  .viz.on-dark .viz-cap{color:#9fb0d4;}
+
+  /* --- ① 高速道路レーン図（L1=下道 / L2=追い越し車線） --- */
+  .lanes{position:relative;border-radius:14px;overflow:hidden;background:linear-gradient(180deg,#eef3ff,#f7f9ff);border:1px solid var(--line);}
+  .lane{position:relative;height:62px;display:flex;align-items:center;padding:0 14px;gap:10px;}
+  .lane + .lane{border-top:1px dashed #c8d4f3;}
+  .lane .lane-tag{font-size:.78rem;font-weight:800;white-space:nowrap;z-index:2;}
+  .lane.l1 .lane-tag{color:#6b7488;}
+  .lane.l2{background:linear-gradient(90deg,rgba(0,82,255,.10),rgba(0,82,255,.02));}
+  .lane.l2 .lane-tag{color:var(--base-blue);}
+  .car{
+    position:absolute;top:50%;left:-40px;width:34px;height:14px;border-radius:7px;
+    transform:translateY(-50%);box-shadow:0 2px 6px rgba(10,30,90,.18);
+  }
+  .lane.l1 .car{background:#9aa6c0;animation:drive 9s linear infinite;}
+  .lane.l2 .car{background:var(--base-blue);animation:drive 2.6s linear infinite;}
+  .lane.l2 .car.b{animation-delay:.9s;} .lane.l2 .car.c{animation-delay:1.7s;}
+  @keyframes drive{from{left:-44px;}to{left:calc(100% + 44px);}}
+
+  /* --- ② 速さの帯（Azul→Beryl 4週間。間隔の短さを棒で見せる） --- */
+  .gap-track{display:flex;align-items:center;gap:0;margin-top:8px;}
+  .gap-node{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:96px;}
+  .gap-dot{width:16px;height:16px;border-radius:50%;background:var(--base-blue);box-shadow:0 0 0 4px rgba(0,82,255,.15);}
+  .gap-bar{flex:1;height:6px;border-radius:3px;background:linear-gradient(90deg,var(--base-blue),#7aa2ff);position:relative;overflow:hidden;}
+  .gap-bar::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);transform:translateX(-100%);animation:sweep 2.2s ease-in-out infinite;}
+  @keyframes sweep{to{transform:translateX(220%);}}
+  .gap-bar .gap-lbl{position:absolute;top:-26px;left:50%;transform:translateX(-50%);font-size:.78rem;font-weight:800;color:var(--base-blue);white-space:nowrap;}
+  .gap-name{font-size:.86rem;font-weight:800;color:var(--ink);} .gap-date{font-size:.72rem;color:var(--ink-soft);}
+
+  /* --- ③ アプリ vs OS機能（B20）。2段スタックを並べ、
+         パケットが EVM 経由（遠回り）と precompile 直結（直行）を進む --- */
+  .stack-cols{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media(max-width:680px){.stack-cols{grid-template-columns:1fr;}}
+  .stack{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--mist);}
+  .stack h4{margin:0 0 12px;font-size:.95rem;}
+  .layer{position:relative;border-radius:9px;padding:9px 12px;font-size:.82rem;font-weight:700;margin:7px 0;border:1px solid var(--line);background:#fff;color:var(--ink-soft);}
+  .layer.app{background:#fff;border-color:#dfe6f7;} .layer.evm{background:#fdf3e8;border-color:#f3d6ad;color:#92400e;}
+  .layer.chain{background:#e8f0ff;border-color:#c7d8ff;color:var(--base-blue-deep);}
+  .layer.pre{background:var(--base-blue);border-color:var(--base-blue);color:#fff;}
+  .pkt{position:absolute;right:-7px;top:50%;width:12px;height:12px;border-radius:50%;background:var(--base-blue);transform:translateY(-50%);box-shadow:0 0 0 4px rgba(0,82,255,.18);}
+  .stack.slow .pkt{animation:hopSlow 4.2s ease-in-out infinite;}
+  .stack.fast .pkt{animation:hopFast 1.6s ease-in-out infinite;}
+  @keyframes hopSlow{0%{top:14%;}25%{top:42%;}50%{top:70%;}75%{top:42%;}100%{top:14%;}}
+  @keyframes hopFast{0%{top:20%;}50%{top:80%;}100%{top:20%;}}
+  .stack-note{font-size:.74rem;color:var(--ink-soft);margin:8px 0 0;text-align:center;}
+  .stack.fast .stack-note{color:var(--base-blue);font-weight:700;}
+
+  /* --- ④ ドーナツ（x402 の約9割が Base 上）。conic-gradient + リビールで描画 --- */
+  .donut-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+  .donut{
+    --p:0;width:148px;height:148px;border-radius:50%;flex:0 0 auto;
+    background:conic-gradient(var(--base-blue) calc(var(--p)*1%),#26314a 0);
+    transition:--p 1.4s ease;position:relative;
+  }
+  .donut::after{content:"";position:absolute;inset:18px;border-radius:50%;background:#141a2b;}
+  .donut .pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:850;color:#fff;z-index:2;}
+  .donut-legend{font-size:.9rem;color:#aab6d2;} .donut-legend b{color:#fff;}
+  /* @property がある環境では数値も滑らかに。無くても最終値は出る */
+
+  /* --- バー（汎用・シェア可視化。--w で幅、リビールで伸びる） --- */
+  .bars{display:grid;gap:12px;margin-top:6px;}
+  .bar-row{display:grid;grid-template-columns:120px 1fr 54px;align-items:center;gap:10px;font-size:.85rem;}
+  .bar-track{height:14px;border-radius:7px;background:var(--mist);overflow:hidden;}
+  .bar-fill{height:100%;width:0;border-radius:7px;background:linear-gradient(90deg,var(--base-blue),#7aa2ff);transition:width 1.3s cubic-bezier(.2,.8,.2,1);}
+  .reveal.in .bar-fill{width:var(--w);}
+  .bar-val{font-weight:800;color:var(--base-blue);text-align:right;}
+
+  /* --- ⑥ 出金ファイナリティの帯（過去→Beryl→Azul の3段）。
+         PDFデッキ p5 "Withdrawal Finality" の流儀を踏襲。
+         既存事実のみ：7日(Fault Proofs) → 5日(Beryl/通常経路) → 最短1日(Azul/特急)。
+         矢印でつなぎ、右へ行くほど短く・濃くなる（＝改善の向き）。 --- */
+  .finbar{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:0;margin-top:8px;}
+  @media(max-width:680px){.finbar{grid-template-columns:1fr;gap:10px;}}
+  .fin-stage{
+    border:1px solid var(--line);border-radius:13px;padding:15px 16px;background:var(--mist);
+    display:flex;flex-direction:column;justify-content:flex-start;text-align:center;
+  }
+  .fin-stage .fin-when{font-size:.74rem;font-weight:700;letter-spacing:.04em;color:var(--ink-mute);margin:0 0 7px;}
+  .fin-stage .fin-days{font-family:var(--font-num);font-weight:850;font-size:1.5rem;line-height:1.1;letter-spacing:-.02em;color:var(--ink);}
+  .fin-stage .fin-days small{font-size:.62em;font-weight:800;}
+  .fin-stage .fin-sub{font-size:.78rem;color:var(--ink-soft);margin:6px 0 0;line-height:1.55;}
+  /* 段階で色を強める：過去=灰 / Beryl=青枠 / Azul=濃紺塗り（PDFの右端ハイライト） */
+  .fin-stage.past{background:#f1f3f8;}
+  .fin-stage.past .fin-days{color:var(--ink-soft);}
+  .fin-stage.now{background:#eef3ff;border-color:#c7d8ff;}
+  .fin-stage.now .fin-days{color:var(--base-blue);}
+  .fin-stage.best{background:var(--ink);border-color:var(--ink);}
+  .fin-stage.best .fin-when{color:#9fb0d4;}
+  .fin-stage.best .fin-days{color:#fff;}
+  .fin-stage.best .fin-sub{color:#aab6d2;}
+  .fin-arrow{display:flex;align-items:center;justify-content:center;color:#9aa6c0;font-weight:900;font-size:1.2rem;padding:0 8px;}
+  @media(max-width:680px){.fin-arrow{transform:rotate(90deg);padding:2px 0;}}
+
+  /* --- ⑦ ERC-20 vs B20 比較表（PDFデッキ p8 の流儀）。
+         左=標準ERC-20(淡色) / 右=B20(濃紺＋✓)。行頭に観点ラベル。
+         既存事実のみ（Beryl blog: ERC-20互換 / freeze-and-seize / メモ / Asset・Stablecoin / Base+Spearbit監査）。 --- */
+  .cmp{margin-top:8px;border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+  .cmp-row{display:grid;grid-template-columns:118px 1fr 1fr;}
+  .cmp-row + .cmp-row{border-top:1px solid var(--line);}
+  .cmp-head .cmp-axis{background:transparent;}
+  .cmp-cell{padding:14px 16px;font-size:.9rem;line-height:1.6;}
+  .cmp-axis{font-weight:800;color:var(--ink-soft);font-size:.84rem;background:var(--mist);display:flex;align-items:center;}
+  .cmp-erc{color:var(--ink-soft);background:#fbfcfe;border-left:1px solid var(--line);}
+  .cmp-b20{color:#e9eefc;background:var(--ink);border-left:1px solid #243049;}
+  .cmp-head .cmp-erc,.cmp-head .cmp-b20{font-weight:800;text-align:center;justify-content:center;}
+  .cmp-head .cmp-erc{color:var(--ink);background:#eef1f7;}
+  .cmp-head .cmp-b20{color:#fff;background:var(--base-blue-deep);}
+  .cmp-b20 .ck{color:#5fd0a8;font-weight:900;margin-right:6px;}
+  .cmp-b20 b{color:#fff;}
+  @media(max-width:680px){
+    .cmp-row{grid-template-columns:1fr;}
+    .cmp-row + .cmp-row{border-top:3px solid var(--line);}
+    .cmp-axis{padding:10px 16px;background:var(--mist-2);}
+    .cmp-erc,.cmp-b20{border-left:none;}
+    .cmp-head{display:none;} /* スマホは行内ラベルで足りるためヘッダ行は隠す */
+  }
+
+  /* --- ⑤ Base MCP フロー図（AI → MCP → あなたの許可 → ウォレット → オンチェーン）。
+         4ノードを矢印でつなぎ、データの粒（dot）が左→右に流れる。on-dark 前提 --- */
+  .mcp-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;align-items:stretch;}
+  @media(max-width:680px){.mcp-flow{grid-template-columns:1fr;}}
+  .mcp-node{position:relative;background:#1b2236;border:1px solid #2c3550;border-radius:12px;padding:16px 14px;text-align:center;}
+  .mcp-node.hub{background:linear-gradient(180deg,#15306b,#0f234f);border-color:var(--base-blue);}
+  .mcp-node .mcp-ic{font-size:1.5rem;line-height:1;margin-bottom:8px;}
+  .mcp-node .mcp-h{font-size:.92rem;font-weight:800;color:#fff;margin:0 0 4px;}
+  .mcp-node .mcp-d{font-size:.76rem;color:#9fb0d4;margin:0;line-height:1.5;}
+  /* ノード間の矢印。横並び時は右辺中央、縦積み時は下辺中央に出す */
+  .mcp-arrow{position:relative;display:flex;align-items:center;justify-content:center;color:#5c6e9c;font-weight:900;font-size:1.1rem;min-width:34px;}
+  @media(max-width:680px){.mcp-arrow{min-height:26px;transform:rotate(90deg);}}
+  /* 「許可ゲート」バッジ：あなたが鍵を握ることを強調 */
+  .mcp-gate{display:inline-block;margin-top:8px;font-size:.7rem;font-weight:800;color:#ffd28a;background:rgba(255,180,60,.12);border:1px solid rgba(255,180,60,.35);border-radius:999px;padding:2px 9px;}
+  /* 流れる粒（reveal で起動） */
+  .mcp-pipe{position:relative;height:4px;border-radius:2px;background:#26314a;margin:18px 2px 6px;overflow:hidden;}
+  .reveal.in .mcp-dot{animation:mcpRun 3s linear infinite;}
+  .mcp-dot{position:absolute;top:50%;left:-8px;width:8px;height:8px;border-radius:50%;background:var(--base-blue);transform:translateY(-50%);box-shadow:0 0 0 4px rgba(0,82,255,.2);}
+  .mcp-dot.b{animation-delay:1s;} .mcp-dot.c{animation-delay:2s;}
+  @keyframes mcpRun{from{left:-8px;}to{left:calc(100% + 8px);}}
+
+  /* --- カウントアップ（hero の数字。JS で count）--- */
+  .counting{font-variant-numeric:tabular-nums;}
+
+  /* スマホ: 長い和文/カタカナ語は折り返しを許可し、はみ出しを防ぐ。余白も詰める */
+  @media (max-width:600px){
+    section{padding:72px 0;}
+    .hero{padding:88px 0 76px;}
+    .hero h1{word-break:normal;line-break:auto;letter-spacing:-.02em;}
+    h2{word-break:normal;line-break:auto;max-width:none;}
+    .wrap{padding:0 20px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1!important;transform:none!important;transition:none!important;}
+    .lane .car,.gap-bar::after,.stack .pkt,.mcp-dot{animation:none!important;}
+    .lane.l2 .car.b,.lane.l2 .car.c{display:none;}
+    .bar-fill{transition:none!important;width:var(--w)!important;}
+    .donut{transition:none!important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ====================== NAV ====================== -->
+<nav>
+  <div class="wrap">
+    <span class="brand"><span class="dot"></span> 第3回Base勉強会</span>
+    <div class="links">
+      <a href="#why">なぜ今</a>
+      <a href="#beryl">Beryl（最新）</a>
+      <a href="#azul">Azul</a>
+      <a href="#b20">B20</a>
+      <a href="#money">お金の地図</a>
+      <a href="#multichain">Base独自?</a>
+      <a href="#agents">AI×お金</a>
+      <a href="#roadmap">これから</a>
+      <a href="#sources">出典</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ====================== HERO ====================== -->
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">第3回Base勉強会 / 紹介ページ</span>
+    <h1>Base は<br><span class="hl">「世界の金融」</span>のためのブロックチェーン。</h1>
+    <p class="lead">
+      Coinbase が作った、<b>速くて安いお金のネット</b>（Ethereum の L2）。
+      秒未満の速さ・1セント未満の手数料で、株・通貨・決済・AIの取引を 24時間365日つなぐ──
+      その「いま」を、1次情報だけで視覚的にまとめました。
+    </p>
+    <p class="hero-sub">
+      ※各数字には出典と時点を併記しています。第三者の統計で確認できたものと、Base 公式が発表した値は、それぞれ区別して示しています。
+    </p>
+
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#why">ざっと見る ↓</a>
+      <a class="btn btn-ghost" href="#sources">出典一覧へ</a>
+    </div>
+
+    <!-- 数字バンド：聴衆に刺さる規模感を最初に -->
+    <div class="stats">
+      <div class="stat">
+        <div class="num">約<span class="counting" data-to="4.2" data-prefix="$" data-suffix="B">$4.2B</span></div>
+        <div class="lbl">Base の TVL（預け入れ総額）。主要 ETH L2 の一角</div>
+        <div class="src">出典: DefiLlama, 2026-06 時点 <a href="#ref-13" style="text-decoration:none">[13]</a></div>
+      </div>
+      <div class="stat">
+        <div class="num">約<span class="counting" data-to="43" data-suffix="%">43%</span></div>
+        <div class="lbl">オンチェーンBTC現物取引のシェア（全チェーン中で最大）</div>
+        <div class="src">出典: Blockworks/PANews, 2026-03 <a href="#ref-14" style="text-decoration:none">[14]</a></div>
+      </div>
+      <div class="stat">
+        <div class="num">$19兆</div>
+        <div class="lbl">2026年に Base 上で決済されたステーブル額（Base公式発表）</div>
+        <div class="src">出典: Base 公式, 2026 <a href="#ref-1" style="text-decoration:none">[1]</a></div>
+      </div>
+      <div class="stat">
+        <div class="num">約<span class="counting" data-to="99" data-suffix="%">99%</span>減</div>
+        <div class="lbl">空ブロックの削減（≈200/日 → ≈2/日, Azulで）</div>
+        <div class="src">出典: Base公式blog (Azul) <a href="#ref-3" style="text-decoration:none">[3]</a></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ====================== WHY NOW ====================== -->
+<section id="why">
+  <div class="wrap">
+    <span class="eyebrow">なぜ今 Base か</span>
+    <h2>「お金のインターネット」の本命に、Base が手を挙げた。</h2>
+    <p class="lead">
+      Base は Coinbase 発の Ethereum L2（レイヤー2）。
+      たとえるなら <b>高速道路の上に作った追い越し車線</b>──Ethereum の安全性を借りつつ、
+      速く・安く処理する上位レイヤーです。トークン化された株、コモディティ、各国通貨、AI同士の支払いまで、
+      すべてが同じネットの上で動き始めています。
+    </p>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="meta">速さ</div>
+        <h3>秒未満で確定</h3>
+        <p>「秒未満の速さ・1セント未満の手数料・24/7/365」を Base 自身が掲げる基本性能。取引は待たずに通る。</p>
+      </div>
+      <div class="card">
+        <div class="meta">広さ</div>
+        <h3>あらゆる資産が乗る</h3>
+        <p>暗号資産だけでなく、株式・コモディティ・予測市場・各国通貨まで。「橋であって島ではない」（Solana/Bitcoin も接続）。</p>
+      </div>
+      <div class="card">
+        <div class="meta">信頼</div>
+        <h3>Coinbase が運営</h3>
+        <p>数千の企業に使われ、誰にでも開かれている。規模・コンプラ・ブランドの後ろ盾がある L2。</p>
+      </div>
+    </div>
+
+    <!-- 図①: 本文の「高速道路の上の追い越し車線」を動く図で。L1=下道(遅い)/L2=Base(速い) -->
+    <div class="viz reveal" aria-hidden="true">
+      <p class="viz-title">図解：Ethereum（下道）の上に、Base という追い越し車線</p>
+      <div class="lanes">
+        <div class="lane l1">
+          <span class="lane-tag">Ethereum（L1・安全だが混む）</span>
+          <span class="car"></span>
+        </div>
+        <div class="lane l2">
+          <span class="lane-tag">Base（L2・追い越し車線：速い・安い）</span>
+          <span class="car"></span><span class="car b"></span><span class="car c"></span>
+        </div>
+      </div>
+      <p class="viz-cap">下の車（Ethereum）はゆっくり。上のレーン（Base）は同じ安全性を借りつつ、何台も速く通り抜ける ── これが「L1の上の追い越し車線」。</p>
+    </div>
+
+    <div class="analogy">
+      <b>30秒で言うと：</b> Base ＝「Coinbase が作った、速くて安いお金のネット」。
+      その上で “世界中のあらゆる価値” が秒速・極小コストで動く、という話です。
+    </div>
+
+    <!-- 図⑤: BTC現物シェア≈43%（第三者統計で裏取り済みの数字）をバーで -->
+    <div class="viz reveal" aria-hidden="true">
+      <p class="viz-title">図解：オンチェーンBTC現物取引のシェア ── Base が全チェーン中で最大</p>
+      <div class="bars">
+        <div class="bar-row">
+          <span><b>Base</b></span>
+          <span class="bar-track"><span class="bar-fill" style="--w:43%"></span></span>
+          <span class="bar-val">≈43%</span>
+        </div>
+        <div class="bar-row">
+          <span>その他チェーン合計</span>
+          <span class="bar-track"><span class="bar-fill" style="--w:57%;background:linear-gradient(90deg,#aab6d2,#cdd6e8)"></span></span>
+          <span class="bar-val" style="color:var(--ink-soft)">≈57%</span>
+        </div>
+      </div>
+      <p class="viz-cap">オンチェーンのBTC現物取引のうち約43%が Base 上 ── 単独のチェーンとして最大。第三者集計で確認できた値です。<sup class="fn"><a href="#ref-14">[14]</a></sup></p>
+    </div>
+
+    <p class="note" style="margin-top:22px">
+      BTC現物シェア（約43%）は第三者の統計で確認できた値です<sup class="fn"><a href="#ref-14">[14]</a></sup>。$19兆の決済額は Base 公式が発表した値です<sup class="fn"><a href="#ref-1">[1]</a></sup>。
+    </p>
+  </div>
+</section>
+
+<!-- ====================== BERYL（最新・主役）====================== -->
+<section id="beryl" style="background:linear-gradient(180deg,#eef3ff 0%,#ffffff 100%);">
+  <div class="wrap">
+    <span class="eyebrow">いま最新のアップグレード</span>
+    <h2>Beryl ── <span style="color:var(--base-blue)">2026年6月25日</span>メインネット稼働の最新アプデ。</h2>
+    <p class="lead">
+      Base の第2の大型アップグレード。前回 Azul の<b>わずか4週間後</b>に投入され、
+      この刊行スピードこそ「Optimism から独立して自分たちでアップグレードを回せるようになった」証拠です。
+      Beryl は <b>3つの目玉</b>を一度に届けます。
+    </p>
+
+    <!-- 図②: 「Azulの4週間後にBeryl」という刊行ペースの短さを帯で視覚化 -->
+    <div class="viz reveal" aria-hidden="true">
+      <p class="viz-title">図解：Azul → Beryl は「わずか4週間」── 独立後の刊行ペース</p>
+      <div class="gap-track">
+        <div class="gap-node">
+          <span class="gap-dot"></span>
+          <span class="gap-name">Azul</span>
+          <span class="gap-date">2026-05-13</span>
+        </div>
+        <div class="gap-bar"><span class="gap-lbl">≈ 4週間</span></div>
+        <div class="gap-node">
+          <span class="gap-dot"></span>
+          <span class="gap-name">Beryl</span>
+          <span class="gap-date">2026-06-25</span>
+        </div>
+      </div>
+      <p class="viz-cap">前回の大型アプデから約4週間で次を投入。この短い間隔こそ「自分たちでアップグレードを回せる」証拠。<sup class="fn"><a href="#ref-2">[2]</a></sup><sup class="fn"><a href="#ref-3">[3]</a></sup></p>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="meta">① 発行のプラットフォーム化</div>
+        <h3>B20（ネイティブトークン標準）</h3>
+        <p>コンプラ機能を最初から内蔵した「お金トークンの新規格」をチェーンに導入。Base を“第一級の発行基盤（first-class issuance platform）”にする中核。</p>
+        <div class="analogy"><b>くわしくは：</b><a href="#b20">↓ B20 セクション</a>で。</div>
+      </div>
+      <div class="card">
+        <div class="meta">② 資本効率</div>
+        <h3>出金の待ち時間 7日 → 5日</h3>
+        <p>Base から Ethereum への出金には2つの経路があり、<b>多くの人が通る通常経路</b>を 7日から5日に短縮（もう一方の「両方式の証明が揃う特急経路」は Azul で最短1日だが、コストが高く今はまれ）。安全性を保ちつつ段階的に短縮します。</p>
+        <div class="analogy"><b>たとえ：</b>「通常便の到着が2日早くなった（速達便は元々もっと速いが割高）」。</div>
+      </div>
+      <div class="card">
+        <div class="meta">③ スケーラビリティ</div>
+        <h3>Reth V2</h3>
+        <p>ノードのディスク使用量を削減し、状態計算を高速化。ブロックの処理上限を上げても詰まらない設計に。さらなる拡張への土台。</p>
+        <div class="analogy"><b>たとえ：</b>「より大きな荷物をさばける物流倉庫に増強」。</div>
+      </div>
+    </div>
+
+    <!-- 図⑥: 出金ファイナリティの帯（過去7日→Beryl 5日/通常→Azul 最短1日/特急）。
+         本文の「出金には2経路ある」を視覚化。新しい主張は足さず、上のカード本文と同じ事実だけ。 -->
+    <div class="viz reveal" aria-hidden="true">
+      <p class="viz-title">図解：Ethereum への出金が確定するまでの待ち時間 ── 短くなってきた</p>
+      <div class="finbar">
+        <div class="fin-stage past">
+          <p class="fin-when">過去</p>
+          <p class="fin-days">7<small>日</small></p>
+          <p class="fin-sub">初期の Fault Proofs。誰でも異議を出せるよう長めの待機。</p>
+        </div>
+        <div class="fin-arrow" aria-hidden="true">→</div>
+        <div class="fin-stage now">
+          <p class="fin-when">現在・通常経路（Beryl）</p>
+          <p class="fin-days">5<small>日</small></p>
+          <p class="fin-sub">多くの人が通る経路を 7→5日に短縮。今後さらに段階的に短縮予定。</p>
+        </div>
+        <div class="fin-arrow" aria-hidden="true">→</div>
+        <div class="fin-stage best">
+          <p class="fin-when">特急経路（Azul・まれ）</p>
+          <p class="fin-days">最短1<small>日</small></p>
+          <p class="fin-sub">TEE と ZK の両証明が揃えば最短1日。コストが高く今は利用がまれ。</p>
+        </div>
+      </div>
+      <p class="viz-cap">出金には2つの経路があります。<b>多くの人が通る通常経路</b>が Beryl で 7日→5日に。<b>両方式の証明が揃う特急経路</b>は Azul で最短1日（ただし高コストでまれ）。右へ行くほど速い。<sup class="fn"><a href="#ref-2">[2]</a></sup><sup class="fn"><a href="#ref-3">[3]</a></sup></p>
+    </div>
+
+    <div class="analogy" style="margin-top:24px">
+      <b>30秒で言うと：</b> Beryl ＝「<b>Azul の4週間後に来た、いま最新のアップデート</b>」。
+      目玉は <b>B20（発行の新規格）・出金が2日早く・処理基盤の増強</b> の3つ。利用者は何もしなくてOK（出金が早くなるだけ）。
+    </div>
+
+    <p class="note" style="margin-top:22px">
+      メインネット 2026-06-25・testnet は Base Sepolia 先行・3本柱（B20 / 出金7→5日 / Reth V2）はいずれも公式blogに記載されています<sup class="fn"><a href="#ref-2">[2]</a></sup><sup class="fn"><a href="#ref-5">[5]</a></sup>。
+    </p>
+  </div>
+</section>
+
+<!-- ====================== AZUL（ひとつ前の大型アプデ）====================== -->
+<section id="azul">
+  <div class="wrap">
+    <span class="eyebrow">ひとつ前の大型アップグレード（土台づくり）</span>
+    <h2>Azul ── Base が「自前のエンジン」に載せ替えた、独立後はじめての大型アプデ。</h2>
+    <p class="lead">
+      2026-05-13 にメインネット稼働。Optimism の Superchain から独立して以来、
+      Base が単独で実行した初の大型ネットワークアップグレードです。
+      「より安全・より速い・より作りやすい」を一度に進めました。
+    </p>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="meta">安全性 / 分散化</div>
+        <h3>multiproof（2系統の鍵）</h3>
+        <p>TEE と ZK、2種類の証明を併用。片方が壊れても止まらず、両方が一致すれば出金が最短1日で確定（＝特急経路。ただしコストが高く現状はまれで、多くの人が通る通常経路は Beryl で5日に）。Stage 2 分散化への大きな一歩。</p>
+        <div class="analogy"><b>たとえ：</b>「鍵を2系統にして、片方が壊れても止まらない金庫」。</div>
+      </div>
+      <div class="card">
+        <div class="meta">性能</div>
+        <h3>単一クライアントへ統合</h3>
+        <p>実行クライアントを base-reth-node 1本に集約、新コンセンサス base-consensus を導入。1 gigagas/s への道を加速。5,000 TPS のバーストを複数回維持。</p>
+        <div class="analogy"><b>たとえ：</b>「部品の寄せ集めから、自社製ワンセットへ」。</div>
+      </div>
+      <div class="card">
+        <div class="meta">開発体験</div>
+        <h3>Ethereum (Osaka) に追従</h3>
+        <p>CLZ オペコード追加や MODEXP の再価格付けなど、Ethereum 最新仕様に整列。多くのアプリは改修不要。</p>
+        <div class="analogy"><b>意味：</b>「本家 Ethereum と歩調を合わせ、開発者が迷わない」。</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-top:24px">
+      <div class="card">
+        <div class="meta">利用者への影響</div>
+        <h3>何もしなくていい</h3>
+        <p>ユーザー側の作業は不要。Base が「より速く・安全・安く」なるだけ。Ethereum への出金は multiproof の成熟とともに速くなる。</p>
+      </div>
+      <div class="card">
+        <div class="meta">守りの本気度</div>
+        <h3>監査コンペ 最大 $25万</h3>
+        <p>稼働前に Immunefi の監査コンペ（4/21–5/4）を実施。重大脆弱性に最大 $250,000 の報奨。「まず安全」を数字で示した。</p>
+      </div>
+    </div>
+
+    <p class="note" style="margin-top:22px">
+      稼働日 2026-05-13 と各性能値は公式blogに記載されています<sup class="fn"><a href="#ref-3">[3]</a></sup><sup class="fn"><a href="#ref-4">[4]</a></sup>（稼働ニュースは<sup class="fn"><a href="#ref-16">[16]</a></sup>）。
+    </p>
+  </div>
+</section>
+
+<!-- ====================== B20 ====================== -->
+<section id="b20" style="background:var(--mist);">
+  <div class="wrap">
+    <span class="eyebrow">開発者の世界</span>
+    <h2>B20 ── 「最初から法令対応の部品が付いた」お金トークンの新規格。</h2>
+    <p class="lead">
+      ERC-20 の進化形として Base が作った独自トークン規格。
+      コンプライアンス機能（移転制御・凍結＆差押え・権限管理・メモ・発行上限）が <b>最初からチェーンに内蔵</b>。
+      発行体が「トークン化は難しい（コンプラ・相互運用・セキュリティが壁）」と感じてきた問題を、規格側で解きます。
+    </p>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="meta">速い・安い</div>
+        <h3>Rust precompile で実装</h3>
+        <p>ふつうのトークンは <b>Solidity で書いて“アプリ”として載せ</b>、仮想マシン（EVM）越しに動くので重い。B20 は違い、<b>チェーン本体に Rust で作り込んだ“標準機能”</b>。EVM を介さず直接動くので速く・安い。それでいて ERC-20 と完全互換（既存ウォレット・取引所はそのまま使える）。</p>
+        <div class="analogy"><b>たとえ：</b>後から入れる<b>アプリ</b>（Solidity）ではなく、スマホに最初から入っている<b>OS標準機能</b>（B20）。自由に作れるのはアプリ、速くて省電力なのはOS機能。</div>
+      </div>
+      <div class="card">
+        <div class="meta">規制対応</div>
+        <h3>freeze-and-seize 内蔵</h3>
+        <p>規制対応の「止める・戻す」を標準装備。ポリシー（許可/拒否リスト）で送受信を制御でき、規制発行体の凍結・差押えにも対応。</p>
+        <div class="analogy"><b>たとえ：</b>「規制対応で “止める・戻す” ができる仕組み」。</div>
+      </div>
+      <div class="card">
+        <div class="meta">2つの型</div>
+        <h3>Asset と Stablecoin</h3>
+        <p>Asset＝小数6〜18桁・リベース倍率・一括発行など汎用。Stablecoin＝小数6桁固定＋通貨コード自己申告。RWA・ステーブル・オンチェーン資産に向く。</p>
+      </div>
+    </div>
+
+    <p class="lead" style="margin-top:34px">
+      狙いはシンプル ── <b>「誰でも、あらゆる資産を、コンプラ込みで発行できる」</b>。
+      Coinbase から Clanker、大手ステーブル発行体まで採用が始まっています。
+    </p>
+
+    <!-- 図③: 「アプリ(Solidity/EVM経由=遠回り) vs OS機能(B20/precompile直結)」を2段スタックで -->
+    <div class="viz reveal" aria-hidden="true">
+      <p class="viz-title">図解：ふつうのトークン（アプリ）と B20（チェーン本体の機能）の違い</p>
+      <div class="stack-cols">
+        <div class="stack slow">
+          <h4>従来：アプリとして載せる（遠回り）</h4>
+          <div class="layer app">トークン（Solidity で実装）<span class="pkt"></span></div>
+          <div class="layer evm">EVM（仮想マシン）を介して実行</div>
+          <div class="layer chain">チェーン本体</div>
+          <p class="stack-note">EVM 越しに動くので重い・割高</p>
+        </div>
+        <div class="stack fast">
+          <h4>B20：チェーン本体の標準機能（直結）</h4>
+          <div class="layer app">ウォレット・取引所（ERC-20 互換のまま）</div>
+          <div class="layer pre">B20（Rust precompile＝チェーンに内蔵）<span class="pkt"></span></div>
+          <div class="layer chain">チェーン本体に直結</div>
+          <p class="stack-note">EVM を介さず直接動くので速い・安い</p>
+        </div>
+      </div>
+      <p class="viz-cap">右の玉（B20）は1段で本体に届く。左（従来）は EVM を経由して何段も上下する ── 「後から入れるアプリ」と「最初から入っている OS 標準機能」の差。<sup class="fn"><a href="#ref-6">[6]</a></sup></p>
+    </div>
+
+    <!-- 図⑦: 標準ERC-20 vs B20 の比較表（PDFデッキ p8 の流儀）。
+         本文・カードで既に述べた事実だけを表形式に整理。新しい主張は足さない。 -->
+    <div class="viz reveal" aria-hidden="true">
+      <p class="viz-title">図解：標準的な ERC-20 と、Base ネイティブの B20 の違い</p>
+      <div class="cmp">
+        <div class="cmp-row cmp-head">
+          <span class="cmp-cell cmp-axis"></span>
+          <span class="cmp-cell cmp-erc">Standard ERC-20</span>
+          <span class="cmp-cell cmp-b20">B20 Native</span>
+        </div>
+        <div class="cmp-row">
+          <span class="cmp-cell cmp-axis">開発と監査</span>
+          <span class="cmp-cell cmp-erc">発行体が独自にコードを書き、高額な外部監査が必要</span>
+          <span class="cmp-cell cmp-b20"><span class="ck">✓</span><b>Base ＋ Spearbit 監査済み</b>の同じ部品を全発行体が使う</span>
+        </div>
+        <div class="cmp-row">
+          <span class="cmp-cell cmp-axis">コンプラ対応</span>
+          <span class="cmp-cell cmp-erc">複雑なロジックをスマートコントラクトに手動で追加</span>
+          <span class="cmp-cell cmp-b20"><span class="ck">✓</span><b>凍結・差押え（freeze-and-seize）</b>と許可/拒否リストを標準装備</span>
+        </div>
+        <div class="cmp-row">
+          <span class="cmp-cell cmp-axis">拡張機能</span>
+          <span class="cmp-cell cmp-erc">限定的</span>
+          <span class="cmp-cell cmp-b20"><span class="ck">✓</span>送金・発行・焼却に<b>メモ</b>付与、イベントでの発表機能</span>
+        </div>
+        <div class="cmp-row">
+          <span class="cmp-cell cmp-axis">型（用途別）</span>
+          <span class="cmp-cell cmp-erc">汎用のみ</span>
+          <span class="cmp-cell cmp-b20"><span class="ck">✓</span><b>Asset</b>（汎用）と<b>Stablecoin</b>（小数6桁固定）の2型を用意</span>
+        </div>
+      </div>
+      <p class="viz-cap">どちらも <b>ERC-20 互換</b>（既存ウォレット・取引所はそのまま）。違いは“どこに実装するか” ── B20 はチェーン本体に作り込んだ標準機能なので、コンプラ部品が最初から付いている。<sup class="fn"><a href="#ref-6">[6]</a></sup></p>
+    </div>
+
+    <!-- 競合比較：コンプラ対応トークン標準は他にもある。B20は何が構造的に違うのか -->
+    <div class="card" style="margin-top:28px;border-left:4px solid var(--base-blue);">
+      <div class="meta">「コンプラ対応トークン」は他にもある。B20は何が違う?</div>
+      <p style="margin:6px 0 14px">
+        実は規制対応トークンの標準は以前からあります（例: <b>ERC-3643</b>＝証券トークンの国際標準, ERC-1400 など）。
+        ただしそれらは<b>すべて「スマートコントラクト（チェーンの上に乗せるアプリ）」として各発行体が実装</b>します。
+        B20 の構造的な違いはここです ── <b>チェーン本体に作り込んだ機能（Rust precompile）</b>であること。
+      </p>
+      <div class="grid grid-2" style="margin-top:0;gap:14px">
+        <div class="analogy" style="margin-top:0">
+          <b>従来（ERC-3643 等）</b><br>
+          各発行体がコンプラ機能を<b>自前で実装→個別に監査</b>。発行体ごとに作り直し・バグの混入リスクが分散。
+        </div>
+        <div class="analogy" style="margin-top:0">
+          <b>B20</b><br>
+          Base が<b>一度実装・監査（Base＋Spearbit）した同じ部品</b>を全発行体が使う。ERC-20 と完全互換でウォレット・取引所もそのまま。
+        </div>
+      </div>
+      <p style="margin:14px 0 0;font-size:.92rem;color:var(--ink-soft)">
+        つまり「機能で他を圧倒」ではなく<b>「実装する“場所”が違う（アプリ→OS）」</b>のが本質。だから速く・安く、将来は
+        「自分のトークンでガス代を払う」など<b>チェーン側でしかできない拡張</b>（Beryl の次の Cobalt アップグレードで予定）にも踏み込めます。
+        <span class="note">※ 比較対象として ERC-3643（証券トークン標準）を参照<sup class="fn"><a href="#ref-12">[12]</a></sup>。「B20が優れている」と断定する中立比較研究は公開されていないため、ここは“構造の違い”として示しています。</span>
+      </p>
+    </div>
+
+    <p class="note" style="margin-top:22px">
+      B20 は <b>Beryl アップグレード（2026-06-25 メインネット）</b>で導入されました<sup class="fn"><a href="#ref-2">[2]</a></sup><sup class="fn"><a href="#ref-6">[6]</a></sup>。
+    </p>
+  </div>
+</section>
+
+<!-- ====================== MONEY MAP ====================== -->
+<section id="money">
+  <div class="wrap">
+    <span class="eyebrow">お金の世界地図</span>
+    <h2>ドルだけじゃない。各国通貨で「自分の通貨のまま」世界の金融に。</h2>
+    <p class="lead">
+      Base 公式によると、Base 上にはドル以外の <b>ローカル通貨ステーブルコインが25種以上</b>あり、ユーロ・円・メキシコペソ・ナイジェリアナイラ・シンガポールドルなどが利用できます。
+      「自国通貨に連動するデジタル通貨」で、誰もが <b>自分が普段使う通貨のまま</b> 世界の金融サービスにアクセスできる未来です。
+    </p>
+    <!-- 内部メモ（聴衆には出さない）: 円(JPY)は要検証。講演 "the yen all live on Base" だが、JPYC(Eth/Polygon/Avalanche/Kaia)・GYEN(Eth/Stellar/Solana)とも発行体公式にBase記載なし(2026-06時点)。本文では「円」を断定的に前面に出さず、各国通貨という一般表現にとどめる。詳細は NEXT.md の要検証参照。 -->
+    <p class="note" style="margin-top:-10px">
+      なお日本の<b>円（JPY）</b>については、Base 公式が対象通貨として<b>言及はしている</b>ものの、<b>具体的な対応は未定</b>です（主要な円ステーブル JPYC・GYEN などは現在おもに Ethereum・Polygon・Solana で利用、2026-06時点）。各国通貨が同じネットワークへ集まる流れの中で、円は今後の展開対象という位置づけです。
+    </p>
+
+    <figure>
+      <img src="../../01-primary/keynote-images/keynote-nonusd-stablecoins-map.png"
+           alt="Base 上の非USDステーブルコインの世界地図。USD/EUR/円/ペソ/レアル/ランド/ポンド/カナダドルなど各国通貨が並ぶ。" />
+      <figcaption>
+        ▲ Base 上のステーブルコイン（Base 公式資料）。左にドル含む各国通貨、世界地図上に各国のコードが点在。<a href="#ref-1" style="text-decoration:none">[1]</a>
+      </figcaption>
+    </figure>
+
+    <!--
+      内部メモ（聴衆には出さない・結論だけ本文に出す）:
+      検証の論拠 ── (1)Base公式の明言: Beryl blog Disclaimer「B20 tokens are deployed, configured, and
+      administered solely by their respective issuers … Coinbase, including Base, is not the issuer」[1]。
+      (2)語り口: Jesse は "on Base / live on Base" と言い、発行体を実名(Wyre X, Rain, Bitso)で挙げる＝主語は外部発行体。
+      (3)講演原文(5:46〜): "over 25 local stablecoins on Base … all live on Base … every currency connected to the same network"。
+      これらは結論「各社のマルチチェーン展開のBase版／Base独自はB20」の根拠。冗長なので本文には出さず結論のみ提示。
+    -->
+    <!-- 判定ブロック：結論ファースト -->
+    <div id="multichain" class="card" style="margin-top:36px;border-left:4px solid var(--base-blue);">
+      <div class="meta">よくある誤解を1つ</div>
+      <h3 style="margin-bottom:6px">これらは「Base が作った通貨」ではありません。</h3>
+      <p style="margin-bottom:14px">
+        マップの各通貨ステーブルは、<b>それぞれ別の発行体が複数チェーンに出している既存のステーブルコイン</b>。
+        Base はその<b>対応チェーンの1つ</b>です（Ethereum や Solana 版があるのと同じ）<sup class="fn"><a href="#ref-2">[2]</a></sup>。
+        たとえば USDC・EURC は Circle が多数チェーンに展開<sup class="fn"><a href="#ref-7">[7]</a></sup>、CADC は発行体が「Base に拡張」と発表<sup class="fn"><a href="#ref-8">[8]</a></sup>。
+      </p>
+      <p style="margin:0;font-size:1rem;color:var(--ink)">
+        <b>Base 独自なのは「通貨」ではなく「土台」</b> ── それらをコンプラ込みで発行できる規格 <b>B20</b>（→ <a href="#b20">B20 セクション</a>）です<sup class="fn"><a href="#ref-6">[6]</a></sup>。
+      </p>
+
+      <!-- 通貨ステーブル深掘り表：Base対応が公開URLで確認できたものだけ「✓」 -->
+      <h3 style="margin:26px 0 4px;font-size:1.06rem">マップの主なステーブルを“発行体・対応チェーン”で見ると</h3>
+      <p style="margin:0 0 12px;font-size:.92rem;color:var(--ink-soft)">
+        いずれも <b>発行体は Base ではなく外部</b>。Base は各社が展開する“対応チェーンの1つ”です。
+        （「✓」は、発行体やプレスの公開情報で Base 対応を確認できたもの）
+      </p>
+      <div style="overflow-x:auto;margin-top:6px">
+        <table style="width:100%;border-collapse:collapse;font-size:.9rem;min-width:560px;">
+          <thead>
+            <tr style="text-align:left;color:var(--ink-soft);border-bottom:2px solid var(--line);">
+              <th style="padding:8px 10px;">通貨 / ティッカー</th>
+              <th style="padding:8px 10px;">発行体</th>
+              <th style="padding:8px 10px;">主な対応チェーン</th>
+              <th style="padding:8px 10px;white-space:nowrap;">Base対応</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--line);">
+              <td style="padding:8px 10px;"><b>USD / USDC</b></td>
+              <td style="padding:8px 10px;">Circle</td>
+              <td style="padding:8px 10px;">Ethereum・Solana・Base ほか多数（公式に34チェーン規模）<sup class="fn"><a href="#ref-7">[7]</a></sup></td>
+              <td style="padding:8px 10px;color:#15803d;font-weight:800;">✓</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line);">
+              <td style="padding:8px 10px;"><b>EUR / EURC</b></td>
+              <td style="padding:8px 10px;">Circle</td>
+              <td style="padding:8px 10px;">Ethereum・Solana・Avalanche・Base・Stellar</td>
+              <td style="padding:8px 10px;color:#15803d;font-weight:800;">✓</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line);">
+              <td style="padding:8px 10px;"><b>BRL / BRZ</b></td>
+              <td style="padding:8px 10px;">Transfero</td>
+              <td style="padding:8px 10px;">Ethereum・BNB・Solana・Polygon・Arbitrum・<b>Base</b> ほか16+<sup class="fn"><a href="#ref-9">[9]</a></sup></td>
+              <td style="padding:8px 10px;color:#15803d;font-weight:800;">✓</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line);">
+              <td style="padding:8px 10px;"><b>CAD / CADC</b></td>
+              <td style="padding:8px 10px;">Paytrie / Loon</td>
+              <td style="padding:8px 10px;">Ethereum・Polygon・Arbitrum・Solana・<b>Base</b>（“expand to Base”と明言）<sup class="fn"><a href="#ref-8">[8]</a></sup></td>
+              <td style="padding:8px 10px;color:#15803d;font-weight:800;">✓</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line);background:var(--flag-bg);">
+              <td style="padding:8px 10px;"><b>MXN / MXNB</b></td>
+              <td style="padding:8px 10px;">Juno（Bitso）</td>
+              <td style="padding:8px 10px;">Arbitrum・Ethereum・Avalanche<sup class="fn"><a href="#ref-10">[10]</a></sup></td>
+              <td style="padding:8px 10px;white-space:nowrap;color:#8a93a8;">発行体公式は左記チェーン</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- 内部メモ: MXNBはJesseが「Bitsoがlaunch」と講演で言及するが、発行体Bitso/Juno公式の対応チェーンにBase記載なし(2026-06時点)。表では「✓」を付けず発行体公式どおりに記載。要検証はNEXT.md参照。 -->
+      <p style="margin:10px 0 0;font-size:.85rem;color:#8a93a8;">
+        ※ メキシコペソ（MXN）は Base 公式が言及しています。発行体公式が案内する対応チェーンは上記のとおりです（2026-06時点）<sup class="fn"><a href="#ref-10">[10]</a></sup>。
+      </p>
+
+      
+    </div>
+
+    <div class="grid grid-3" style="margin-top:40px">
+      <div class="card">
+        <div class="meta">実需</div>
+        <h3>$6億 の決済実績</h3>
+        <p>Wyre X・Rain などの発行体が、2026年だけで Base 上で <b>$600M</b> のステーブル決済を実行。日常の買い物に使える段階に。</p>
+      </div>
+      <div class="card">
+        <div class="meta">地域</div>
+        <h3>各地のネオバンク / 取引所</h3>
+        <p>Tu Yo・Flex はドルステーブルと BTC で「世界水準の体験」を提供。Bitso は MXN（メキシコペソ）を導入し、ペソで稼げる Vault も展開。</p>
+      </div>
+      <div class="card">
+        <div class="meta">ビジョン</div>
+        <h3>通貨が同じ網につながる</h3>
+        <p>すべての通貨が同じネットワークにつながれば、どこの誰でも「自国通貨のまま」グローバル金融に参加できる。</p>
+      </div>
+    </div>
+
+    <p class="note" style="margin-top:22px">
+      $19兆 / 25種+ / $600M は <b>Base 公式の発表値</b>です（2026年時点）<sup class="fn"><a href="#ref-1">[1]</a></sup>。
+      各国通貨ステーブルが各地で立ち上がっている潮流は、第三者（a16z など）も報告しています<sup class="fn"><a href="#ref-15">[15]</a></sup>。
+    </p>
+  </div>
+</section>
+
+<!-- ====================== AGENTS / MCP ====================== -->
+<section id="agents" style="background:var(--ink);color:#fff;border-bottom:none;">
+  <div class="wrap">
+    <span class="eyebrow" style="color:#7aa2ff">AI × お金（エージェント経済）</span>
+    <h2 style="color:#fff">AIに話しかけるだけで、残高確認 → 送金 → swap。</h2>
+    <p class="lead" style="color:#c7d0e6">
+      Base MCP は「AIに “手” を持たせて操作させる仕組み」。
+      Claude などの普段のツールから <b>簡単な言葉（simple prompts）</b> で、あなたのウォレットに安全に接続し、
+      送金・取引・swap などのオンチェーン操作を実行できます（権限はあなたが管理）。
+    </p>
+
+    <!-- 図⑤: Base MCP の仕組み。AI → MCP → あなたの許可 → ウォレット → オンチェーン の4段フロー -->
+    <div class="viz on-dark reveal">
+      <p class="viz-title">図解：Base MCP の仕組み ── 「話す」が「オンチェーン操作」に変わるまで</p>
+
+      <p style="color:#c7d0e6;font-size:.92rem;margin:0 0 18px;line-height:1.7">
+        <b style="color:#fff">MCP（Model Context Protocol）</b>は、AIに外部ツールをつなぐ共通の差し込み口です。
+        「USB-C のように、AI とアプリの接続規格を 1 本に揃えるもの」とイメージしてください。
+        <b style="color:#fff">Base MCP</b> は、その差し込み口に <b style="color:#fff">あなたのウォレット＝Base への “手”</b> をつなぐ部品。
+        つないだ瞬間から、AI は対話のまま残高確認・送金・swap を実行できるようになります。
+      </p>
+
+      <div class="mcp-flow">
+        <div class="mcp-node">
+          <div class="mcp-ic" aria-hidden="true">🗣️</div>
+          <p class="mcp-h">① あなた → AI</p>
+          <p class="mcp-d">「jesse.base.eth に 10 USDC 送って」と<b style="color:#cdd8f2">普段の言葉</b>で頼む。<br>Claude / Codex / Hermes / OpenClaw など、使い慣れたツールでOK。</p>
+        </div>
+        <div class="mcp-arrow" aria-hidden="true">→</div>
+        <div class="mcp-node hub">
+          <div class="mcp-ic" aria-hidden="true">🔌</div>
+          <p class="mcp-h">② Base MCP</p>
+          <p class="mcp-d">頼みを<b style="color:#cdd8f2">オンチェーンの操作</b>へ翻訳する差し込み口。AI とウォレットの間に立つ“通訳兼ゲート”。</p>
+          <span class="mcp-gate">🔑 許可はあなたが管理</span>
+        </div>
+        <div class="mcp-arrow" aria-hidden="true">→</div>
+        <div class="mcp-node">
+          <div class="mcp-ic" aria-hidden="true">👛</div>
+          <p class="mcp-h">③ あなたのウォレット<br><span style="font-size:.8em;font-weight:700;color:#9fb0d4">（Base Account）</span></p>
+          <p class="mcp-d"><b style="color:#cdd8f2">account.base.app</b> で作る自分のウォレット。<b style="color:#cdd8f2">メールのワンタイムコード（OTP）やパスキー</b>でサインインでき、パスワード不要。あなたが<b style="color:#cdd8f2">許可した範囲だけ</b>署名・実行し、鍵は常に手元（自己管理）。AI が勝手に動かすことはない。<sup class="fn"><a href="#ref-18" style="color:#8fa0c4">[18]</a></sup></p>
+        </div>
+        <div class="mcp-arrow" aria-hidden="true">→</div>
+        <div class="mcp-node">
+          <div class="mcp-ic" aria-hidden="true">⛓️</div>
+          <p class="mcp-h">④ Base（オンチェーン）</p>
+          <p class="mcp-d">送金・swap・Aerodrome/Uniswap で流動性提供・Morpho で借入まで、<b style="color:#cdd8f2">数秒・低コスト</b>で確定。</p>
+        </div>
+      </div>
+
+      <div class="mcp-pipe" aria-hidden="true">
+        <span class="mcp-dot"></span><span class="mcp-dot b"></span><span class="mcp-dot c"></span>
+      </div>
+      <p class="viz-cap">
+        ▲ ①頼む → ②MCPが翻訳（許可ゲート）→ ③ウォレットが許可範囲で実行 → ④Base上で確定。
+        <b style="color:#cdd8f2">肝は ②③</b>：AI に渡すのは「操作のお願い」までで、<b style="color:#cdd8f2">鍵と許可はあなたの手元</b>に残ります。
+        <sup class="fn"><a href="#ref-1" style="color:#8fa0c4">[1]</a></sup>（仕組みの呼称・対応ツールは Base 公式発表）／MCP 規格は公式<sup class="fn"><a href="#ref-17" style="color:#8fa0c4">[17]</a></sup>。
+      </p>
+    </div>
+
+    <!-- 図: ③のウォレット（Base Account）の実画面。account.base.app の Web UI。
+         MCP が操作するのはこの“あなたのウォレット”。Buy/Swap/Send/Receive が一画面に。 -->
+    <figure>
+      <img src="../../01-primary/keynote-images/base-account-web-ui.png"
+           alt="Base Account（account.base.app）の Web 画面。左に Assets/Activity/Apps と Buy/Swap/Send/Receive、右に取引履歴（USDC↔他トークンのスワップ・受取）。" />
+      <figcaption style="color:#9fb0d4">
+        ▲ 上の図③「あなたのウォレット」の実画面 ── <b style="color:#cdd8f2">Base Account</b>（<b style="color:#cdd8f2">account.base.app</b> で作成）。
+        メールのワンタイムコード（OTP）やパスキーでサインインでき、Buy / Swap / Send / Receive が1画面に。MCP はこのウォレットを“許可した範囲だけ”操作します。<sup class="fn"><a href="#ref-18" style="color:#9fb0d4">[18]</a></sup>
+      </figcaption>
+    </figure>
+
+    <!-- 図④: 「x402決済の約9割がBase上」をドーナツで（Base公式発表値） -->
+    <div class="viz on-dark reveal" aria-hidden="true">
+      <p class="viz-title">図解：AI同士の支払い（x402）── 約9割が Base 上で完了</p>
+      <div class="donut-wrap">
+        <div class="donut" data-p="90"><span class="pct">≈90%</span></div>
+        <div class="donut-legend">
+          <b>x402 決済の約9割が Base 上で完了。</b><br>
+          AI が相互に支払う決済規格（Coinbase 発、HTTP の "402 Payment Required" 由来）。
+          その大半が Base に集まりつつあります。<br>
+          <span style="color:#8fa0c4;font-size:.86em;">※ Base 公式の発表値<sup class="fn"><a href="#ref-1" style="color:#8fa0c4">[1]</a></sup>。x402 の仕様は公式<sup class="fn"><a href="#ref-11" style="color:#8fa0c4">[11]</a></sup>。</span>
+        </div>
+      </div>
+    </div>
+
+    <figure>
+      <img src="../../01-primary/keynote-images/keynote-demo-prompts.png"
+           alt="Base MCP のデモ用プロンプト例。USDC vault検索・送金・残高確認・ポートフォリオ閲覧などを simple prompts で。" />
+      <figcaption style="color:#9fb0d4">
+        ▲ 「全部 simple prompts で」── APYが高い USDC vault を探す／jesse.base.eth に送金／残高は？／ポートフォリオの価値は？ など。<a href="#ref-1" style="color:#9fb0d4;text-decoration:none">[1]</a>
+      </figcaption>
+    </figure>
+
+    <div class="grid grid-3" style="margin-top:40px">
+      <div class="card" style="background:#141a2b;border-color:#243049;">
+        <div class="meta" style="color:#7aa2ff">規模（Base公式発表値）</div>
+        <h3 style="color:#fff">エージェント経済が成長中</h3>
+        <p style="color:#aab6d2">Base 公式によると、Virtuals は <b>4万体の自律エージェントで月$400万超</b>、Banker は手数料で自走し <b>$3,000万超</b>のエージェント収益。
+        <span style="color:#8fa0c4;font-size:.86em;">※いずれも Base 公式が示す値です<sup class="fn"><a href="#ref-1" style="color:#8fa0c4">[1]</a></sup>（集計の前提により数値は変わり得ます）。</span></p>
+        <!-- 内部メモ: Virtuals/Bankerは第三者と乖離（実数約1.7万体/累計$39.5M, Banker綴り"Bankr"の可能性で$30M裏取り不能）。詳細NEXT.md。 -->
+      </div>
+      <div class="card" style="background:#141a2b;border-color:#243049;">
+        <div class="meta" style="color:#7aa2ff">決済プロトコル</div>
+        <h3 style="color:#fff">x402 ── AI同士の支払い</h3>
+        <p style="color:#aab6d2">x402 は Coinbase 発のエージェント決済規格（HTTP の "402 Payment Required" 由来）。
+        Base 公式によると <b>x402 決済の約9割が Base 上で完了</b>。AI が相互に支払う基盤が Base に集まりつつあります。
+        </p>
+      </div>
+      <div class="card" style="background:#141a2b;border-color:#243049;">
+        <div class="meta" style="color:#7aa2ff">体験 / 勉強会デモ</div>
+        <h3 style="color:#fff">いつものツールから</h3>
+        <p style="color:#aab6d2">Aerodrome / Uniswap で流動性提供、Morpho で借入まで対話のまま完結。当日は「話しかけるだけ」を実演（録画/ログ再生ベース）。
+        <span class="flag">当日は録画／ログ再生で安全に実演</span></p>
+      </div>
+    </div>
+
+    <p class="note" style="margin-top:22px;color:#9fb0d4">
+      この節の数字は Base 公式の発表値<sup class="fn"><a href="#ref-1" style="color:#9fb0d4">[1]</a></sup>、x402 の仕様は公式<sup class="fn"><a href="#ref-11" style="color:#9fb0d4">[11]</a></sup>に基づきます。
+    </p>
+  </div>
+</section>
+
+<!-- ====================== ROADMAP ====================== -->
+<section id="roadmap">
+  <div class="wrap">
+    <span class="eyebrow">これから</span>
+    <h2>独立後の Base は、年6回の小刻みアップグレードへ。</h2>
+    <p class="lead">
+      統合スタックへの移行で、Base は <b>年6回</b>（従来年3回）の、小さく狙いを絞ったハードフォークを目指します。
+      「ネット全体の定例バージョンアップ」を頻繁に・リスク小さく回す方針です。
+    </p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">2026-05-13 ・ Azul（稼働済み）</div>
+        <div class="tl-body">独立後初の大型アプデ。multiproof / 単一クライアント / Osaka 整列。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026-06-25 ・ Beryl（第2アップグレード）</div>
+        <div class="tl-body">B20（トークン規格）を導入。出金の待ち時間を 7日→5日 に短縮、スケーリング基盤 Reth V2。Azul のわずか4週間後＝この刊行ペースが「独立後」の証。</div>
+      </div>
+      <div class="tl-item future">
+        <div class="tl-date">2026 9月予定 ・ Cobalt（Beryl の次の大型アップグレード）</div>
+        <div class="tl-body">Beryl の次に控える Cobalt では、ネイティブ・アカウント抽象化（AA）で「ウォレットを “普通のアプリのログイン” 並みに簡単」に。B20強化（自トークンでガス支払い等）／node単一バイナリ化。</div>
+      </div>
+    </div>
+
+    <p class="note" style="margin-top:22px">
+      Beryl 稼働日（6-25）・Cobalt（9月・ネイティブAA）はいずれも公式blogに記載されています<sup class="fn"><a href="#ref-2">[2]</a></sup><sup class="fn"><a href="#ref-3">[3]</a></sup><sup class="fn"><a href="#ref-4">[4]</a></sup>。
+    </p>
+  </div>
+</section>
+
+<!-- 読み方/用語集は登壇者用の内部資料に退避 → 02-derived/script/pronunciation.md（聴衆向けLPには非表示） -->
+
+<!-- ====================== METHODOLOGY（数字の出典について） ====================== -->
+<section id="verify" style="background:var(--mist);">
+  <div class="wrap">
+    <span class="eyebrow">数字の出典について</span>
+    <h2>この資料の数字は、2つの種類に分けて示しています。</h2>
+    <p class="lead">
+      この資料の数字は、<b>第三者の統計で確認できた数字</b>と、<b>Base 公式が発表した数字</b>に分けて示しています。
+      どちらも出典と時点を併記しているので、安心して参照いただけます。
+    </p>
+
+    <div class="grid grid-2" style="margin-top:34px">
+      <div class="card">
+        <div class="meta">① 第三者の統計で確認できる数字</div>
+        <h3>中立なデータソースで裏づく</h3>
+        <p>
+          ・TVL 約 <b>$4.2B</b>（DefiLlama, 2026-06）<br>
+          ・ステーブル時価総額 約 <b>$4.87B</b>（DefiLlama）<br>
+          ・オンチェーンBTC現物シェア 約 <b>43%</b>（Blockworks/PANews, 2026-03）<br>
+          ・空ブロック約99%減・5,000 TPS（Base 公式 / CMC）
+        </p>
+      </div>
+      <div class="card">
+        <div class="meta">② Base 公式が発表した数字</div>
+        <h3>Base 公式が示す値</h3>
+        <p>
+          ・ステーブル決済 <b>$19兆</b>（2026年）<br>
+          ・ローカル通貨ステーブル <b>25種+</b><br>
+          ・Wyre X・Rain の決済 <b>$600M</b><br>
+          ・エージェント収益（Virtuals 月$400万 / Banker $3,000万+）
+        </p>
+        <div class="analogy" style="font-size:.84em">
+          <b>参考：</b>ステーブル決済の規模は、第三者でも「兆ドル単位」が確認できます（Coinbase の四半期開示で <b>約$13.9兆</b> など）。時点や集計方法で数字は変わるため、出典と時点を添えています。
+        </div>
+        <!-- 内部メモ: ②は中立統計と完全一致する独立ソース未確認のため「Base公式発表」と帰属させ言い切らない。Virtuals/Bankerは第三者と乖離（実数約1.7万体/累計$39.5M, Banker綴り"Bankr"の可能性）。詳細 NEXT.md。 -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== SOURCES ====================== -->
+<section id="sources">
+  <div class="wrap">
+    <span class="eyebrow">参考文献・出典</span>
+    <h2>このページの参考文献</h2>
+    <p class="lead">
+      本文中の <b>[1]〜[18]</b> はこのリストに対応します。すべてクリックで原典に飛べます。
+      Base 公式（docs.base.org / blog.base.dev / 公式発表）を中心に、発行体公式・第三者統計・参考記事を種別とともに示します。
+    </p>
+
+    <div class="refs" style="margin-top:24px">
+      <ol>
+        <li id="ref-1"><span class="src-name">Base 公式「Base is the blockchain for global finance」（2026-06-17 公式発表）</span> ─ <a href="https://www.youtube.com/watch?v=l8yp2bTRvIU" target="_blank" rel="noopener">youtube.com/watch?v=l8yp2bTRvIU</a>　<span class="badge">Base公式</span></li>
+        <li id="ref-2"><span class="src-name">Introducing Base Beryl（公式blog, 2026-06-19）</span> ─ <a href="https://blog.base.dev/introducing-base-beryl" target="_blank" rel="noopener">blog.base.dev/introducing-base-beryl</a>　<span class="badge">Eng Blog</span></li>
+        <li id="ref-3"><span class="src-name">Introducing Base Azul（公式blog）</span> ─ <a href="https://blog.base.dev/introducing-base-azul" target="_blank" rel="noopener">blog.base.dev/introducing-base-azul</a>　<span class="badge">Eng Blog</span></li>
+        <li id="ref-4"><span class="src-name">A new, unified stack for Base Chain（公式blog）</span> ─ <a href="https://blog.base.dev/next-chapter-for-base-chain-1" target="_blank" rel="noopener">blog.base.dev/next-chapter-for-base-chain-1</a>　<span class="badge">Eng Blog</span></li>
+        <li id="ref-5"><span class="src-name">Beryl 公式仕様（docs.base.org）</span> ─ <a href="https://docs.base.org/base-chain/specs/upgrades/beryl/overview" target="_blank" rel="noopener">docs.base.org/…/beryl/overview</a>　<span class="badge">公式docs</span></li>
+        <li id="ref-6"><span class="src-name">B20 公式仕様（docs.base.org）＋ Base Standard Library</span> ─ <a href="https://docs.base.org/base-chain/specs/upgrades/beryl/b20" target="_blank" rel="noopener">docs.base.org/…/beryl/b20</a> ／ <a href="https://github.com/base/base-std" target="_blank" rel="noopener">github.com/base/base-std</a>　<span class="badge">公式docs</span></li>
+        <li id="ref-7"><span class="src-name">Multichain USDC（Circle 公式）</span> ─ <a href="https://www.circle.com/multi-chain-usdc" target="_blank" rel="noopener">circle.com/multi-chain-usdc</a>　<span class="badge">発行体公式</span></li>
+        <li id="ref-8"><span class="src-name">Paytrie expands CADC to Base Network（プレス, 2025-02）</span> ─ <a href="https://www.kron4.com/business/press-releases/ein-presswire/786764431/paytrie-expands-canadian-dollar-stablecoin-cadc-to-base-network-for-faster-low-cost-onchain-transactions/" target="_blank" rel="noopener">kron4.com/…/paytrie-expands-cadc-to-base</a>　<span class="badge">プレス</span></li>
+        <li id="ref-9"><span class="src-name">Brazilian Digital Token (BRZ)（CoinMarketCap）</span> ─ <a href="https://coinmarketcap.com/currencies/brz/" target="_blank" rel="noopener">coinmarketcap.com/currencies/brz</a>　<span class="badge">第三者</span></li>
+        <li id="ref-10"><span class="src-name">MXNB Stablecoin（Bitso Business 公式）</span> ─ <a href="https://bitso.com/business/products/mxnb-stablecoin" target="_blank" rel="noopener">bitso.com/business/products/mxnb-stablecoin</a>　<span class="badge">発行体公式</span></li>
+        <li id="ref-11"><span class="src-name">x402（公式）</span> ─ <a href="https://www.x402.org/" target="_blank" rel="noopener">x402.org</a>　<span class="badge">公式</span></li>
+        <li id="ref-12"><span class="src-name">ERC-3643（T-REX, 証券トークン標準）公式</span> ─ <a href="https://www.erc3643.org/" target="_blank" rel="noopener">erc3643.org</a>　<span class="badge">参考</span></li>
+        <li id="ref-13"><span class="src-name">Base チェーン統計（TVL・ステーブル時価総額）</span> ─ <a href="https://defillama.com/chain/base" target="_blank" rel="noopener">defillama.com/chain/base</a>（2026-06時点）　<span class="badge">第三者統計</span></li>
+        <li id="ref-14"><span class="src-name">オンチェーンBTC現物シェア（Blockworks 集計, Base ≈43%）</span> ─ <a href="https://www.panewslab.com/en/articles/019cf705-d802-71ef-865c-e58e6d18d165" target="_blank" rel="noopener">panewslab.com/…</a>（2026-03時点）　<span class="badge">第三者統計</span></li>
+        <li id="ref-15"><span class="src-name">a16z crypto「Stablecoins are going local」（非USDステーブルの潮流）</span> ─ <a href="https://a16zcrypto.substack.com/p/stablecoins-are-going-local" target="_blank" rel="noopener">a16zcrypto.substack.com/p/stablecoins-are-going-local</a>　<span class="badge">参考</span></li>
+        <li id="ref-16"><span class="src-name">Base Azul 稼働ニュース（CoinMarketCap Academy, 2026-05-30）</span> ─ <a href="https://coinmarketcap.com/academy/article/base-azul-upgrade-mainnet" target="_blank" rel="noopener">coinmarketcap.com/academy/…/base-azul-upgrade-mainnet</a>　<span class="badge" style="background:#fde6cf;color:#92400e;">二次・補助</span></li>
+        <li id="ref-17"><span class="src-name">Model Context Protocol（MCP）公式仕様（Anthropic）</span> ─ <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">modelcontextprotocol.io</a>　<span class="badge">規格公式</span></li>
+        <li id="ref-18"><span class="src-name">Base Account（自己管理のスマートウォレット／ERC-4337）＝ サインインはメールOTP・パスキー・リカバリーフレーズ</span> ─ <a href="https://account.base.app/" target="_blank" rel="noopener">account.base.app</a> ／ <a href="https://docs.base.org/base-account/overview/what-is-base-account" target="_blank" rel="noopener">docs.base.org/base-account/…</a>　<span class="badge">公式docs</span></li>
+      </ol>
+    </div>
+
+    <p class="note" style="margin-top:18px">
+      キーノート由来の画像は上記 [1]（Base 公式資料）のスクリーンショットです。Base Account の画面は account.base.app の実画面です<sup class="fn"><a href="#ref-18">[18]</a></sup>。
+    </p>
+    <p class="note" style="margin-top:6px">
+      このページは第3回Base勉強会の紹介ページです。<!-- 内部: 発表確定・社外公開は最終レビュー後（承認線）。CLAUDE.md §3 -->
+    </p>
+  </div>
+</section>
+
+<!-- ====================== FOOTER ====================== -->
+<footer>
+  <div class="wrap">
+    <span>第3回Base勉強会 紹介ページ ・ 2026-06-21</span>
+    <span class="note">対象 ＝ Coinbase の Base（Ethereum L2）。同名の倉庫SaaS "Base" とは無関係。</span>
+  </div>
+</footer>
+
+<script>
+/* 図・アニメーションの起動。外部依存なし。
+   動きが苦手な人(prefers-reduced-motion)は即・最終状態で表示する。 */
+(function(){
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* --- 1) スクロール・リビール（.reveal を画面内で .in に） --- */
+  var reveals = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
+  function fillDonut(el){
+    var p = parseFloat(el.getAttribute("data-p")) || 0;
+    el.style.setProperty("--p", p);                 // conic-gradient を伸ばす
+  }
+  function activate(el){
+    el.classList.add("in");
+    var d = el.querySelector(".donut");             // 図④: ドーナツがあれば塗る
+    if(d){ if(reduce){ d.style.setProperty("--p", parseFloat(d.getAttribute("data-p"))||0); } else { requestAnimationFrame(function(){ fillDonut(d); }); } }
+  }
+  if(reduce || !("IntersectionObserver" in window)){
+    reveals.forEach(activate);
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ activate(e.target); io.unobserve(e.target); }
+      });
+    }, {threshold:.18, rootMargin:"0px 0px -8% 0px"});
+    reveals.forEach(function(el){ io.observe(el); });
+  }
+
+  /* --- 2) hero の数字カウントアップ。元テキストはそのまま最終値として残す --- */
+  function countUp(el){
+    var target = parseFloat(el.getAttribute("data-to"));
+    var suffix = el.getAttribute("data-suffix") || "";
+    var prefix = el.getAttribute("data-prefix") || "";
+    var dur = 1100, start = null, done = false;
+    function finalText(){ return prefix + (target % 1 === 0 ? target : target.toFixed(1)) + suffix; }
+    function settle(){ if(!done){ done = true; el.textContent = finalText(); } }
+    function step(ts){
+      if(done) return;
+      if(start === null) start = ts;
+      var t = Math.min((ts - start)/dur, 1);
+      var eased = 1 - Math.pow(1 - t, 3);
+      var val = target * eased;
+      var shown = (target % 1 === 0) ? Math.round(val) : val.toFixed(1);
+      el.textContent = prefix + shown + suffix;
+      if(t < 1) requestAnimationFrame(step); else settle();
+    }
+    /* 安全網: rAF が止まっても(タブ非表示など)必ず最終値=正しい数字に収束させる。
+       数字の正確さは規則11/12の要請なので、途中値で固定しない。 */
+    setTimeout(settle, dur + 400);
+    document.addEventListener("visibilitychange", function(){ if(document.hidden) settle(); });
+    requestAnimationFrame(step);
+  }
+  var counters = Array.prototype.slice.call(document.querySelectorAll(".counting[data-to]"));
+  if(counters.length){
+    if(reduce || !("IntersectionObserver" in window)){
+      /* 何もしない（HTMLに書いた最終値がそのまま見える） */
+    } else {
+      var io2 = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){ countUp(e.target); io2.unobserve(e.target); }
+        });
+      }, {threshold:.6});
+      counters.forEach(function(el){ io2.observe(el); });
+    }
+  }
+})();
+</script>
+
+</body>
+</html>
