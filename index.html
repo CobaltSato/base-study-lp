@@ -8,10 +8,17 @@
   Base 勉強会 紹介LP（ビジネス訴求・視覚重視 / 非エンジニア混在向け）
   - 数字・日付・固有名は 02-derived/context/SoR.md の正本で裏取り。未確認は [要検証] を明示。
   - 主張の根拠は 01-primary/**（1次資料）のみ。02-derived/** 同士を根拠にしない（推論の連鎖防止）。
-  - 画像は ../../01-primary/keynote-images/ を相対参照（リポジトリ内から開く前提）。
+  - 画像は同階層の images/ を相対参照（このフォルダ＝index.html+images/ で自己完結。GitHub Pages公開用にも同構成でコピーする）。元の1次資料は 01-primary/keynote-images/ にある。
   - これは紹介ページであり「発表確定版」ではない（CLAUDE.md §3 承認線）。
   - 2026-06-21 視覚リファイン: 中身（数字・出典・脚注・主張）は不変。<style>内のみ調整（タイポ/余白/質感）。
+  - 2026-06-21 公開前レビュー（ファクトチェック＋聴衆視点）:
+      * ファクト: ステーブル時価総額を $4.87B → $4.78B に更新（DefiLlama 2026-06 現在値にドリフト解消）。
+        他の数字・日付（Beryl 6/25・Azul 5/13・Cobalt 9月・TVL $4.2B・BTC現物43%・$19兆/90%）は1次資料で再確認し不変。
+      * 聴衆視点: Azulカードの専門語を平易化（TPS開く / base-reth-node・base-consensus・CLZ・MODEXP・"Stage 2"等の生コード名を本文から除去）、
+        Reth V2 見出しに意味ラベル付与、$19兆ラベルにフロー/ストックの別を明記、B20「2つの型」を平易化、デモ文を聴衆向けに再構成。
+      * 内部メモ（要検証・承認線）は全てHTMLコメント内（聴衆非表示）であることを確認。脚注[1-18]は全て対応するref/アンカーに解決。
 -->
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -478,7 +485,7 @@
       </div>
       <div class="stat">
         <div class="num">$19兆</div>
-        <div class="lbl">2026年に Base 上で決済されたステーブル額（Base公式発表）</div>
+        <div class="lbl">2026年に Base 上で動いたステーブル決済の累計額。預け入れ残高（左の TVL）とは別物の「流れた総額」（Base公式発表）</div>
         <div class="src">出典: Base 公式, 2026 <a href="#ref-1" style="text-decoration:none">[1]</a></div>
       </div>
       <div class="stat">
@@ -610,8 +617,8 @@
       </div>
       <div class="card">
         <div class="meta">③ スケーラビリティ</div>
-        <h3>Reth V2</h3>
-        <p>ノードのディスク使用量を削減し、状態計算を高速化。ブロックの処理上限を上げても詰まらない設計に。さらなる拡張への土台。</p>
+        <h3>処理基盤の刷新（Reth V2）</h3>
+        <p>ノードの保存容量を削減し、計算を高速化。処理上限を上げても詰まらない設計に。さらなる拡張への土台です。</p>
         <div class="analogy"><b>たとえ：</b>「より大きな荷物をさばける物流倉庫に増強」。</div>
       </div>
     </div>
@@ -668,19 +675,19 @@
       <div class="card">
         <div class="meta">安全性 / 分散化</div>
         <h3>multiproof（2系統の鍵）</h3>
-        <p>TEE と ZK、2種類の証明を併用。片方が壊れても止まらず、両方が一致すれば出金が最短1日で確定（＝特急経路。ただしコストが高く現状はまれで、多くの人が通る通常経路は Beryl で5日に）。Stage 2 分散化への大きな一歩。</p>
+        <p>2種類の安全確認（TEE と ZK ＝異なる方式の証明）を併用。片方が壊れても止まらず、両方が一致すれば出金が最短1日で確定（＝特急経路。ただしコストが高く現状はまれで、多くの人が通る通常経路は Beryl で5日に）。「運営者に依存しない」状態へ近づく、大きな一歩です。</p>
         <div class="analogy"><b>たとえ：</b>「鍵を2系統にして、片方が壊れても止まらない金庫」。</div>
       </div>
       <div class="card">
         <div class="meta">性能</div>
-        <h3>単一クライアントへ統合</h3>
-        <p>実行クライアントを base-reth-node 1本に集約、新コンセンサス base-consensus を導入。1 gigagas/s への道を加速。5,000 TPS のバーストを複数回維持。</p>
+        <h3>処理エンジンを1つに統合</h3>
+        <p>バラバラだった処理ソフトを Base 自前の1セットに集約。1秒あたりにさばける取引数（TPS）を底上げし、瞬間的に <b>毎秒5,000件</b> の取引を複数回さばけた実績も。さらなる高速化（目標：毎秒10億ガス相当の処理能力）への土台。</p>
         <div class="analogy"><b>たとえ：</b>「部品の寄せ集めから、自社製ワンセットへ」。</div>
       </div>
       <div class="card">
         <div class="meta">開発体験</div>
-        <h3>Ethereum (Osaka) に追従</h3>
-        <p>CLZ オペコード追加や MODEXP の再価格付けなど、Ethereum 最新仕様に整列。多くのアプリは改修不要。</p>
+        <h3>本家 Ethereum の最新仕様に追従</h3>
+        <p>Ethereum 本体の最新アップデートに細かく整列。内部を合わせておくことで、多くのアプリは改修なしでそのまま動きます。</p>
         <div class="analogy"><b>意味：</b>「本家 Ethereum と歩調を合わせ、開発者が迷わない」。</div>
       </div>
     </div>
@@ -731,7 +738,7 @@
       <div class="card">
         <div class="meta">2つの型</div>
         <h3>Asset と Stablecoin</h3>
-        <p>Asset＝小数6〜18桁・リベース倍率・一括発行など汎用。Stablecoin＝小数6桁固定＋通貨コード自己申告。RWA・ステーブル・オンチェーン資産に向く。</p>
+        <p>用途で2種類を使い分け。<b>Asset</b>＝株・コモディティなど幅広い資産向けの汎用型。<b>Stablecoin</b>＝通貨に連動するステーブル専用の型。現実資産のトークン化（RWA）やステーブルコインに向きます。</p>
       </div>
     </div>
 
@@ -842,7 +849,7 @@
     </p>
 
     <figure>
-      <img src="../../01-primary/keynote-images/keynote-nonusd-stablecoins-map.png"
+      <img src="images/keynote-nonusd-stablecoins-map.png"
            alt="Base 上の非USDステーブルコインの世界地図。USD/EUR/円/ペソ/レアル/ランド/ポンド/カナダドルなど各国通貨が並ぶ。" />
       <figcaption>
         ▲ Base 上のステーブルコイン（Base 公式資料）。左にドル含む各国通貨、世界地図上に各国のコードが点在。<a href="#ref-1" style="text-decoration:none">[1]</a>
@@ -1015,7 +1022,7 @@
     <!-- 図: ③のウォレット（Base Account）の実画面。account.base.app の Web UI。
          MCP が操作するのはこの“あなたのウォレット”。Buy/Swap/Send/Receive が一画面に。 -->
     <figure>
-      <img src="../../01-primary/keynote-images/base-account-web-ui.png"
+      <img src="images/base-account-web-ui.png"
            alt="Base Account（account.base.app）の Web 画面。左に Assets/Activity/Apps と Buy/Swap/Send/Receive、右に取引履歴（USDC↔他トークンのスワップ・受取）。" />
       <figcaption style="color:#9fb0d4">
         ▲ 上の図③「あなたのウォレット」の実画面 ── <b style="color:#cdd8f2">Base Account</b>（<b style="color:#cdd8f2">account.base.app</b> で作成）。
@@ -1038,7 +1045,7 @@
     </div>
 
     <figure>
-      <img src="../../01-primary/keynote-images/keynote-demo-prompts.png"
+      <img src="images/keynote-demo-prompts.png"
            alt="Base MCP のデモ用プロンプト例。USDC vault検索・送金・残高確認・ポートフォリオ閲覧などを simple prompts で。" />
       <figcaption style="color:#9fb0d4">
         ▲ 「全部 simple prompts で」── APYが高い USDC vault を探す／jesse.base.eth に送金／残高は？／ポートフォリオの価値は？ など。<a href="#ref-1" style="color:#9fb0d4;text-decoration:none">[1]</a>
@@ -1061,10 +1068,10 @@
         </p>
       </div>
       <div class="card" style="background:#141a2b;border-color:#243049;">
-        <div class="meta" style="color:#7aa2ff">体験 / 勉強会デモ</div>
+        <div class="meta" style="color:#7aa2ff">体験 / 勉強会でのデモ</div>
         <h3 style="color:#fff">いつものツールから</h3>
-        <p style="color:#aab6d2">Aerodrome / Uniswap で流動性提供、Morpho で借入まで対話のまま完結。当日は「話しかけるだけ」を実演（録画/ログ再生ベース）。
-        <span class="flag">当日は録画／ログ再生で安全に実演</span></p>
+        <p style="color:#aab6d2">Aerodrome / Uniswap で流動性提供、Morpho で借入まで、対話のまま完結。勉強会では、この「話しかけるだけ」の操作を録画ベースで安全にお見せします。
+        <span class="flag">勉強会では録画／ログ再生で安全にデモ</span></p>
       </div>
     </div>
 
@@ -1091,7 +1098,7 @@
       </div>
       <div class="tl-item">
         <div class="tl-date">2026-06-25 ・ Beryl（第2アップグレード）</div>
-        <div class="tl-body">B20（トークン規格）を導入。出金の待ち時間を 7日→5日 に短縮、スケーリング基盤 Reth V2。Azul のわずか4週間後＝この刊行ペースが「独立後」の証。</div>
+        <div class="tl-body">B20（トークン規格）を導入。出金の待ち時間を 7日→5日 に短縮、処理基盤を刷新（Reth V2）。Azul のわずか4週間後＝この刊行ペースが「独立後」の証。</div>
       </div>
       <div class="tl-item future">
         <div class="tl-date">2026 9月予定 ・ Cobalt（Beryl の次の大型アップグレード）</div>
@@ -1123,7 +1130,7 @@
         <h3>中立なデータソースで裏づく</h3>
         <p>
           ・TVL 約 <b>$4.2B</b>（DefiLlama, 2026-06）<br>
-          ・ステーブル時価総額 約 <b>$4.87B</b>（DefiLlama）<br>
+          ・ステーブル時価総額 約 <b>$4.78B</b>（DefiLlama, 2026-06）<br>
           ・オンチェーンBTC現物シェア 約 <b>43%</b>（Blockworks/PANews, 2026-03）<br>
           ・空ブロック約99%減・5,000 TPS（Base 公式 / CMC）
         </p>
