@@ -829,10 +829,8 @@
       <div class="card">
         <div class="meta">安全性 / 分散化</div>
         <h3>multiproof（2系統の鍵）</h3>
-        <p><b>2種類の安全確認（TEE と ZK ＝異なる方式の証明）を併用</b>します。出金の正しさを、ハードウェアで守られた実行環境（TEE）と、数学的に検証できる証明（ZK）の<b>2つの目で</b>チェックする仕組みです。<br>
-          ・<b>通常経路</b>：どちらか<b>一方の証明</b>があれば確定（単一証明パス）。Beryl でこの待ち時間を <b>7日 → 5日</b>に短縮。多くの人が通るのはこちら。<br>
-          ・<b>特急経路</b>：<b>両方の証明が一致</b>すれば <b>最短1日</b>で確定。ただし ZK 証明の生成コストが高く、現状はまれ。<br>
-          1つの番人に頼らず複数の検証を組み合わせることで、「運営者に依存しない」状態へ近づく、大きな一歩です。</p>
+        <p>出金の正しさを、<b>方式の違う2つの証明（TEE と ZK）で二重チェック</b>する仕組み。1つの番人に頼らず複数の目で確かめることで、「<b>運営者に依存しない</b>」状態へ近づく大きな一歩です。<br>
+          この二重化により出金の待ち時間も短縮（Beryl で <b>7日 → 5日</b>）。詳しい段階は下の「出金の待ち時間」図で。</p>
         <div class="analogy"><b>たとえ：</b>「種類の違う2本の鍵を用意した金庫。普段はどちらか1本で開け、2本が揃えば“特急レーン”で最速で開く」。</div>
       </div>
       <div class="card">
@@ -1206,12 +1204,12 @@
       <div class="card">
         <div class="meta">実需</div>
         <h3>$6億 の決済実績</h3>
-        <p>Wyre X・Rain などの発行体が、2026年だけで Base 上で <b>$600M</b> のステーブル決済を実行。日常の買い物に使える段階に。</p>
+        <p><b>Wyre X</b>（米国の決済インフラ企業）・<b>Rain</b>（ステーブル担保カードのスタートアップ）などの発行体が、2026年だけで Base 上で <b>$600M</b> のステーブル決済を実行。日常の買い物に使える段階に。</p>
       </div>
       <div class="card">
         <div class="meta">地域</div>
         <h3>各地のネオバンク / 取引所</h3>
-        <p>Tu Yo・Flex はドルステーブルと BTC で「世界水準の体験」を提供。Bitso は MXN（メキシコペソ）を導入し、ペソで稼げる Vault も展開。</p>
+        <p><b>Tuyo・Flex</b>（スマホ完結のネオバンク）はドルステーブルと BTC で「世界水準の体験」を提供。<b>Bitso</b>（中南米の暗号資産取引所）は MXN（メキシコペソ）を導入し、ペソで稼げる Vault も展開。</p>
       </div>
       <div class="card">
         <div class="meta">ビジョン</div>
@@ -1270,7 +1268,7 @@
         <div class="mcp-node" style="--t:2.7s">
           <div class="mcp-ic" aria-hidden="true">⛓️</div>
           <p class="mcp-h">④ Base（オンチェーン）</p>
-          <p class="mcp-d">送金・swap・Aerodrome/Uniswap で流動性提供・Morpho で借入まで、<b style="color:#cdd8f2">数秒・低コスト</b>で確定。</p>
+          <p class="mcp-d">送金・swap・<b style="color:#cdd8f2">Aerodrome/Uniswap</b>（DEX）で流動性提供・<b style="color:#cdd8f2">Morpho</b>（貸借）で借入まで、<b style="color:#cdd8f2">数秒・低コスト</b>で確定。</p>
         </div>
       </div>
 
@@ -1298,7 +1296,7 @@
     <!-- 図: ①→③の“実際にやってみた”実例。AIに頼む→Base Accountで承認、の2枚。
          左=AIが操作を組み立て承認待ち→完了（機微なURL/内部calldataはマスク済み）。右=Base Accountの承認画面（−1 USDC/+MUSDC）。 -->
     <div id="demo" style="margin-top:8px;scroll-margin-top:80px">
-      <p class="viz-title" style="text-align:center">実例：AI に頼む → あなたが承認 ── Moonwell に 1 USDC を“貸す”を対話だけで</p>
+      <p class="viz-title" style="text-align:center">実例：AI に頼む → あなたが承認 ── Moonwell（Base の貸借サービス）に 1 USDC を“貸す”を対話だけで</p>
       <div class="grid grid-2" style="gap:18px;align-items:start;margin-top:14px">
         <figure style="margin:0">
           <img src="images/mcp-demo-agent.png"
@@ -1343,7 +1341,7 @@
       <div class="card" style="background:#141a2b;border-color:#243049;">
         <div class="meta" style="color:#7aa2ff">規模（Base公式発表値）</div>
         <h3 style="color:#fff">エージェント経済が成長中</h3>
-        <p style="color:#aab6d2">Base 公式によると、Virtuals は <b>4万体の自律エージェントで月$400万超</b>、Banker は手数料で自走し <b>$3,000万超</b>のエージェント収益。
+        <p style="color:#aab6d2">Base 公式によると、<b>Virtuals</b>（AIエージェントの発行プラットフォーム）は <b>4万体の自律エージェントで月$400万超</b>、Banker は手数料で自走し <b>$3,000万超</b>のエージェント収益。
         <span style="color:#8fa0c4;font-size:.86em;">※いずれも Base 公式が示す値です<sup class="fn"><a href="#ref-1" style="color:#8fa0c4">[1]</a></sup>（集計の前提により数値は変わり得ます）。</span></p>
         <!-- 内部メモ: Virtuals/Bankerは第三者と乖離（実数約1.7万体/累計$39.5M, Banker綴り"Bankr"の可能性で$30M裏取り不能）。詳細NEXT.md。 -->
       </div>
@@ -1357,7 +1355,7 @@
       <div class="card" style="background:#141a2b;border-color:#243049;">
         <div class="meta" style="color:#7aa2ff">体験 / 勉強会でのデモ</div>
         <h3 style="color:#fff">いつものツールから</h3>
-        <p style="color:#aab6d2">Aerodrome / Uniswap で流動性提供、Morpho で借入まで、対話のまま完結。勉強会では、この「話しかけるだけ」の操作を実例とあわせてお見せします。</p>
+        <p style="color:#aab6d2"><b>Aerodrome / Uniswap</b>（分散型取引所＝DEX）で流動性提供、<b>Morpho</b>（レンディング＝貸借）で借入まで、対話のまま完結。勉強会では、この「話しかけるだけ」の操作を実例とあわせてお見せします。</p>
       </div>
     </div>
 
