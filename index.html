@@ -69,7 +69,7 @@
     -moz-osx-font-smoothing:grayscale;
   }
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
-  section{padding:104px 0;position:relative;}
+  section{padding:104px 0;position:relative;scroll-margin-top:80px;}
   /* セクション境界は全幅ベタ線でなく、中央で濃く端で消えるヘアラインに（“仕様書”の規律を上品に） */
   section + section::before{
     content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
@@ -144,6 +144,14 @@
   .btn-primary:hover{background:var(--base-blue-deep);transform:translateY(-1px);box-shadow:0 10px 26px rgba(0,82,255,.34);}
   .btn-ghost{border:1.5px solid var(--line);color:var(--ink);background:rgba(255,255,255,.6);}
   .btn-ghost:hover{border-color:var(--base-blue);color:var(--base-blue);transform:translateY(-1px);}
+  /* Hero下のセクション内ジャンプ（聴衆が見出しから飛べる目次。出典/種類などメタ節は載せない） */
+  .jump-nav{margin-top:18px;display:flex;gap:8px;flex-wrap:wrap;}
+  .jump-nav .jl{
+    font-size:.82rem;font-weight:700;text-decoration:none;color:var(--muted);
+    padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.55);
+    transition:color .16s,border-color .16s,background .16s,transform .16s;
+  }
+  .jump-nav .jl:hover{color:var(--base-blue);border-color:var(--base-blue);background:#fff;transform:translateY(-1px);}
 
   /* ---------- stat band ---------- */
   .stats{
@@ -634,8 +642,19 @@
 
     <div class="cta-row">
       <a class="btn btn-primary" href="#why">ざっと見る ↓</a>
-      <a class="btn btn-ghost" href="#sources">出典一覧へ</a>
     </div>
+
+    <!-- セクション内ジャンプ：聴衆が興味のある見出しへ直接飛べる目次（出典/数字の種類などメタ節は除外） -->
+    <nav class="jump-nav" aria-label="このページの内容">
+      <a class="jl" href="#numbers">数字でみる</a>
+      <a class="jl" href="#why">なぜ Base</a>
+      <a class="jl" href="#azul">Azul</a>
+      <a class="jl" href="#beryl">Beryl</a>
+      <a class="jl" href="#b20">B20</a>
+      <a class="jl" href="#money">各国通貨</a>
+      <a class="jl" href="#agents">AIで送金</a>
+      <a class="jl" href="#roadmap">ロードマップ</a>
+    </nav>
 
     <!-- 数字バンド：聴衆に刺さる規模感を最初に。数字は DefiLlama 2026-06-22 クリップ(1次)で裏取り。 -->
     <h2 id="numbers" style="margin:32px 0 4px;font-size:1.35rem;letter-spacing:.02em;scroll-margin-top:80px">数字でみる Base</h2>
