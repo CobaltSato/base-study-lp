@@ -108,8 +108,9 @@
   nav .wrap{display:flex;align-items:center;gap:20px;height:62px;}
   .brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:1rem;letter-spacing:-.01em;}
   .brand .dot{width:17px;height:17px;border-radius:5px;background:var(--base-blue);display:inline-block;box-shadow:0 2px 8px rgba(0,82,255,.35);}
-  nav .links{margin-left:auto;display:flex;gap:6px;font-size:.86rem;font-weight:600;}
-  nav .links a{color:var(--ink-soft);text-decoration:none;padding:7px 11px;border-radius:9px;transition:color .18s,background .18s;}
+  nav .links{margin-left:auto;display:flex;gap:2px;font-size:.83rem;font-weight:600;}
+  nav .links a{color:var(--ink-soft);text-decoration:none;padding:7px 9px;border-radius:9px;transition:color .18s,background .18s;white-space:nowrap;}
+  @media(max-width:1080px){nav .links{font-size:.8rem;gap:0;}nav .links a{padding:7px 7px;}}
   nav .links a:hover{color:var(--base-blue);background:var(--mist-2);}
   @media(max-width:760px){nav .links{display:none;}}
 
@@ -349,24 +350,51 @@
   .donut-legend{font-size:.9rem;color:#aab6d2;} .donut-legend b{color:#fff;}
   /* @property がある環境では数値も滑らかに。無くても最終値は出る */
 
-  /* --- バー（汎用・シェア可視化。各 .bar-fill の inline style="width:NN%" で長さ＝量を確定。
-         JS非依存で常に正しい幅で描画される堅牢設計。最大値=100%基準で比例。 --- */
-  .bars{display:grid;gap:12px;margin-top:6px;}
-  .bar-row{display:grid;grid-template-columns:128px 1fr 132px;align-items:center;gap:10px;font-size:.85rem;}
-  /* トラック（背景）= 薄い枠だけ。fill（塗り）が長さ＝量を表す主役。 */
-  .bar-track{height:16px;border-radius:8px;background:#eef1f8;overflow:hidden;}
-  /* 塗りは inline style の width:**% で長さを確定（＝JSにもCSS変数にも一切依存しない最堅実装）。
-     ※ 以前 var(--w) 経由でトラックと見分けが付かず全バー満タンに見えるバグ（2026-06-22 再々修正＝inline width直書きへ）。 */
-  .bar-fill{height:100%;border-radius:8px;background:var(--base-blue);min-width:3px;}
-  /* Base 行（主役）：濃い青のグラデで一段映えさせる。 */
-  .bar-fill.lead{background:linear-gradient(90deg,#0052ff,#3b82ff);box-shadow:0 1px 6px rgba(0,82,255,.35);}
-  /* Base 以外：はっきり濃いグレー青。トラック(#eef1f8)と明確に差をつける。 */
+  /* --- バー（汎用・シェア可視化）2026-06-22 Scrap&Build：
+         旧「ラベル列＋薄トラック＋別列の値」を廃し、
+         "塗りバーそのものに値ラベルを内包＋下に0→最大の目盛り" 方式へ。
+         長さ＝量は各 .bar-fill の inline style="width:NN%" で確定（JS非依存・最堅）。
+         値ラベルはバー内（長いバー）／バー外（短いバー）に自動で出し分け。 --- */
+  .bars{display:grid;grid-template-columns:1fr;gap:11px;margin-top:10px;}
+  .bar-row{display:grid;grid-template-columns:128px 1fr;align-items:center;gap:14px;font-size:.85rem;}
+  .bar-name{font-weight:700;color:var(--ink-soft);line-height:1.35;}
+  .bar-name b{color:var(--ink);}
+  /* レーン＝目盛り基準の容器（背景は無色。下端に薄い基線だけ＝“0からの伸び”を示す） */
+  .bar-lane{position:relative;height:26px;display:flex;align-items:center;}
+  .bar-lane::before{content:"";position:absolute;left:0;right:0;bottom:-3px;height:1px;background:var(--line);}
+  /* 塗りバー本体：inline width:**% が長さ＝量（CSS変数にもJSにも依存しない）。
+     値ラベルを内側右端に収める flex 箱を兼ねる。 */
+  .bar-fill{
+    height:22px;border-radius:7px;background:#c2cbe0;min-width:2px;
+    display:flex;align-items:center;justify-content:flex-end;
+    padding:0 11px;white-space:nowrap;box-sizing:border-box;position:relative;
+  }
+  .bar-fill .bv{font-family:var(--font-num);font-variant-numeric:tabular-nums;font-weight:800;font-size:.82rem;color:#fff;}
+  /* Base 行（主役）：濃い青グラデ＋影で一段映える。値ラベルは白で内包。 */
+  .bar-fill.lead{background:linear-gradient(90deg,#0052ff,#3b82ff);box-shadow:0 2px 10px rgba(0,82,255,.32);}
+  .bar-fill.lead .bv{color:#fff;}
+  /* Base 以外：濃いグレー青。値ラベルはバー内（濃地に白）。 */
   .bar-fill.muted{background:#aeb9d4;}
-  /* 値ラベル＋倍率バッジを横並びに */
-  .bar-val{font-weight:800;color:var(--base-blue);text-align:right;white-space:nowrap;}
-  .bar-val.muted{color:var(--ink-soft);font-weight:700;}
-  .bar-mult{display:inline-block;margin-left:7px;font-size:.7rem;font-weight:800;color:#0052ff;
-            background:rgba(0,82,255,.10);border:1px solid rgba(0,82,255,.28);border-radius:999px;padding:1px 8px;vertical-align:middle;}
+  .bar-fill.muted .bv{color:#fff;}
+  /* 短いバー（値が内側に収まらない時）：.bar-fill.out を付け、値を右外に出す */
+  .bar-fill.out{justify-content:flex-start;overflow:visible;}
+  .bar-fill.out .bv{position:absolute;left:calc(100% + 8px);top:50%;transform:translateY(-50%);color:var(--ink-soft);}
+  .bar-fill.muted.out .bv{color:var(--ink-soft);}
+  /* 倍率/順位バッジ（Base行のみ）。値ラベルの右、バー内に小さく添える
+     （バー外に出すと幅97%の行ではみ出すため内包。濃地に映える白半透明）。 */
+  .bar-mult{margin-left:9px;font-family:var(--font-num);font-size:.7rem;font-weight:800;
+            color:#fff;white-space:nowrap;background:rgba(255,255,255,.20);
+            border:1px solid rgba(255,255,255,.45);border-radius:999px;padding:2px 9px;}
+  /* 目盛り（0 → 最大値）。.bar-row と同じ2列グリッドで、ラベル列を空けて
+     2列目（レーン幅）に 0〜最大 を両端表示。レーンと目盛りが正確に揃う。 */
+  .bar-axis{display:grid;grid-template-columns:128px 1fr;gap:14px;margin-top:7px;
+            font-family:var(--font-num);font-size:.7rem;color:var(--ink-mute);letter-spacing:.02em;}
+  .bar-axis > .bar-axis-scale{display:flex;justify-content:space-between;}
+  @media(max-width:600px){
+    .bar-row,.bar-axis{grid-template-columns:92px 1fr;gap:9px;}
+    .bar-fill{padding:0 8px;}
+    .bar-mult{font-size:.64rem;padding:1px 6px;margin-left:6px;}
+  }
 
   /* --- ⑥ 出金ファイナリティの帯（過去→Beryl→Azul の3段）。
          PDFデッキ p5 "Withdrawal Finality" の流儀を踏襲。
@@ -465,8 +493,11 @@
   /* --- ⑤ Base MCP フロー図（AI → MCP → あなたの許可 → ウォレット → オンチェーン）。
          4ノードを矢印でつなぎ、「頼み」が①→②→③→④へ伝わる様子を“リレー点灯”で見せる。on-dark 前提。
          アニメは reveal.in で起動し、prefers-reduced-motion では全停止＝最終状態で静止。--- */
-  .mcp-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;align-items:stretch;}
-  @media(max-width:680px){.mcp-flow{grid-template-columns:1fr;}}
+  /* 4ノード＋3矢印を横一列に。ノード=1fr / 矢印=auto の7トラックで一行に並べる
+     （2026-06-22 修正：以前 repeat(4,1fr) で7要素が2行に折れ“2×2”に崩れていた）。 */
+  .mcp-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:0;align-items:stretch;}
+  /* 中間幅では4列横並びが窮屈なので、縦一列（①→②→③→④）に積む */
+  @media(max-width:920px){.mcp-flow{grid-template-columns:1fr;}}
   .mcp-node{
     position:relative;background:#1b2236;border:1px solid #2c3550;border-radius:12px;padding:16px 14px;text-align:center;
     transition:border-color .4s ease,box-shadow .4s ease,transform .4s ease,background .4s ease;
@@ -495,7 +526,7 @@
 
   /* ノード間の矢印。横並び時は右辺中央、縦積み時は下辺中央に出す */
   .mcp-arrow{position:relative;display:flex;align-items:center;justify-content:center;color:#5c6e9c;font-weight:900;font-size:1.1rem;min-width:34px;overflow:visible;}
-  @media(max-width:680px){.mcp-arrow{min-height:26px;transform:rotate(90deg);}}
+  @media(max-width:920px){.mcp-arrow{min-height:26px;transform:rotate(90deg);}}
   /* 矢印にも“通過”の合図：頼みが通る瞬間だけ青く光って前へスッと動く（リレーに同期）。
      3つの矢印は data-step 1→2→3 で順に。--t で各 delay を指定。 */
   .reveal.in .mcp-arrow{animation:mcpArrow 4.8s ease-in-out infinite;animation-delay:var(--ta,0s);}
@@ -503,7 +534,7 @@
     0%,12%,100%{color:#5c6e9c;transform:translateX(0);text-shadow:none;}
     6%        {color:#7aa2ff;transform:translateX(4px);text-shadow:0 0 12px rgba(0,82,255,.8);}
   }
-  @media(max-width:680px){
+  @media(max-width:920px){
     /* 縦積み時は回転を保ったまま下方向へ動かす */
     @keyframes mcpArrow{
       0%,12%,100%{color:#5c6e9c;text-shadow:none;}
@@ -565,13 +596,16 @@
   <div class="wrap">
     <span class="brand"><span class="dot"></span> 第3回Base勉強会</span>
     <div class="links">
+      <a href="#numbers">数字</a>
       <a href="#why">なぜ今</a>
+      <a href="#compare">比較</a>
       <a href="#azul">Azul</a>
       <a href="#beryl">Beryl（最新）</a>
       <a href="#b20">B20</a>
       <a href="#money">お金の地図</a>
       <a href="#multichain">Base独自?</a>
       <a href="#agents">AI×お金</a>
+      <a href="#demo">実例デモ</a>
       <a href="#roadmap">これから</a>
       <a href="#sources">出典</a>
     </div>
@@ -604,7 +638,7 @@
     </div>
 
     <!-- 数字バンド：聴衆に刺さる規模感を最初に。数字は DefiLlama 2026-06-22 クリップ(1次)で裏取り。 -->
-    <h2 style="margin:32px 0 4px;font-size:1.35rem;letter-spacing:.02em">数字でみる Base</h2>
+    <h2 id="numbers" style="margin:32px 0 4px;font-size:1.35rem;letter-spacing:.02em;scroll-margin-top:80px">数字でみる Base</h2>
     <div class="stats">
       <div class="stat">
         <div class="num">約<span class="counting" data-to="4.2" data-prefix="$" data-suffix="B">$4.2B</span></div>
@@ -692,90 +726,79 @@
       <p class="viz-title">図解：オンチェーンのBTC現物取引シェア（チェーン別）── Base が単独1位</p>
       <div class="bars">
         <div class="bar-row">
-          <span><b>Base</b></span>
-          <span class="bar-track"><span class="bar-fill lead" style="width:100%"></span></span>
-          <span class="bar-val">43%<span class="bar-mult">2位の3.3倍</span></span>
+          <span class="bar-name"><b>Base</b></span>
+          <span class="bar-lane"><span class="bar-fill lead" style="width:95.6%"><span class="bv">43%</span><span class="bar-mult">2位の3.3倍</span></span></span>
         </div>
         <div class="bar-row">
-          <span>Ethereum</span>
-          <span class="bar-track"><span class="bar-fill muted" style="width:30.2%"></span></span>
-          <span class="bar-val muted">13%</span>
+          <span class="bar-name">Ethereum</span>
+          <span class="bar-lane"><span class="bar-fill muted out" style="width:28.9%"><span class="bv">13%</span></span></span>
         </div>
         <div class="bar-row">
-          <span>Arbitrum</span>
-          <span class="bar-track"><span class="bar-fill muted" style="width:27.9%"></span></span>
-          <span class="bar-val muted">12%</span>
+          <span class="bar-name">Arbitrum</span>
+          <span class="bar-lane"><span class="bar-fill muted out" style="width:26.7%"><span class="bv">12%</span></span></span>
         </div>
         <div class="bar-row">
-          <span>BNB Chain</span>
-          <span class="bar-track"><span class="bar-fill muted" style="width:23.3%"></span></span>
-          <span class="bar-val muted">10%</span>
+          <span class="bar-name">BNB Chain</span>
+          <span class="bar-lane"><span class="bar-fill muted out" style="width:22.2%"><span class="bv">10%</span></span></span>
         </div>
         <div class="bar-row">
-          <span>HyperCore</span>
-          <span class="bar-track"><span class="bar-fill muted" style="width:23.3%"></span></span>
-          <span class="bar-val muted">10%</span>
+          <span class="bar-name">HyperCore</span>
+          <span class="bar-lane"><span class="bar-fill muted out" style="width:22.2%"><span class="bv">10%</span></span></span>
         </div>
         <div class="bar-row">
-          <span>Solana</span>
-          <span class="bar-track"><span class="bar-fill muted" style="width:20.9%"></span></span>
-          <span class="bar-val muted">9%</span>
+          <span class="bar-name">Solana</span>
+          <span class="bar-lane"><span class="bar-fill muted out" style="width:20.0%"><span class="bv">9%</span></span></span>
         </div>
+        <div class="bar-axis"><span></span><span class="bar-axis-scale"><span>0</span><span>45%</span></span></div>
       </div>
       <p class="viz-cap">オンチェーンのBTC現物取引（週次・上位6チェーンで約97%）のうち <b>約43%が Base 上</b> ── チェーン別で単独1位。第三者集計（2026-03時点）で確認できた値です。<sup class="fn"><a href="#ref-14">[14]</a></sup><br><span style="color:var(--ink-soft);font-size:.82em">※ ここでの「現物取引」はチェーン上での BTC の<b>売買（スワップ）</b>を指す。Bitcoin本体チェーン（L1）での BTC のやり取りは送金であり売買ではないため、この集計には含まれない。</span></p>
     </div>
 
     <!-- 図: 他チェーンとの比較（L2では1位）。DefiLlama 2026-06-22 クリップ(1次)から。
          ETH等のL1は桁が違い棒が潰れるため、まず「L2同士」で比較し1位を明示。全チェーン順位は数字で併記。 -->
-    <div class="viz reveal" aria-hidden="true">
+    <div id="compare" class="viz reveal" aria-hidden="true" style="scroll-margin-top:80px">
       <p class="viz-title">図解：L2同士で比べると ── Base は TVL でもステーブル時価総額でも1位</p>
 
       <p style="font-size:.9rem;color:var(--ink-soft);margin:0 0 6px;font-weight:700">① 預け入れ総額（DeFi TVL）</p>
       <div class="bars">
         <div class="bar-row">
-          <span><b>Base</b></span>
-          <span class="bar-track"><span class="bar-fill lead" style="width:100%"></span></span>
-          <span class="bar-val">$4.2B<span class="bar-mult">2位の3.2倍</span></span>
+          <span class="bar-name"><b>Base</b></span>
+          <span class="bar-lane"><span class="bar-fill lead" style="width:84.0%"><span class="bv">$4.2B</span><span class="bar-mult">2位の3.2倍</span></span></span>
         </div>
         <div class="bar-row">
-          <span>Arbitrum</span>
-          <span class="bar-track"><span class="bar-fill muted" style="width:31.0%"></span></span>
-          <span class="bar-val muted">$1.3B</span>
+          <span class="bar-name">Arbitrum</span>
+          <span class="bar-lane"><span class="bar-fill muted out" style="width:26.0%"><span class="bv">$1.3B</span></span></span>
         </div>
         <div class="bar-row">
-          <span>Polygon</span>
-          <span class="bar-track"><span class="bar-fill muted" style="width:23.8%"></span></span>
-          <span class="bar-val muted">$1.0B</span>
+          <span class="bar-name">Polygon</span>
+          <span class="bar-lane"><span class="bar-fill muted out" style="width:20.0%"><span class="bv">$1.0B</span></span></span>
         </div>
         <div class="bar-row">
-          <span>OP Mainnet</span>
-          <span class="bar-track"><span class="bar-fill muted" style="width:7.1%"></span></span>
-          <span class="bar-val muted">$0.3B</span>
+          <span class="bar-name">OP Mainnet</span>
+          <span class="bar-lane"><span class="bar-fill muted out" style="width:6.0%"><span class="bv">$0.3B</span></span></span>
         </div>
+        <div class="bar-axis"><span></span><span class="bar-axis-scale"><span>0</span><span>$5B</span></span></div>
       </div>
 
       <p style="font-size:.9rem;color:var(--ink-soft);margin:22px 0 6px;font-weight:700">② ステーブルコインの時価総額（Stables MCap）</p>
       <div class="bars">
         <div class="bar-row">
-          <span><b>Base</b></span>
-          <span class="bar-track"><span class="bar-fill lead" style="width:100%"></span></span>
-          <span class="bar-val">$4.86B<span class="bar-mult">L2で1位</span></span>
+          <span class="bar-name"><b>Base</b></span>
+          <span class="bar-lane"><span class="bar-fill lead" style="width:97.2%"><span class="bv">$4.86B</span><span class="bar-mult">L2で1位</span></span></span>
         </div>
         <div class="bar-row">
-          <span>Arbitrum</span>
-          <span class="bar-track"><span class="bar-fill muted" style="width:79.4%"></span></span>
-          <span class="bar-val muted">$3.86B</span>
+          <span class="bar-name">Arbitrum</span>
+          <span class="bar-lane"><span class="bar-fill muted" style="width:77.2%"><span class="bv">$3.86B</span></span></span>
         </div>
         <div class="bar-row">
-          <span>Polygon</span>
-          <span class="bar-track"><span class="bar-fill muted" style="width:69.8%"></span></span>
-          <span class="bar-val muted">$3.39B</span>
+          <span class="bar-name">Polygon</span>
+          <span class="bar-lane"><span class="bar-fill muted" style="width:67.8%"><span class="bv">$3.39B</span></span></span>
         </div>
         <div class="bar-row">
-          <span>OP Mainnet</span>
-          <span class="bar-track"><span class="bar-fill muted" style="width:11.3%"></span></span>
-          <span class="bar-val muted">$0.55B</span>
+          <span class="bar-name">OP Mainnet</span>
+          <span class="bar-lane"><span class="bar-fill muted out" style="width:11.0%"><span class="bv">$0.55B</span></span></span>
         </div>
+        <div class="bar-axis"><span></span><span class="bar-axis-scale"><span>0</span><span>$5B</span></span></div>
       </div>
 
       <p class="viz-cap">
@@ -1274,7 +1297,7 @@
 
     <!-- 図: ①→③の“実際にやってみた”実例。AIに頼む→Base Accountで承認、の2枚。
          左=AIが操作を組み立て承認待ち→完了（機微なURL/内部calldataはマスク済み）。右=Base Accountの承認画面（−1 USDC/+MUSDC）。 -->
-    <div style="margin-top:8px">
+    <div id="demo" style="margin-top:8px;scroll-margin-top:80px">
       <p class="viz-title" style="text-align:center">実例：AI に頼む → あなたが承認 ── Moonwell に 1 USDC を“貸す”を対話だけで</p>
       <div class="grid grid-2" style="gap:18px;align-items:start;margin-top:14px">
         <figure style="margin:0">
