@@ -441,14 +441,23 @@
   .lane-label > b{display:block;font-weight:800;color:var(--ink);}
   .lane-label .lane-proof{display:block;margin-top:4px;font-size:.72rem;color:var(--ink-soft);font-weight:600;line-height:1.5;}
   .lane-label .lane-proof b{color:var(--ink);font-weight:800;}
-  /* TEE/ZK 点灯チップ。on=点灯（色つき）/ 既定=消灯（薄グレー）/ muted=参考表示 */
+  /* TEE/ZK 点灯チップ。data-step=順に点灯 / data-empty=点かない枠 / muted=参考表示 */
   .chips{display:inline-flex;align-items:center;gap:5px;margin-top:5px;}
   .chip{font-size:.66rem;font-weight:800;letter-spacing:.02em;padding:2px 7px;border-radius:6px;background:#e7eaf1;color:#9aa3b5;border:1px solid var(--line);}
-  .chip.on{background:#e8f7ef;color:#137a52;border-color:#9fe0c0;}
-  .lane.l-best .chip.on{background:#dcefe6;}
   .chip.muted{background:#eef1f7;color:#8b94a6;font-weight:700;}
   .chip-or{font-size:.64rem;color:var(--ink-mute);font-weight:700;}
   .chip-and{font-size:.78rem;color:#137a52;font-weight:900;}
+  /* 証明チップの“点灯アニメ”：data-step を持つチップは画面内で順に点灯する（消灯→点灯）。
+     data-empty（通常経路のZK枠）は点かないまま＝「1つだけ」を視覚化。 */
+  .chip[data-step]{transform:scale(.86);opacity:.55;
+    transition:background .3s ease,color .3s ease,border-color .3s ease,transform .3s cubic-bezier(.34,1.56,.64,1),opacity .3s ease;}
+  .race.in .chip[data-step]{background:#e8f7ef;color:#137a52;border-color:#9fe0c0;transform:scale(1);opacity:1;}
+  .race.in .lane.l-best .chip[data-step]{background:#dcefe6;}
+  /* 順番に灯す：step1 → step2。レーンごとに開始タイミングをずらして“積み上がる”感を出す */
+  .lane.l-now  .chip[data-step="1"]{transition-delay:.15s;}
+  .lane.l-best .chip[data-step="1"]{transition-delay:.30s;}
+  .lane.l-best .chip[data-step="2"]{transition-delay:.62s;}
+  .chip[data-empty]{opacity:.5;}
   /* トラック＝灰の溝。中をバーが左から右へ伸びる */
   .track{position:relative;height:40px;border-radius:9px;background:#eef1f7;border:1px solid var(--line);overflow:hidden;}
   .track .bar{
@@ -457,8 +466,8 @@
     transition:width 1.5s cubic-bezier(.22,.61,.36,1);
   }
   .lane.l-past .bar{background:linear-gradient(90deg,#c4ccdb,#aab4c8);}
-  .lane.l-now  .bar{background:linear-gradient(90deg,#7ea6ff,var(--base-blue));transition-duration:1.1s;}
-  .lane.l-best .bar{background:linear-gradient(90deg,#2b3a5e,var(--ink));transition-duration:.7s;}
+  .lane.l-now  .bar{background:linear-gradient(90deg,#7ea6ff,var(--base-blue));transition-duration:1.1s;transition-delay:.45s;}
+  .lane.l-best .bar{background:linear-gradient(90deg,#2b3a5e,var(--ink));transition-duration:.7s;transition-delay:.95s;}
   /* ゴールの「確定」バッジ。バーが伸び切ってから点灯（delay は伸長時間に合わせる） */
   .track .goal{
     position:absolute;right:8px;top:50%;transform:translateY(-50%) scale(.6);
@@ -471,8 +480,8 @@
   .race.in .bar{width:var(--bar);}
   .race.in .goal{opacity:1;transform:translateY(-50%) scale(1);}
   .lane.l-past .goal{transition-delay:1.55s;}
-  .lane.l-now  .goal{transition-delay:1.15s;}
-  .lane.l-best .goal{transition-delay:.75s;}
+  .lane.l-now  .goal{transition-delay:1.7s;}
+  .lane.l-best .goal{transition-delay:1.75s;}
 
   /* --- ⑦ ERC-20 vs B20 比較表（PDFデッキ p8 の流儀）。
          左=標準ERC-20(淡色) / 右=B20(濃紺＋✓)。行頭に観点ラベル。
@@ -592,6 +601,9 @@
     .lane.l2 .car.b,.lane.l2 .car.c{display:none;}
     .bar-fill{transition:none!important;}
     .track .bar,.track .goal{transition:none!important;}
+    /* 証明チップは静止した“点灯済み”状態で見せる（data-empty は薄いまま＝1つだけ） */
+    .chip[data-step]{transition:none!important;transform:none!important;opacity:1!important;background:#e8f7ef;color:#137a52;border-color:#9fe0c0;}
+    .lane.l-best .chip[data-step]{background:#dcefe6;}
     .donut{transition:none!important;}
     html{scroll-behavior:auto;}
   }
@@ -936,17 +948,17 @@
       </div>
     </div>
 
-    <!-- 図⑥: 出金ファイナリティ・レーストラック（7日→5日→1日が左から伸び、ゴールで「確定」点灯）。
-         本文の「出金には2経路ある」を視覚化。新しい主張は足さず、上のカード本文と同じ事実だけ。
-         バー長は待ち時間(7:5:1)の相対表現。.race が画面内で .in になり伸長＋点灯。 -->
+    <!-- 図⑥: 出金ファイナリティ・チャート。チェックが「何重か」でバー（待ち時間）が決まる。
+         画面内で .race.in が付くと、各レーンの証明チップが順に“点灯”し、点灯し終えるとバーが
+         その重さに対応した長さへ縮む（＝二重ほど短い）。新主張は足さず、上カード本文と同じ事実だけ。 -->
     <div class="viz reveal" aria-hidden="true">
-      <p class="viz-title">図解：出金の待ち時間は「証明のチェックが何重か」で決まる ── 二重なら短い</p>
+      <p class="viz-title">図解：チェックが<b>何重か</b>で待ち時間が決まる ── <b>二重なら短い</b></p>
       <div class="race reveal">
         <div class="lane l-now">
           <div class="lane-label">
-            <b>通常経路（Beryl）</b>
-            <span class="chips"><span class="chip on">TEE</span><span class="chip-or">または</span><span class="chip">ZK</span></span>
-            <span class="lane-proof">証明は<b>1つだけ</b>。その証明器が壊れていないか<b>見張る時間</b>が要る。</span>
+            <b>通常（Beryl）</b>
+            <span class="chips"><span class="chip" data-step="1">TEE</span><span class="chip-or">/</span><span class="chip" data-empty>ZK</span></span>
+            <span class="lane-proof">証明は<b>1つ</b> → 見張る時間が要る</span>
           </div>
           <div class="track">
             <div class="bar" style="--bar:71.4%"><span class="day">5日</span></div>
@@ -955,9 +967,9 @@
         </div>
         <div class="lane l-best">
           <div class="lane-label">
-            <b>特急経路（まれ）</b>
-            <span class="chips"><span class="chip on">TEE</span><span class="chip-and">＋</span><span class="chip on">ZK</span></span>
-            <span class="lane-proof"><b>2つが一致</b>＝もう疑う余地が小さい。だから<b>長く待たなくていい</b>。</span>
+            <b>特急（まれ）</b>
+            <span class="chips"><span class="chip" data-step="1">TEE</span><span class="chip-and">＋</span><span class="chip" data-step="2">ZK</span></span>
+            <span class="lane-proof"><b>2つ一致</b> → ほぼ疑う余地なし</span>
           </div>
           <div class="track">
             <div class="bar" style="--bar:14.3%"><span class="day">最短1日</span></div>
@@ -966,9 +978,9 @@
         </div>
         <div class="lane l-past">
           <div class="lane-label">
-            <b>参考：過去（初期）</b>
+            <b>過去（参考）</b>
             <span class="chips"><span class="chip muted">Fault Proofs</span></span>
-            <span class="lane-proof">誰でも異議を出せる<b>長めの猶予</b>。Beryl がこの役割を狭めた。</span>
+            <span class="lane-proof">誰でも異議 → <b>長い猶予</b></span>
           </div>
           <div class="track">
             <div class="bar" style="--bar:100%"><span class="day">7日</span></div>
@@ -976,7 +988,7 @@
           </div>
         </div>
       </div>
-      <p class="viz-cap"><b>待ち時間＝処理の遅さではなく「不正をチェックする安全マージン」</b>です。チェックが<b>二重（TEE＋ZK一致）なら短くでき＝最短1日</b>、<b>一重（どちらか一方）なら見張る時間を長めに残す＝5日</b>。特急は ZK 証明の生成コストが高く、現状はまれ。<sup class="fn"><a href="#ref-2">[2]</a></sup><sup class="fn"><a href="#ref-3">[3]</a></sup></p>
+      <p class="viz-cap">待ち時間＝処理の遅さではなく<b>「不正をチェックする安全マージン」</b>。二重（TEE＋ZK）なら短く＝最短1日、一重なら長めに見張る＝5日。<sup class="fn"><a href="#ref-2">[2]</a></sup><sup class="fn"><a href="#ref-3">[3]</a></sup></p>
     </div>
 
     <div class="analogy" style="margin-top:24px">
@@ -1191,6 +1203,12 @@
               <td style="padding:8px 10px;color:#15803d;font-weight:800;">✓</td>
             </tr>
             <tr style="border-bottom:1px solid var(--line);">
+              <td style="padding:8px 10px;"><b>EUR / EURAU</b></td>
+              <td style="padding:8px 10px;">AllUnity<br><span style="font-size:.82em;color:var(--ink-soft)">（独・DWS / Deutsche Bank系、BaFin認可）</span></td>
+              <td style="padding:8px 10px;">Ethereum・Arbitrum・Optimism・Polygon・BNB・Solana・Stellar・<b>Base</b><sup class="fn"><a href="#ref-20">[20]</a></sup></td>
+              <td style="padding:8px 10px;color:#15803d;font-weight:800;">✓</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line);">
               <td style="padding:8px 10px;"><b>BRL / BRZ</b></td>
               <td style="padding:8px 10px;">Transfero</td>
               <td style="padding:8px 10px;">Ethereum・BNB・Solana・Polygon・Arbitrum・<b>Base</b> ほか16+<sup class="fn"><a href="#ref-9">[9]</a></sup></td>
@@ -1208,6 +1226,18 @@
               <td style="padding:8px 10px;">Arbitrum・Ethereum・Avalanche<sup class="fn"><a href="#ref-10">[10]</a></sup></td>
               <td style="padding:8px 10px;white-space:nowrap;color:#8a93a8;">発行体公式は左記チェーン</td>
             </tr>
+            <tr style="border-bottom:1px solid var(--line);">
+              <td style="padding:8px 10px;"><b>ZAR / ZARP</b></td>
+              <td style="padding:8px 10px;">Rand Reserve<br><span style="font-size:.82em;color:var(--ink-soft)">（財務管理: Old Mutual Wealth）</span></td>
+              <td style="padding:8px 10px;">Ethereum・Polygon・<b>Base</b>・Solana・Gnosis<sup class="fn"><a href="#ref-21">[21]</a></sup></td>
+              <td style="padding:8px 10px;color:#15803d;font-weight:800;">✓</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line);">
+              <td style="padding:8px 10px;"><b>GBP / TGBP</b></td>
+              <td style="padding:8px 10px;">BCP Technologies<br><span style="font-size:.82em;color:var(--ink-soft)">（英・FCA監督）</span></td>
+              <td style="padding:8px 10px;">Ethereum・<b>Base</b>・Avalanche・BNB・Polygon・Solana<sup class="fn"><a href="#ref-22">[22]</a></sup></td>
+              <td style="padding:8px 10px;color:#15803d;font-weight:800;">✓</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -1215,8 +1245,34 @@
       <p style="margin:10px 0 0;font-size:.85rem;color:#8a93a8;">
         ※ メキシコペソ（MXN）は Base 公式が言及しています。発行体公式が案内する対応チェーンは上記のとおりです（2026-06時点）<sup class="fn"><a href="#ref-10">[10]</a></sup>。
       </p>
+      <p style="margin:8px 0 0;font-size:.85rem;color:#8a93a8;">
+        ※ 公式キーノート画像には他にもアルゼンチンペソ（ARGT）・ブラジルレアル（BRLY / BRLA）等が並びますが、
+        本表では <b>発行体やプレスの公開情報で Base 対応を確認できたものだけ</b>を掲載しています（規則: 確実な分のみ）。
+        たとえば画像の "ARGT"（Twin 発行）は発行体公式の対応チェーンが TRON・Stellar で Base を確認できず、
+        Base 対応のアルゼンチンペソは別銘柄 <b>wARS</b>（Ripio 発行）です（2026-06時点）。
+      </p>
 
-      
+
+    </div>
+
+    <!-- 参考情報：なぜ「多通貨」をアピールするのか（公式講演の論理に基づく）。
+         数の多さではなく「同一ネットワークへの集約」という戦略の宣言。根拠は講演原文 5:46〜[1]。 -->
+    <div class="card" style="margin-top:36px;border-left:4px solid var(--base-blue-deep);background:#f6f8ff;">
+      <div class="meta">参考：なぜ Base は「多通貨」をアピールするのか</div>
+      <h3 style="margin-bottom:8px">ポイントは「数」ではなく「同じ網に集まる」こと。</h3>
+      <p style="margin:0 0 12px">
+        ステーブルコインの多くは、もともと複数チェーンに展開されています（例：USDC は数十チェーン）。
+        だから「Base が多通貨に対応」というだけでは、それ自体が Base 固有の強みとは言い切れません。
+      </p>
+      <p style="margin:0 0 12px">
+        Base 公式が語っているのは方向が逆で、<b>多くの“異なる通貨”が1つのネットワークに集まる</b>という点です。
+        講演では「すべての通貨が<b>同じネットワークにつながる</b>未来（every currency connected to the same network）」と述べ、
+        ユーロ・ペソ・ナイラ・シンガポールドルなどが <b>同じ Base 上で互いに交換・決済できる</b>ことを「global finance（世界の金融）の土台」として位置づけています<sup class="fn"><a href="#ref-1">[1]</a></sup>。
+      </p>
+      <p style="margin:0;font-size:.92rem;color:var(--ink-soft)">
+        ※ 「他のL2と比べて種類が多いか」を示す中立的な統計は確認できていません。「25種以上」は <b>Base 公式の発表値</b>であり、
+        ここで紹介できるのは <b>発行体公式で Base 対応を確認できた通貨</b>に限っています（上の表）。
+      </p>
     </div>
 
     <div class="grid grid-3" style="margin-top:40px">
@@ -1462,7 +1518,7 @@
     <span class="eyebrow">参考文献・出典</span>
     <h2>このページの参考文献</h2>
     <p class="lead">
-      本文中の <b>[1]〜[18]</b> はこのリストに対応します。すべてクリックで原典に飛べます。
+      本文中の <b>[1]〜[22]</b> はこのリストに対応します。すべてクリックで原典に飛べます。
       Base 公式（docs.base.org / blog.base.dev / 公式発表）を中心に、発行体公式・第三者統計・参考記事を種別とともに示します。
     </p>
 
@@ -1487,6 +1543,9 @@
         <li id="ref-17"><span class="src-name">Model Context Protocol（MCP）公式仕様（Anthropic）</span> ─ <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">modelcontextprotocol.io</a>　<span class="badge">規格公式</span></li>
         <li id="ref-18"><span class="src-name">Base Account（自己管理のスマートウォレット／ERC-4337）＝ サインインはメールOTP・パスキー・リカバリーフレーズ</span> ─ <a href="https://account.base.app/" target="_blank" rel="noopener">account.base.app</a> ／ <a href="https://docs.base.org/base-account/overview/what-is-base-account" target="_blank" rel="noopener">docs.base.org/base-account/…</a>　<span class="badge">公式docs</span></li>
         <li id="ref-19"><span class="src-name">全チェーンの TVL ランキング（Base ＝ L2で1位・全チェーン6位。ステーブル時価総額でも L2で1位）</span> ─ <a href="https://defillama.com/chains" target="_blank" rel="noopener">defillama.com/chains</a>（2026-06-22時点）　<span class="badge">第三者統計</span></li>
+        <li id="ref-20"><span class="src-name">EURAU（AllUnity 公式・対応チェーンに Base を明記、2026-06時点）</span> ─ <a href="https://allunity.com/eurau/" target="_blank" rel="noopener">allunity.com/eurau</a>　<span class="badge">発行体公式</span></li>
+        <li id="ref-21"><span class="src-name">ZARP Stablecoin（Rand Reserve 公式・対応チェーンに Base を明記、2026-06時点）</span> ─ <a href="https://www.zarpstablecoin.com/about/" target="_blank" rel="noopener">zarpstablecoin.com/about</a>　<span class="badge">発行体公式</span></li>
+        <li id="ref-22"><span class="src-name">Tokenised GBP / tGBP（BCP Technologies 発行・FCA監督。対応チェーンに Base、Coinbase 取扱）</span> ─ <a href="https://www.tokenisedgbp.com/" target="_blank" rel="noopener">tokenisedgbp.com</a> ／ <a href="https://crypto.news/coinbase-taps-uk-regulated-tgbp-in-local-currency-stablecoin-push/" target="_blank" rel="noopener">crypto.news（Coinbase 取扱）</a>　<span class="badge">発行体公式＋プレス</span></li>
       </ol>
     </div>
 
